@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+* {
+  font-family: "Quicksand", sans-serif;
+}
+
+body {
+  background-color: rgb(245, 245, 245);
+}
+
+nav.navbar ul li {
+  font-size: 0.9rem;
+}
+
+a.setting-link {
+  text-decoration: none;
+  color: black;
+}
+
+.card {
+  border-radius: 1.5rem;
+  padding: 0.5rem 0 0.5rem 0;
+  border: none;
+}
+
+.card.card-page-title,
+.card.card-setting-menu {
+  padding: 10px 20px 10px 20px;
+}
+.card.card-page-title p,
+.card.card-page-title h4,
+.card.card-setting-menu p,
+.card.card-setting-menu h4 {
+  margin: 0;
+}
+
+table,
+tr,
+td,
+th {
+  font-size: 0.7rem;
+}
+
+@media (min-width: 992px) {
+  .navbar {
+    height: 35px;
+    background-color: rgb(31, 31, 134);
+  }
+  .navbar .container .collapse ul.navbar-nav li.nav-item a.nav-link {
+    font-size: 1rem;
+  }
+  .navbar .container a.text-username {
+    font-size: 1.1rem;
+  }
+}/*# sourceMappingURL=mycss.css.map */
