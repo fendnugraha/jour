@@ -36,6 +36,8 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?= base_url('purchase'); ?>">Pembelian</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('sales'); ?>">Penjualan</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('finance/kas'); ?>">Kas</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

@@ -10,6 +10,7 @@ class Home extends CI_Controller
         is_logged_in();
         $this->load->library('form_validation');
         $this->load->model('home_model');
+        // $this->load->helper('form');
     }
 
     public function index()
@@ -22,6 +23,7 @@ class Home extends CI_Controller
 
         $data['cashflow'] = $this->db->query("SELECT a.*, b.username FROM cashflow a LEFT JOIN user b ON b.id = a.user_id")->result_array();
         $data['kasakhir'] = $this->home_model->kasAkhir();
+        $data['akun_kas'] = $this->db->query("SELECT * FROM acc_coa WHERE acc_code LIKE '60%'")->result_array();
 
         $data['title'] = 'Dashboard';
         $this->load->view('include/header', $data);
@@ -163,6 +165,7 @@ class Home extends CI_Controller
 
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
         $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+        $this->form_validation->set_rules('acc_kas', 'Akun Kas', 'required');
         $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required|alpha_numeric_spaces|min_length[5]|trim');
 
         if ($this->form_validation->run() == false) {
@@ -181,7 +184,25 @@ class Home extends CI_Controller
                 'user_id' => $user_id
             ];
 
+            $data2 = [
+                'id' => null,
+                'waktu' => $this->input->post('tanggal'),
+                'invoice' => $invoice,
+                'debt_code' => $this->input->post('acc_kas'),
+                'cred_code' => '10100-001',
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => 1
+            ];
+
+            $this->db->trans_begin();
+
             $this->db->insert('cashflow', $data);
+            $this->db->insert('account_trace', $data2);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+            }
             redirect('home');
         }
     }

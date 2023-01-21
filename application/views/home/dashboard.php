@@ -259,6 +259,20 @@
                         </div>
                     </div>
                     <div class="mb-1 row">
+                        <label for="acc_kas" class="col-sm col-form-label">Kategori</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="acc_kas" id="acc_kas">
+                                <option value="">- Pilih Kategori -</option>
+                                <?php
+                                foreach ($akun_kas as $kas) {
+                                ?>
+                                    <option value="<?= $kas['acc_code']; ?>" <?= set_select('acc_kas', $kas['acc_code']); ?>><?= $kas['acc_code']; ?> | <?= $kas['acc_name']; ?></option>
+                                <?php
+                                }; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-1 row">
                         <label for="deskripsi" class="col-sm col-form-label">Deskripsi</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="deskripsi" id="deskripsi" value="<?= set_value('deskripsi'); ?>">

@@ -174,9 +174,60 @@ class Setting extends CI_Controller
 
     public function accounts()
     {
-        $data['title'] = 'Setting / Chart of Accounts';
-        $this->load->view('include/header', $data);
-        $this->load->view('setting/accounts', $data);
-        $this->load->view('include/footer');
+        $data['acc_coa'] = $this->db->get('acc_coa')->result_array();
+        $data['accounts'] = $this->db->get('accounts')->result_array();
+
+        $this->form_validation->set_rules('acc_name', 'Nama Akun', 'required|alpha_numeric_spaces|max_length[60]|is_unique[acc_coa.acc_name]');
+        $this->form_validation->set_rules('main_acc', 'Kategori', 'required');
+        $this->form_validation->set_rules('st_balance', 'Saldo Awal', 'required|numeric');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Setting / Chart of Accounts';
+            $this->load->view('include/header', $data);
+            $this->load->view('setting/accounts', $data);
+            $this->load->view('include/footer');
+        } else {
+            $this->_addaccount();
+        }
+    }
+
+    public function _addaccount()
+    {
+        $main_acc = $this->input->post('main_acc');
+        $accounts = $this->db->get_where('accounts', ['nama' => $main_acc])->row_array();
+        $querycode = "SELECT MAX(RIGHT(acc_code,3)) AS kd_max FROM acc_coa
+                    WHERE main_acc = '$main_acc'";
+        $q = $this->db->query($querycode);
+        if ($q->num_rows() > 0) {
+            $k = $q->row_array();
+            $tmp = ((int) $k['kd_max']) + 1;
+            $new_code = $accounts['kode'] . "-"  . sprintf("%03s", $tmp);
+        } else {
+            $new_code = $accounts['kode'] . "."  . "001";
+        }
+
+        $data = [
+            'id' => null,
+            'acc_code' => $new_code,
+            'acc_name' => $this->input->post('acc_name'),
+            'main_acc' => $main_acc,
+            'status' => $accounts['status'],
+            'type' => $accounts['type'],
+            'st_balance' => $this->input->post('st_balance')
+        ];
+
+        if ($this->db->insert('acc_coa', $data)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Account COA Berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('setting/accounts');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Penambahan account COA gagal, silahkan dicek kembali !.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('setting/accounts');
+        };
     }
 }

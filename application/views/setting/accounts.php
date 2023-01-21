@@ -3,125 +3,86 @@
         <div class="row">
             <div class="col-sm">
                 <div class="control-nav mb-3">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
-                        + Tambah Kontak
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAccounts">
+                        + Tambah Account
                     </button>
                 </div>
                 <table class="table display">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <!-- <th>ID</th> -->
+                            <th>Kode</th>
                             <th>Nama</th>
+                            <th>Kategori</th>
+                            <th>Status</th>
                             <th>Type</th>
-                            <th>Deskripsi</th>
+                            <th>Saldo Awal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($contact as $ct) {; ?>
+                        <?php foreach ($acc_coa as $coa) {; ?>
                             <tr>
-                                <td><?= $ct['id']; ?></td>
-                                <td><?= $ct['nama']; ?></td>
-                                <td><?= $ct['type']; ?></td>
-                                <td><?= $ct['keterangan']; ?></td>
+                                <!-- <td><?= $coa['id']; ?></td> -->
+                                <td><?= $coa['acc_code']; ?></td>
+                                <td><?= $coa['acc_name']; ?></td>
+                                <td><?= $coa['main_acc']; ?></td>
+                                <td><?= $coa['status']; ?></td>
+                                <td><?= $coa['type']; ?></td>
+                                <td class="text-end"><?= number_format($coa['st_balance']); ?></td>
                             </tr>
                         <?php }; ?>
                     </tbody>
                 </table>
-
                 <a href="<?= base_url('setting'); ?>">Kembali</a>
             </div>
-            <div class="col-sm">
-                <?= $this->session->flashdata('message'); ?>
-            </div>
+
         </div>
     </div>
 </div>
-
-
+<?= $this->session->flashdata('message'); ?>
 
 
 
 <!-- Modal -->
-<div class="modal fade" id="addContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="addAccounts" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Kategori</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Account</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('setting/addContact'); ?>" method="post">
-                    <div class="mb-1 row">
-                        <label for="ct_name" class="col-sm col-form-label">Nama Kontak</label>
+                <form action="<?= base_url('setting/accounts'); ?>" method="post">
+                    <div class="mb-3 row">
+                        <label for="acc_name" class="col-sm col-form-label">Nama Kontak</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="ct_name" id="ct_name" value="<?= set_value('ct_name'); ?>">
+                            <input type="text" class="form-control" name="acc_name" id="acc_name" value="<?= set_value('acc_name'); ?>">
                             <div class="form-text">Maksimal 60 Karakter</div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
-                        <label for="catprefix" class="col-sm col-form-label">Type</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" name="ct_type" id="ct_type">
-                                <option value="Konsumen">Konsumen</option>
-                                <option value="Supplier">Supplier</option>
+                    <div class="mb-3 row">
+                        <label for="main_acc" class="col-sm col-form-label">Type</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="main_acc" id="main_acc">
+                                <option value="">Pilih Kategori</option>
+                                <?php foreach ($accounts as $acc) {; ?>
+                                    <option value="<?= $acc['nama']; ?>"><?= $acc['nama'] . " - " . $acc['kode']; ?></option>
+                                <?php }; ?>
                             </select>
                         </div>
                     </div>
-                    <div class="mb-1 row">
-                        <label for="ct_desc" class="col-sm col-form-label">Deskripsi</label>
+                    <div class="mb-3 row">
+                        <label for="st_balance" class="col-sm col-form-label">Saldo Awal</label>
                         <div class="col-sm-8">
-                            <textarea type="text" class="form-control" name="ct_desc" id="ct_desc" value="<?= set_value('ct_desc'); ?>">
-                            </textarea>
+                            <input type="number" class="form-control" name="st_balance" id="st_balance" value="<?= set_value('st_balance'); ?>">
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        </form>
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="addContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Kategori</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="<?= base_url('setting/addContact'); ?>" method="post">
-                    <div class="mb-1 row">
-                        <label for="ct_name" class="col-sm col-form-label">Nama Kontak</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="ct_name" id="ct_name" value="<?= set_value('ct_name'); ?>">
-                            <div class="form-text">Maksimal 60 Karakter</div>
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="catprefix" class="col-sm col-form-label">Type</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" name="ct_type" id="ct_type">
-                                <option value="Konsumen">Konsumen</option>
-                                <option value="Supplier">Supplier</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="ct_desc" class="col-sm col-form-label">Deskripsi</label>
-                        <div class="col-sm-8">
-                            <textarea type="text" class="form-control" name="ct_desc" id="ct_desc" value="<?= set_value('ct_desc'); ?>">
-                            </textarea>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <?php echo validation_errors('<div class="alert alert-warning alert-dismissible fade show error" role="alert">', '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>'); ?>
             </div>
         </div>
         </form>
