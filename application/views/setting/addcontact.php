@@ -31,6 +31,7 @@
                 <a href="<?= base_url('setting'); ?>">Kembali</a>
             </div>
             <div class="col-sm">
+                <?php echo validation_errors(); ?>
                 <?= $this->session->flashdata('message'); ?>
             </div>
         </div>

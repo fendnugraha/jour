@@ -20,44 +20,38 @@
 <div class="card">
     <div class="card-body">
         <div class="control-nav mb-3">
-            <a href="<?= base_url('finance/addJournal'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Input Jurnal</a>
-            <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-info"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
-            <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
-
+            <a href="<?= base_url('finance/addReceivable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Tambah Piutang</a>
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
+                + Tambah Kontak
+            </button> -->
         </div>
         <table class="table display">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>WAKTU</th>
-                    <th>INVOICE</th>
-                    <th>DESKRIPSI</th>
-                    <th>ACCOUNT</th>
+                    <th>CONTACT</th>
                     <th>JUMLAH</th>
                     <th>STATUS</th>
-                    <th>USER</th>
+                    <th>ACTION</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 <?php
-                foreach ($account_trace as $p) {
-                    if ($p['status'] == 1) {
+                foreach ($receivable as $rv) {
+                    if ($rv['pay_stats'] == 0) {
                         $status = "<span class='badge rounded-pill text-bg-success'>success</span>";
-                    } elseif ($p['status'] == 2) {
+                    } elseif ($rv['pay_stats'] == 1) {
                         $status = "<span class='badge rounded-pill text-bg-danger'>void</span>";
                     };
                 ?>
                     <tr>
-                        <td><?= $p['id']; ?></td>
-                        <td><?= $p['waktu']; ?></td>
-                        <td><?= $p['invoice']; ?></td>
-                        <td><?= $p['description']; ?></td>
-                        <td><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></td>
-                        <td><?= $p['jumlah']; ?></td>
+                        <td><?= $rv['id']; ?></td>
+                        <td><?= $rv['ct_name']; ?></td>
+                        <td><?= number_format($rv['bill_total']); ?></td>
                         <td><?= $status; ?></td>
                         <td>
-                            <a href="<?= base_url('finance/edit_journal/') . $p['id'];; ?> ">Edit</a>
-                            <a href="<?= base_url('finance/jr_detail/') . $p['id'];; ?> ">Detail</a>
+                            <!-- <a href="<?= base_url('finance/edit_journal/') . $rv['contact_id'];; ?> ">Edit</a> -->
+                            <a href="<?= base_url('finance/rv_detail/') . $rv['contact_id'];; ?> ">Detail</a>
                         </td>
                     </tr>
                 <?php }; ?>

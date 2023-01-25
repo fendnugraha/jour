@@ -54,7 +54,7 @@
             <div class="modal-body">
                 <form action="<?= base_url('setting/accounts'); ?>" method="post">
                     <div class="mb-3 row">
-                        <label for="acc_name" class="col-sm col-form-label">Nama Kontak</label>
+                        <label for="acc_name" class="col-sm col-form-label">Nama Account</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="acc_name" id="acc_name" value="<?= set_value('acc_name'); ?>">
                             <div class="form-text">Maksimal 60 Karakter</div>
