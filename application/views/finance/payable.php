@@ -2,16 +2,25 @@
     <div class="col-sm">
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
-                <p>Total Inventory</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($total_inv['total_inv']); ?> ,-</b></h2>
+                <p>Total Hutang</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['bill']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
     <div class="col-sm">
         <div class="card bg-info text-bg-light">
             <div class="card-body">
-                <p>Total Pembelian</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($total_po['total']); ?> ,-</b></h2>
+                <p>Total Pembayaran</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['got_paid']); ?> ,-</b></h2>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card bg-dark text-bg-dark">
+            <div class="card-body">
+                <p>Sisa Hutang</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['remaining']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -20,44 +29,38 @@
 <div class="card">
     <div class="card-body">
         <div class="control-nav mb-3">
-            <a href="<?= base_url('finance/addJournal'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Input Jurnal</a>
-            <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-info"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
-            <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
-
+            <a href="<?= base_url('finance/addPayable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Tambah Hutang</a>
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
+                + Tambah Kontak
+            </button> -->
         </div>
         <table class="table display">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>WAKTU</th>
-                    <th>INVOICE</th>
-                    <th>DESKRIPSI</th>
-                    <th>ACCOUNT</th>
+                    <th>CONTACT</th>
                     <th>JUMLAH</th>
                     <th>STATUS</th>
-                    <th>USER</th>
+                    <th>ACTION</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 <?php
-                foreach ($account_trace as $p) {
-                    if ($p['status'] == 1) {
-                        $status = "<span class='badge rounded-pill text-bg-success'>success</span>";
-                    } elseif ($p['status'] == 2) {
-                        $status = "<span class='badge rounded-pill text-bg-danger'>void</span>";
+                foreach ($payable as $rv) {
+                    if ($rv['bill_total'] == 0) {
+                        $status = "<span class='badge rounded-pill text-bg-success'>Fullpaid</span>";
+                    } else {
+                        $status = "<span class='badge rounded-pill text-bg-danger'>Unpaid</span>";
                     };
                 ?>
                     <tr>
-                        <td><?= $p['id']; ?></td>
-                        <td><?= $p['waktu']; ?></td>
-                        <td><?= $p['invoice']; ?></td>
-                        <td><?= $p['description']; ?></td>
-                        <td><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></td>
-                        <td><?= number_format($p['jumlah']); ?></td>
+                        <td><?= $rv['id']; ?></td>
+                        <td><?= $rv['ct_name']; ?></td>
+                        <td><?= number_format($rv['bill_total']); ?></td>
                         <td><?= $status; ?></td>
                         <td>
-                            <a href="<?= base_url('finance/edit_journal/') . $p['id']; ?> ">Edit</a>
-                            <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> ">Detail</a>
+                            <!-- <a href="<?= base_url('finance/edit_journal/') . $rv['contact_id'];; ?> ">Edit</a> -->
+                            <a href="<?= base_url('finance/rv_detail/') . $rv['contact_id'];; ?> ">Detail</a>
                         </td>
                     </tr>
                 <?php }; ?>

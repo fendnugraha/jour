@@ -40,4 +40,23 @@ class Finance_model extends CI_Model
             return "RV.BK." . date('dmy') . "."  . $user["id"] . "." . $contact_id . "." . "0000001";
         }
     }
+
+    public function invoice_payable($contact_id)
+    {
+        $uname = $this->session->userdata('uname');
+        $sql = "SELECT * FROM user WHERE username ='$uname'";
+        // $data['tanggal'] = date('Y-m-d');
+        $user = $this->db->query($sql)->row_array();
+
+        $querycode = "SELECT MAX(RIGHT(invoice,7)) AS kd_max FROM payable_tb
+                    WHERE contact_id = '$contact_id' and pay_stats = 0";
+        $q = $this->db->query($querycode);
+        if ($q->num_rows() > 0) {
+            $k = $q->row_array();
+            $tmp = ((int) $k['kd_max']) + 1;
+            return "PY.BK." . date('dmy') . "."  . $user["id"] . "." . $contact_id . "." . sprintf("%07s", $tmp);
+        } else {
+            return "PY.BK." . date('dmy') . "."  . $user["id"] . "." . $contact_id . "." . "0000001";
+        }
+    }
 }

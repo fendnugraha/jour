@@ -2,16 +2,25 @@
     <div class="col-sm">
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
-                <p>Total Inventory</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($total_inv['total_inv']); ?> ,-</b></h2>
+                <p>Total Piutang</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['bill']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
     <div class="col-sm">
         <div class="card bg-info text-bg-light">
             <div class="card-body">
-                <p>Total Pembelian</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($total_po['total']); ?> ,-</b></h2>
+                <p>Total Pembayaran</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['got_paid']); ?> ,-</b></h2>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card bg-dark text-bg-dark">
+            <div class="card-body">
+                <p>Sisa Piutang</p>
+                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['remaining']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -38,10 +47,10 @@
             <tbody class="table-group-divider">
                 <?php
                 foreach ($receivable as $rv) {
-                    if ($rv['pay_stats'] == 0) {
-                        $status = "<span class='badge rounded-pill text-bg-success'>success</span>";
-                    } elseif ($rv['pay_stats'] == 1) {
-                        $status = "<span class='badge rounded-pill text-bg-danger'>void</span>";
+                    if ($rv['bill_total'] == 0) {
+                        $status = "<span class='badge rounded-pill text-bg-success'>Fullpaid</span>";
+                    } else {
+                        $status = "<span class='badge rounded-pill text-bg-danger'>Unpaid</span>";
                     };
                 ?>
                     <tr>
