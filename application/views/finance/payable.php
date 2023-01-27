@@ -59,8 +59,8 @@
                         <td><?= number_format($rv['bill_total']); ?></td>
                         <td><?= $status; ?></td>
                         <td>
-                            <!-- <a href="<?= base_url('finance/edit_journal/') . $rv['contact_id'];; ?> ">Edit</a> -->
-                            <a href="<?= base_url('finance/rv_detail/') . $rv['contact_id'];; ?> ">Detail</a>
+                            <!-- <a href="<?= base_url('finance/edit_payable/') . $rv['contact_id'];; ?> ">Edit</a> -->
+                            <a href="<?= base_url('finance/py_detail/') . $rv['contact_id'];; ?> ">Detail</a>
                         </td>
                     </tr>
                 <?php }; ?>

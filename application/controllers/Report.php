@@ -30,4 +30,14 @@ class Report extends CI_Controller
         $this->load->view('report/labarugi', $data);
         $this->load->view('include/footer');
     }
+
+    public function neraca()
+    {
+        $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
+
+        $data['title'] = 'Report / Neraca (Balance Sheet)';
+        $this->load->view('include/header', $data);
+        $this->load->view('report/neraca', $data);
+        $this->load->view('include/footer');
+    }
 }

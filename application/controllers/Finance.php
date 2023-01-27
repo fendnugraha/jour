@@ -455,7 +455,7 @@ class Finance extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Dashboard / Jurnal Umum / Hutang / Hutang Detail';
             $this->load->view('include/header', $data);
-            $this->load->view('finance/rv_detail', $data);
+            $this->load->view('finance/py_detail', $data);
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->input->post('invoice');
@@ -486,7 +486,7 @@ class Finance extends CI_Controller
                 'cred_code' => $rv_account,
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
-                'rvpy' => 'payable',
+                'rvpy' => 'Payable',
                 'pay_stats' => 1,
                 'pay_nth' => $pay_nth,
                 'user_id' => $user_id
