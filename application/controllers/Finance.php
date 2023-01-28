@@ -382,7 +382,7 @@ class Finance extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Dashboard / Jurnal Umum / Hutang / Tambah Hutang';
             $this->load->view('include/header', $data);
-            $this->load->view('finance/addpayable', $data);
+            $this->load->view('finance/addPayable', $data);
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->finance_model->invoice_payable($this->input->post('contact'));

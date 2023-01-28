@@ -26,10 +26,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto me-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?= base_url('home'); ?> ">Dashboard</a>
-                    </li>
-                    <li class="nav-item dropdown">
+                    </li> -->
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Transaksi
                         </a>
@@ -39,6 +39,9 @@
                             <li><a class="dropdown-item" href="<?= base_url('finance/kas'); ?>">Kas</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a></li>
                         </ul>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('report'); ?>">Report</a>

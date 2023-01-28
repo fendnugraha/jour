@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2023 at 05:54 PM
+-- Generation Time: Jan 28, 2023 at 10:30 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.29
 
@@ -116,7 +116,13 @@ INSERT INTO `account_trace` (`id`, `waktu`, `invoice`, `description`, `debt_code
 (7, '2023-01-25 22:24:00', 'JR.BK.250123.7.0000003', 'Harian dadan', '60101-001', '10100-001', 150000, 1, NULL, NULL, NULL, 7),
 (8, '2023-01-25 23:26:00', 'RV.BK.250123.7.7.0000001', 'Pinjam untuk foya foya', '10400-002', '10100-001', 300000, 1, 'Receivable', 0, 0, 7),
 (9, '2023-01-25 23:36:00', 'RV.BK.250123.7.7.0000002', 'Pinjam dulu bayar esok lusa', '10400-002', '10100-001', 200000, 1, 'Receivable', 0, 0, 7),
-(10, '2023-01-25 23:51:00', 'RV.BK.250123.7.8.0000001', 'Bon dulu sementara', '10400-001', '10200-001', 3000000, 1, 'Receivable', 0, 0, 7);
+(10, '2023-01-25 23:51:00', 'RV.BK.250123.7.8.0000001', 'Bon dulu sementara', '10400-001', '10200-001', 3000000, 1, 'Receivable', 0, 0, 7),
+(11, '2023-01-26 22:31:00', 'RV.BK.250123.7.7.0000001', 'Sudah bayar ke admin', '10100-001', '10400-002', 300000, 1, 'Receivable', 1, 1, 7),
+(13, '2023-01-27 13:39:00', 'RV.BK.250123.7.8.0000001', 'transfer', '10200-001', '10400-001', 3000000, 1, 'Receivable', 1, 1, 7),
+(14, '2023-01-27 14:01:00', 'RV.BK.270123.7.7.0000003', 'Pinjam untuk biaya kehidupan', '10400-002', '10200-001', 1000000, 1, 'Receivable', 0, 0, 7),
+(15, '2023-01-27 14:13:00', 'RV.BK.270123.7.9.0000001', 'Pinjam Sementara', '10400-001', '10200-001', 5000000, 1, 'Receivable', 0, 0, 7),
+(16, '2023-01-27 14:33:00', 'PY.BK.270123.7.9.0000001', 'Pinjaman penambahan Modal', '10200-001', '20100-001', 50000000, 1, 'Payable', 0, 0, 7),
+(17, '2023-01-27 16:00:00', 'RV.BK.270123.7.9.0000001', 'Bayar transfer', '10200-001', '10400-001', 5000000, 1, 'Receivable', 1, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -202,7 +208,8 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact` (`id`, `nama`, `type`, `keterangan`) VALUES
 (7, 'DOA IBU Inc', 'Supplier', 'Dagang Pulsa Dan Kuota           '),
-(8, 'DURA CO', 'Konsumen', 'Premium Clothing Line and Apparel                            ');
+(8, 'DURA CO', 'Konsumen', 'Premium Clothing Line and Apparel                            '),
+(9, 'Metal Sun', 'Supplier', 'Dagang Besi dan Material                            ');
 
 -- --------------------------------------------------------
 
@@ -228,6 +235,32 @@ CREATE TABLE `inventory` (
 
 INSERT INTO `inventory` (`id`, `kode`, `nama`, `cat_id`, `beli`, `jual`, `stok`, `is_active`, `date_modified`) VALUES
 (1, 'KP0001', 'Kopi Hitam Gillus Mix', 1, 1500, 3500, 100, 1, 1674313295);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payable_tb`
+--
+
+CREATE TABLE `payable_tb` (
+  `id` int(11) NOT NULL,
+  `waktu` datetime NOT NULL,
+  `invoice` varchar(60) NOT NULL,
+  `contact_id` int(11) NOT NULL,
+  `description` varchar(160) NOT NULL,
+  `bill_amount` int(11) NOT NULL,
+  `pay_amount` int(11) NOT NULL,
+  `pay_stats` int(11) NOT NULL,
+  `pay_nth` int(11) NOT NULL,
+  `rv_type` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payable_tb`
+--
+
+INSERT INTO `payable_tb` (`id`, `waktu`, `invoice`, `contact_id`, `description`, `bill_amount`, `pay_amount`, `pay_stats`, `pay_nth`, `rv_type`) VALUES
+(1, '2023-01-27 14:33:00', 'PY.BK.270123.7.9.0000001', 9, 'Pinjaman penambahan Modal', 50000000, 0, 0, 0, '10200-001');
 
 -- --------------------------------------------------------
 
@@ -302,7 +335,12 @@ CREATE TABLE `receivable_tb` (
 INSERT INTO `receivable_tb` (`id`, `waktu`, `invoice`, `contact_id`, `description`, `bill_amount`, `pay_amount`, `pay_stats`, `pay_nth`, `rv_type`) VALUES
 (1, '2023-01-25 23:26:00', 'RV.BK.250123.7.7.0000001', 7, 'Pinjam untuk foya foya', 300000, 0, 0, 0, '10100-001'),
 (3, '2023-01-25 23:36:00', 'RV.BK.250123.7.7.0000002', 7, 'Pinjam dulu bayar esok lusa', 200000, 0, 0, 0, '10100-001'),
-(4, '2023-01-25 23:51:00', 'RV.BK.250123.7.8.0000001', 8, 'Bon dulu sementara', 3000000, 0, 0, 0, '10200-001');
+(4, '2023-01-25 23:51:00', 'RV.BK.250123.7.8.0000001', 8, 'Bon dulu sementara', 3000000, 0, 0, 0, '10200-001'),
+(5, '2023-01-26 22:31:00', 'RV.BK.250123.7.7.0000001', 7, 'Sudah bayar ke admin', 0, 300000, 1, 1, '10100-001'),
+(7, '2023-01-27 13:39:00', 'RV.BK.250123.7.8.0000001', 8, 'transfer', 0, 3000000, 1, 1, '10200-001'),
+(8, '2023-01-27 14:01:00', 'RV.BK.270123.7.7.0000003', 7, 'Pinjam untuk biaya kehidupan', 1000000, 0, 0, 0, '10200-001'),
+(9, '2023-01-27 14:13:00', 'RV.BK.270123.7.9.0000001', 9, 'Pinjam Sementara', 5000000, 0, 0, 0, '10200-001'),
+(10, '2023-01-27 16:00:00', 'RV.BK.270123.7.9.0000001', 9, 'Bayar transfer', 0, 5000000, 1, 1, '10200-001');
 
 -- --------------------------------------------------------
 
@@ -367,7 +405,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `fullname`, `password`, `role`, `date_reg`, `last_login`, `status`) VALUES
-(7, 'administrator', 'Administrator', '$2y$10$8A9am7VSx50MGCvnVi.Luegdet2ZJyenak/igCaH7B6kWxEP1Nq3e', 1, 1669868304, 1674660249, 1);
+(7, 'administrator', 'Administrator', '$2y$10$8A9am7VSx50MGCvnVi.Luegdet2ZJyenak/igCaH7B6kWxEP1Nq3e', 1, 1669868304, 1674897601, 1);
 
 -- --------------------------------------------------------
 
@@ -431,6 +469,12 @@ ALTER TABLE `inventory`
   ADD KEY `kode` (`kode`);
 
 --
+-- Indexes for table `payable_tb`
+--
+ALTER TABLE `payable_tb`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `product_cat`
 --
 ALTER TABLE `product_cat`
@@ -486,7 +530,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `account_trace`
 --
 ALTER TABLE `account_trace`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `acc_coa`
@@ -504,12 +548,18 @@ ALTER TABLE `cashflow`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `payable_tb`
+--
+ALTER TABLE `payable_tb`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -528,7 +578,7 @@ ALTER TABLE `product_trace`
 -- AUTO_INCREMENT for table `receivable_tb`
 --
 ALTER TABLE `receivable_tb`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `setting`

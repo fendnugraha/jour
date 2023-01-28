@@ -9,6 +9,7 @@ class Report extends CI_Controller
 
         is_logged_in();
         $this->load->library('form_validation');
+        $this->load->model('finance_model');
     }
 
     public function index()
@@ -34,6 +35,8 @@ class Report extends CI_Controller
     public function neraca()
     {
         $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
+        $data['liabilities'] = $this->db->get_where('accounts', ['type' => 'Liabilities'])->result_array();
+        $data['ekuitas'] = $this->db->get_where('accounts', ['type' => 'Ekuitas'])->result_array();
 
         $data['title'] = 'Report / Neraca (Balance Sheet)';
         $this->load->view('include/header', $data);

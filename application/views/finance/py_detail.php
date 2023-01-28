@@ -79,7 +79,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('finance/rv_detail/' . $contact_id); ?>" method="post">
+                <form action="<?= base_url('finance/py_detail/' . $contact_id); ?>" method="post">
                     <div class="mb-2 row">
                         <label for="p_date" class="col-sm col-form-label">Tanggal</label>
                         <div class="col-sm-8">

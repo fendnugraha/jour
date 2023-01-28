@@ -40,4 +40,5 @@
         </form>
     </div>
 </div>
+<?php echo validation_errors(); ?>
 <?= $this->session->flashdata('message'); ?>
