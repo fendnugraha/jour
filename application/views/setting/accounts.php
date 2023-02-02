@@ -17,6 +17,7 @@
                             <th>Status</th>
                             <th>Type</th>
                             <th>Saldo Awal</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,7 @@
                                 <td><?= $coa['status']; ?></td>
                                 <td><?= $coa['type']; ?></td>
                                 <td class="text-end"><?= number_format($coa['st_balance']); ?></td>
+                                <td class="text-center"><a href="<?= base_url('setting/editAccount/') . $coa['acc_code']; ?>">Edit</a></td>
                             </tr>
                         <?php }; ?>
                     </tbody>

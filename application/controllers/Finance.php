@@ -130,6 +130,7 @@ class Finance extends CI_Controller
         $this->db->join('user b', 'b.id = a.user_id', 'left');
         $this->db->join('acc_coa c', 'c.acc_code = a.debt_code', 'left');
         $this->db->join('acc_coa d', 'd.acc_code = a.cred_code', 'left');
+        // $this->db->order_by('id', 'DESC');
         $data['account_trace'] = $this->db->get('account_trace a')->result_array();
 
         $data['total_po'] = $this->db->query("SELECT sum(purchases*price) as total FROM product_trace WHERE status = 1")->row_array();
@@ -149,7 +150,7 @@ class Finance extends CI_Controller
         $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
         $this->form_validation->set_rules('acc_debet', 'Akun Debet', 'required');
         $this->form_validation->set_rules('acc_credit', 'Akun Credit', 'required|differs[acc_debet]');
-        $this->form_validation->set_rules('description', 'Deskripsi', 'required|alpha_numeric_spaces|max_length[320]');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[320]|trim');
         $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
 
         if ($this->form_validation->run() == false) {
@@ -171,13 +172,53 @@ class Finance extends CI_Controller
             ];
 
             $this->db->insert('account_trace', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> Journal telah berhasil diedit.
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Journal telah berhasil ditambahkan.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>');
             redirect('finance/addJournal');
         }
     }
+
+    public function editJournal($j_id)
+    {
+        $user_id = $this->session->userdata('user_id');
+        $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+        $data['journal'] = $this->db->get_where('account_trace', ['id' => $j_id, 'rvpy' => null])->row_array();
+        $data['status'] = $this->db->get('status')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('acc_debet', 'Akun Debet', 'required');
+        $this->form_validation->set_rules('acc_credit', 'Akun Credit', 'required|differs[acc_debet]');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[320]|trim');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Jurnal Umum / Edit Journal / Journal ID ' . $j_id;
+            $this->load->view('include/header', $data);
+            $this->load->view('finance/editjournal', $data);
+            $this->load->view('include/footer');
+        } else {
+            $data = [
+                'waktu' => $this->input->post('p_date'),
+                'description' => $this->input->post('description'),
+                'debt_code' => $this->input->post('acc_debet'),
+                'cred_code' => $this->input->post('acc_credit'),
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => $this->input->post('status'),
+                'user_id' => $user_id
+            ];
+
+            $this->db->update('account_trace', $data, ['id' => $j_id]);
+            $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Journal telah berhasil diedit.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('finance/editJournal/' . $j_id);
+        }
+    }
+
+    // Receivable AREA
 
     public function receivable()
     {
@@ -200,8 +241,7 @@ class Finance extends CI_Controller
         $this->db->like('acc_code', '10400-', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
-        $this->db->like('acc_code', '10100-', 'after');
-        $this->db->or_like('acc_code', '10200-', 'after');
+        $this->db->like('acc_code', '10', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
         $data['contact'] = $this->db->get('contact')->result_array();
 

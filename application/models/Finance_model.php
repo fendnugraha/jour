@@ -65,9 +65,9 @@ class Finance_model extends CI_Model
         $saldoAwal = $this->db->get_where('acc_coa', ['acc_code' => $kode_akun])->row_array();
         $saldoAwal = $saldoAwal['st_balance'];
 
-        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal'")->row_array();
+        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
 
-        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal'")->row_array();
+        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
 
         if ($type_akun == "D") {
             $endBalance = $saldoAwal + $total_debet['t_debet'] - $total_credit['t_credit'];
@@ -76,5 +76,37 @@ class Finance_model extends CI_Model
         }
 
         return $endBalance;
+    }
+
+    public function profitLossCount($endDate)
+    {
+        $pendapatan = $this->db->query("SELECT SUM(jumlah) as inc FROM account_trace WHERE cred_code like '40%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
+        $hpp = $this->db->query("SELECT SUM(jumlah) as hpp FROM account_trace WHERE debt_code like '50%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
+        $biaya = $this->db->query("SELECT SUM(jumlah) as cost FROM account_trace WHERE debt_code like '60%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
+
+        $profitCount = $pendapatan['inc'] - $hpp['hpp'] - $biaya['cost'];
+        $this->db->update('acc_coa', ['st_balance' => $profitCount], ['acc_code' => '30100-002']);
+
+        return $profitCount;
+    }
+
+    public function modalCount($endDate)
+    {
+        $asset_awal = $this->db->query("SELECT SUM(st_balance) as asset_awal FROM acc_coa WHERE type = 'Assets'")->row_array();
+        $asset_plus = $this->db->query("SELECT SUM(jumlah) as asset_plus FROM account_trace WHERE debt_code LIKE '1%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+        $asset_minus = $this->db->query("SELECT SUM(jumlah) as asset_minus FROM account_trace WHERE cred_code LIKE '1%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+
+        $total_asset = $asset_awal['asset_awal'] + $asset_plus['asset_plus'] - $asset_minus['asset_minus'];
+
+        $liabilities_awal = $this->db->query("SELECT SUM(st_balance) as liabilities_awal FROM acc_coa WHERE type = 'liabilities'")->row_array();
+        $liabilities_plus = $this->db->query("SELECT SUM(jumlah) as liabilities_plus FROM account_trace WHERE debt_code LIKE '2%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+        $liabilities_minus = $this->db->query("SELECT SUM(jumlah) as liabilities_minus FROM account_trace WHERE cred_code LIKE '2%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+
+        $total_liabilities = $liabilities_awal['liabilities_awal'] + $liabilities_plus['liabilities_plus'] - $liabilities_minus['liabilities_minus'];
+
+        $modalCount = $total_asset - $total_liabilities;
+        $this->db->update('acc_coa', ['st_balance' => $modalCount], ['acc_code' => '30100-001']);
+
+        return $modalCount;
     }
 }

@@ -43,4 +43,5 @@ class Report extends CI_Controller
         $this->load->view('report/neraca', $data);
         $this->load->view('include/footer');
     }
+
 }

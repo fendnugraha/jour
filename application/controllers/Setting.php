@@ -177,7 +177,7 @@ class Setting extends CI_Controller
         $data['acc_coa'] = $this->db->get('acc_coa')->result_array();
         $data['accounts'] = $this->db->get('accounts')->result_array();
 
-        $this->form_validation->set_rules('acc_name', 'Nama Akun', 'required|alpha_numeric_spaces|max_length[60]|is_unique[acc_coa.acc_name]');
+        $this->form_validation->set_rules('acc_name', 'Nama Akun', 'required|max_length[60]|is_unique[acc_coa.acc_name]|trim');
         $this->form_validation->set_rules('main_acc', 'Kategori', 'required');
         $this->form_validation->set_rules('st_balance', 'Saldo Awal', 'required|numeric');
 
@@ -229,5 +229,32 @@ class Setting extends CI_Controller
             </div>');
             redirect('setting/accounts');
         };
+    }
+
+    public function editAccount($kode_akun)
+    {
+        $data['accounts'] = $this->db->get_where('acc_coa', ['acc_code' => $kode_akun])->row_array();
+
+        $this->form_validation->set_rules('acc_name', 'Account Name', 'Required|max_length[60]|trim');
+        $this->form_validation->set_rules('st_balance', 'Saldo Awal', 'Required|numeric');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Setting / Chart of Accounts / Edit Account';
+            $this->load->view('include/header', $data);
+            $this->load->view('setting/editaccount', $data);
+            $this->load->view('include/footer');
+        } else {
+            $data = [
+                'acc_name' => $this->input->post('acc_name'),
+                'st_balance' => $this->input->post('st_balance'),
+            ];
+
+            $this->db->update('acc_coa', $data, ['acc_code' => $kode_akun]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Perubahan Account Berhasil.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('setting/editAccount/' . $kode_akun);
+        }
     }
 }

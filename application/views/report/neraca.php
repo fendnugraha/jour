@@ -14,6 +14,8 @@
                         </thead>
                         <tbody>
                             <?php
+                            $this->finance_model->profitLossCount(date('Y-m-d'));
+                            $this->finance_model->modalCount(date('Y-m-d'));
                             $acc_code = $as['kode'] . '%';
                             $acc_coa = $this->db->query("SELECT * FROM acc_coa WHERE acc_code LIKE '$acc_code'")->result_array();
                             foreach ($acc_coa as $c) {; ?>
@@ -60,10 +62,10 @@
                 </table>
             </div>
         </div>
-        <div class="card">
+        <div class="card text-bg-info">
             <div class="card-body">
                 <h4 class="card-title">EKUITAS</h4>
-                <table class="table">
+                <table class="table table-warning">
                     <?php
                     foreach ($ekuitas as $eq) {; ?>
                         <thead>

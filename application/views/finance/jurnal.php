@@ -56,7 +56,12 @@
                         <td><?= number_format($p['jumlah']); ?></td>
                         <td><?= $status; ?></td>
                         <td>
-                            <a href="<?= base_url('finance/edit_journal/') . $p['id']; ?> ">Edit</a>
+                            <div class="edit-journal-area" <?php if ($p['rvpy'] == !null) {
+                                                                echo "hidden";
+                                                            }; ?>>
+                                <a href="<?= base_url('finance/editJournal/') . $p['id']; ?> ">Edit</a>
+
+                            </div>
                             <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> ">Detail</a>
                         </td>
                     </tr>
