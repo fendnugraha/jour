@@ -3,15 +3,15 @@
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
                 <p>Total Piutang</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['bill']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-file-invoice"></i> <b><?= number_format($dt_receivable['bill']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
     <div class="col-sm">
-        <div class="card bg-info text-bg-light">
+        <div class="card bg-warning text-bg-light">
             <div class="card-body">
                 <p>Total Pembayaran</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['got_paid']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-cash-register"></i> <b><?= number_format($dt_receivable['got_paid']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="card bg-dark text-bg-dark">
             <div class="card-body">
                 <p>Sisa Piutang</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_receivable['remaining']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-regular fa-credit-card"></i> <b><?= number_format($dt_receivable['remaining']); ?> ,-</b></h2>
 
             </div>
         </div>

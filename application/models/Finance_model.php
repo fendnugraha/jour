@@ -78,11 +78,29 @@ class Finance_model extends CI_Model
         return $endBalance;
     }
 
-    public function profitLossCount($endDate)
+    public function accountsCount($kode_akun, $type_akun, $tanggal)
     {
-        $pendapatan = $this->db->query("SELECT SUM(jumlah) as inc FROM account_trace WHERE cred_code like '40%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
-        $hpp = $this->db->query("SELECT SUM(jumlah) as hpp FROM account_trace WHERE debt_code like '50%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
-        $biaya = $this->db->query("SELECT SUM(jumlah) as cost FROM account_trace WHERE debt_code like '60%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1")->row_array();
+        $saldoAwal = $this->db->query("SELECT SUM(st_balance) as stb FROM acc_coa WHERE acc_code LIKE '$kode_akun%'")->row_array();
+        $saldoAwal = $saldoAwal['stb'];
+
+        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code LIKE '$kode_akun%' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+
+        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code LIKE '$kode_akun%' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+
+        if ($type_akun == "D") {
+            $accountsCount = $saldoAwal + $total_debet['t_debet'] - $total_credit['t_credit'];
+        } else {
+            $accountsCount = $saldoAwal - $total_debet['t_debet'] + $total_credit['t_credit'];
+        }
+
+        return $accountsCount;
+    }
+
+    public function profitLossCount($startDate, $endDate)
+    {
+        $pendapatan = $this->db->query("SELECT SUM(jumlah) as inc FROM account_trace WHERE cred_code like '40%' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
+        $hpp = $this->db->query("SELECT SUM(jumlah) as hpp FROM account_trace WHERE debt_code like '50%' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
+        $biaya = $this->db->query("SELECT SUM(jumlah) as cost FROM account_trace WHERE debt_code like '60%' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
 
         $profitCount = $pendapatan['inc'] - $hpp['hpp'] - $biaya['cost'];
         $this->db->update('acc_coa', ['st_balance' => $profitCount], ['acc_code' => '30100-002']);

@@ -407,8 +407,7 @@ class Finance extends CI_Controller
         $this->db->like('acc_code', '20', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
-        $this->db->like('acc_code', '10100-', 'after');
-        $this->db->or_like('acc_code', '10200-', 'after');
+        $this->db->like('acc_code', '10', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
         $data['contact'] = $this->db->get('contact')->result_array();
 
@@ -481,7 +480,7 @@ class Finance extends CI_Controller
 
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice")->result_array();
 
-        $this->db->like('acc_code', '20', 'after');
+        $this->db->like('acc_code', '10', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $data['rv_stats'] = $this->db->select('sum(bill_amount) as billing, sum(pay_amount) as payments, sum(bill_amount-pay_amount) as rv_remain')->get_where('payable_tb', ['contact_id' => $contact_id])->row_array();
@@ -500,7 +499,7 @@ class Finance extends CI_Controller
         } else {
             $invoice_no = $this->input->post('invoice');
             $rcv = $this->db->get_where('account_trace', ['invoice' => $invoice_no, 'pay_nth' => 0])->row_array();
-            $rv_account = $rcv['debt_code'];
+            $rv_account = $rcv['cred_code'];
             $pay_nth = $this->db->query("SELECT MAX(pay_nth) as pay_max FROM payable_tb WHERE invoice = '$invoice_no' and pay_stats < 3")->row_array();
             $pay_nth = $pay_nth['pay_max'] + 1;
 
@@ -522,8 +521,8 @@ class Finance extends CI_Controller
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'description' => $this->input->post('description'),
-                'debt_code' => $this->input->post('acc_debet'),
-                'cred_code' => $rv_account,
+                'debt_code' => $rv_account,
+                'cred_code' => $this->input->post('acc_debet'),
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'rvpy' => 'Payable',

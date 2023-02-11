@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="col-sm">
-        <div class="card bg-warning text-bg-light">
+        <div class="card bg-success text-bg-dark">
             <div class="card-body">
                 <p>Total Pembayaran</p>
                 <h2 class="d-flex justify-content-between"><i class="fas fa-cash-register"></i> <b><?= number_format($rv_stats['payments']); ?> ,-</b></h2>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="col-sm">
-        <div class="card bg-success text-bg-dark">
+        <div class="card bg-danger text-bg-dark">
             <div class="card-body">
                 <p>Sisa Piutang</p>
                 <h2 class="d-flex justify-content-between"><i class="fa-solid fa-sack-dollar"></i> <b><?= number_format($rv_stats['rv_remain']); ?> ,-</b></h2>
@@ -57,8 +57,8 @@
                         <td><?= $rv['waktu']; ?></td>
                         <td><?= $rv['invoice']; ?></td>
                         <td><?= $rv['description']; ?></td>
-                        <td><?= $rv['bill_amount']; ?></td>
-                        <td><?= $rv['pay_amount']; ?></td>
+                        <td><?= number_format($rv['bill_amount']); ?></td>
+                        <td><?= number_format($rv['pay_amount']); ?></td>
                     </tr>
                 <?php }; ?>
             </tbody>
