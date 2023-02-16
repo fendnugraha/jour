@@ -1,5 +1,5 @@
 <div class="row mb-3">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <form class="" action="<?= base_url('report/generalLedger'); ?> " method="post">
             <div class="mb-3">
                 <label for="kode_akun">Pilih Akun</label>
@@ -27,13 +27,12 @@
             </div>
         </form>
     </div>
-    <div class="col-sm-8 ">
+    <div class="col-sm-6 ">
     </div>
 </div>
 <div class="card mb-3">
     <div class="card-body">
         <p>SALDO AWAL: <?= number_format($saldo); ?></p>
-        <p><?= $dateAwal; ?></p>
         <table class="table display-noorder">
             <thead>
                 <tr>

@@ -57,8 +57,8 @@
                         <td><?= $rv['waktu']; ?></td>
                         <td><?= $rv['invoice']; ?></td>
                         <td><?= $rv['description']; ?></td>
-                        <td><?= $rv['bill_amount']; ?></td>
-                        <td><?= $rv['pay_amount']; ?></td>
+                        <td><?= number_format($rv['bill_amount']); ?></td>
+                        <td><?= number_format($rv['pay_amount']); ?></td>
                     </tr>
                 <?php }; ?>
             </tbody>

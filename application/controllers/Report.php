@@ -91,9 +91,9 @@ class Report extends CI_Controller
         FROM account_trace a
         LEFT JOIN acc_coa b ON b.acc_code = a.debt_code
         LEFT JOIN acc_coa c ON c.acc_code = a.cred_code
-        WHERE date(waktu) BETWEEN '$startDate' AND '$endDate' AND debt_code = '$kode_akun' 
-        OR date(waktu) BETWEEN '$startDate' AND '$endDate' AND cred_code = '$kode_akun'
-        ORDER BY a.id")->result_array();
+        WHERE date(waktu) BETWEEN '$startDate' AND '$endDate' AND debt_code = '$kode_akun' and a.status = 1
+        OR date(waktu) BETWEEN '$startDate' AND '$endDate' AND cred_code = '$kode_akun' and a.status = 1
+        ORDER BY a.waktu")->result_array();
 
         $data['title'] = 'Report / Buku Besar (General Ledger)';
         $this->load->view('include/header', $data);

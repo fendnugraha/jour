@@ -29,10 +29,19 @@
 <div class="card">
     <div class="card-body">
         <div class="control-nav mb-3">
-            <a href="<?= base_url('finance/addReceivable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Tambah Piutang</a>
+
             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
                 + Tambah Kontak
             </button> -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tambah Piutang
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= base_url('finance/addReceivable'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Piutang</a></li>
+                    <li><a href="<?= base_url('finance/addReceivableSales'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Penjualan Kredit</a></li>
+                </ul>
+            </div>
         </div>
         <table class="table display">
             <thead class="thead-dark">
