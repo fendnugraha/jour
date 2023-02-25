@@ -60,14 +60,14 @@ class Finance_model extends CI_Model
         }
     }
 
-    public function endBalance($kode_akun, $type_akun, $tanggal)
+    public function endBalance($kode_akun, $type_akun, $startDate, $endDate)
     {
         $saldoAwal = $this->db->get_where('acc_coa', ['acc_code' => $kode_akun])->row_array();
         $saldoAwal = $saldoAwal['st_balance'];
 
-        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code = '$kode_akun' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
 
-        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code = '$kode_akun' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code = '$kode_akun' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
 
         if ($type_akun == "D") {
             $endBalance = $saldoAwal + $total_debet['t_debet'] - $total_credit['t_credit'];
@@ -78,14 +78,14 @@ class Finance_model extends CI_Model
         return $endBalance;
     }
 
-    public function accountsCount($kode_akun, $type_akun, $tanggal)
+    public function accountsCount($kode_akun, $type_akun, $startDate, $endDate)
     {
         $saldoAwal = $this->db->query("SELECT SUM(st_balance) as stb FROM acc_coa WHERE acc_code LIKE '$kode_akun%'")->row_array();
         $saldoAwal = $saldoAwal['stb'];
 
-        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code LIKE '$kode_akun%' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+        $total_debet = $this->db->query("SELECT sum(jumlah) as t_debet FROM account_trace WHERE debt_code LIKE '$kode_akun%' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
 
-        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code LIKE '$kode_akun%' and date(waktu) between '0000-00-00' and '$tanggal' and status = 1")->row_array();
+        $total_credit = $this->db->query("SELECT sum(jumlah) as t_credit FROM account_trace WHERE cred_code LIKE '$kode_akun%' and date(waktu) between '$startDate' and '$endDate' and status = 1")->row_array();
 
         if ($type_akun == "D") {
             $accountsCount = $saldoAwal + $total_debet['t_debet'] - $total_credit['t_credit'];
@@ -126,5 +126,19 @@ class Finance_model extends CI_Model
         $this->db->update('acc_coa', ['st_balance' => $modalCount], ['acc_code' => '30100-001']);
 
         return $modalCount;
+    }
+
+    public function totalDebetCredit($kode_akun, $type, $startDate, $endDate)
+    {
+        if ($type == "Debt") {
+            $debtCreditCount = $this->db->query("SELECT SUM(jumlah) as dc_total FROM account_trace 
+        WHERE debt_code = '$kode_akun' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
+        } elseif ($type == "Credit") {
+            $debtCreditCount = $this->db->query("SELECT SUM(jumlah) as dc_total FROM account_trace 
+        WHERE cred_code = '$kode_akun' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
+        }
+
+        $debtCreditCount = $debtCreditCount['dc_total'];
+        return $debtCreditCount;
     }
 }

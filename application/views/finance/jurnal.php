@@ -36,6 +36,7 @@
                     <th>JUMLAH</th>
                     <th>STATUS</th>
                     <th>USER</th>
+                    <th>OPSI</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -55,6 +56,7 @@
                         <td><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></td>
                         <td><?= number_format($p['jumlah']); ?></td>
                         <td><?= $status; ?></td>
+                        <td><?= $p['username']; ?></td>
                         <td>
                             <div class="edit-journal-area" <?php if ($p['rvpy'] == !null) {
                                                                 echo "hidden";

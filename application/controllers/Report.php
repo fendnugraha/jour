@@ -34,6 +34,14 @@ class Report extends CI_Controller
 
     public function profitLossStatement()
     {
+        if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
+            $data['startDate'] = date('Y-m-d');
+            $data['endDate'] = date('Y-m-d');
+        } else {
+            $data['startDate'] = $this->input->post('startDate');
+            $data['endDate'] = $this->input->post('endDate');
+        }
+
         $data['pendapatan'] = $this->db->get_where('accounts', ['type' => 'Pendapatan'])->result_array();
         $data['hpp'] = $this->db->get_where('accounts', ['type' => 'Harga Pokok Produksi'])->result_array();
         $data['biaya'] = $this->db->get_where('accounts', ['type' => 'Biaya'])->result_array();
@@ -79,7 +87,11 @@ class Report extends CI_Controller
 
         $data['dateAwal'] = date("Y-m-d", strtotime("-1 day", strtotime($startDate)));
         $dateAwal = date("Y-m-d", strtotime("-1 day", strtotime($startDate)));
-        $data['saldo'] = $this->finance_model->endBalance($kode_akun, $acc_coa['status'], $dateAwal);
+        $data['saldo'] = $this->finance_model->endBalance($kode_akun, $acc_coa['status'], '0000-00-00', $dateAwal);
+        $data['endBalance'] = $this->finance_model->endBalance($kode_akun, $acc_coa['status'], '0000-00-00', $endDate);
+        $data['debt_total'] = $this->finance_model->totalDebetCredit($kode_akun, "Debt", $startDate, $endDate);
+        $data['cred_total'] = $this->finance_model->totalDebetCredit($kode_akun, "Credit", $startDate, $endDate);
+
 
         $data['kode_akun'] = $kode_akun;
         $data['startDate'] = $startDate;
@@ -87,10 +99,11 @@ class Report extends CI_Controller
 
         $data['coa'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
-        $data['accTrace'] = $this->db->query("SELECT a.*, b.acc_name as debtname, c.acc_name as credname
+        $data['accTrace'] = $this->db->query("SELECT a.*, b.acc_name as debtname, c.acc_name as credname, d.username
         FROM account_trace a
         LEFT JOIN acc_coa b ON b.acc_code = a.debt_code
         LEFT JOIN acc_coa c ON c.acc_code = a.cred_code
+        LEFT JOIN user d ON d.id = a.user_id
         WHERE date(waktu) BETWEEN '$startDate' AND '$endDate' AND debt_code = '$kode_akun' and a.status = 1
         OR date(waktu) BETWEEN '$startDate' AND '$endDate' AND cred_code = '$kode_akun' and a.status = 1
         ORDER BY a.waktu")->result_array();

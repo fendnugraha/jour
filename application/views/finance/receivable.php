@@ -28,7 +28,7 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <div class="control-nav mb-3">
+        <div class="control-nav mb-3 d-flex gap-2">
 
             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
                 + Tambah Kontak
@@ -42,6 +42,8 @@
                     <li><a href="<?= base_url('finance/addReceivableSales'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Penjualan Kredit</a></li>
                 </ul>
             </div>
+            <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-success">Jurnal</a>
+            <a href="<?= base_url('finance/payable'); ?>" class="btn btn-info">Hutang</a>
         </div>
         <table class="table display">
             <thead class="thead-dark">

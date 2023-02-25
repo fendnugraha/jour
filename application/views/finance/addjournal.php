@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="form-addproduct col-sm">
+            <div class="form-addproduct col-sm-8">
                 <form action="<?= base_url('finance/addJournal'); ?>" method="post">
                     <div class="mb-2 row">
                         <label for="p_date" class="col-sm col-form-label">Tanggal</label>

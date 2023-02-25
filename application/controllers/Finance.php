@@ -396,6 +396,7 @@ class Finance extends CI_Controller
     public function rv_detail($contact_id)
     {
         $user_id = $this->session->userdata('user_id');
+        $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
         $data['rv_detail'] = $this->db->get_where('receivable_tb', ['contact_id' => $contact_id])->result_array();
@@ -431,7 +432,7 @@ class Finance extends CI_Controller
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'contact_id' => $contact_id,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . ".Pembayaran dari " . $contact['nama'] . " / " . $contact['keterangan'],
                 'bill_amount' => 0,
                 'pay_amount' => $this->input->post('jumlah'),
                 'pay_stats' => 1,
@@ -443,7 +444,7 @@ class Finance extends CI_Controller
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . ".Pembayaran dari " . $contact['nama'] . " / " . $contact['keterangan'],
                 'debt_code' => $this->input->post('acc_debet'),
                 'cred_code' => $rv_account,
                 'jumlah' => $this->input->post('jumlah'),
@@ -562,6 +563,7 @@ class Finance extends CI_Controller
     public function py_detail($contact_id)
     {
         $user_id = $this->session->userdata('user_id');
+        $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
         $data['rv_detail'] = $this->db->get_where('payable_tb', ['contact_id' => $contact_id])->result_array();
@@ -596,7 +598,7 @@ class Finance extends CI_Controller
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'contact_id' => $contact_id,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . ".Pembayaran ke " . $contact['nama'] . " / " . $contact['keterangan'],
                 'bill_amount' => 0,
                 'pay_amount' => $this->input->post('jumlah'),
                 'pay_stats' => 1,
@@ -608,7 +610,7 @@ class Finance extends CI_Controller
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . ".Pembayaran ke " . $contact['nama'] . " / " . $contact['keterangan'],
                 'debt_code' => $rv_account,
                 'cred_code' => $this->input->post('acc_debet'),
                 'jumlah' => $this->input->post('jumlah'),

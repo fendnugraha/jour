@@ -20,7 +20,7 @@
                             <tr class="table-primary">
                                 <th>---</th>
                                 <th colspan="3" class="text-primary"><?= $as['nama']; ?></th>
-                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($as['kode'], $as['status'], $endDate)); ?></th>
+                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($as['kode'], $as['status'], '0000-00-00', $endDate)); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +34,7 @@
                                     <td colspan="2"></td>
                                     <td><?= $c['acc_code']; ?></td>
                                     <td><?= $c['acc_name']; ?></td>
-                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], $endDate)); ?></td>
+                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], '0000-00-00', $endDate)); ?></td>
                                 </tr>
                             <?php }; ?>
                         <?php }; ?>
@@ -54,7 +54,7 @@
                             <tr class="table-primary">
                                 <th>---</th>
                                 <th colspan="3" class="text-primary"><?= $lb['nama']; ?></th>
-                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($lb['kode'], $lb['status'], $endDate)); ?></th>
+                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($lb['kode'], $lb['status'], '0000-00-00', $endDate)); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +66,7 @@
                                     <td colspan="2"></td>
                                     <td><?= $c['acc_code']; ?></td>
                                     <td><?= $c['acc_name']; ?></td>
-                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], $endDate)); ?></td>
+                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], '0000-00-00', $endDate)); ?></td>
                                 </tr>
                             <?php }; ?>
                         <?php }; ?>
@@ -84,7 +84,7 @@
                             <tr class="table-primary">
                                 <th>---</th>
                                 <th colspan="3" class="text-primary"><?= $eq['nama']; ?></th>
-                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($eq['kode'], $eq['status'], $endDate)); ?></th>
+                                <th class="text-primary text-end"><?= number_format($this->finance_model->accountsCount($eq['kode'], $eq['status'], '0000-00-00', $endDate)); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,7 +96,7 @@
                                     <td colspan="2"></td>
                                     <td><?= $c['acc_code']; ?></td>
                                     <td><?= $c['acc_name']; ?></td>
-                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], $endDate)); ?></td>
+                                    <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], '0000-00-00', $endDate)); ?></td>
                                 </tr>
                             <?php }; ?>
                         <?php }; ?>
