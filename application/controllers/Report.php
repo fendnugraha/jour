@@ -60,6 +60,8 @@ class Report extends CI_Controller
             $data['endDate'] = $this->input->post('endDate');
         }
 
+        $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
+
         $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
         $data['liabilities'] = $this->db->get_where('accounts', ['type' => 'Liabilities'])->result_array();
         $data['ekuitas'] = $this->db->get_where('accounts', ['type' => 'Ekuitas'])->result_array();

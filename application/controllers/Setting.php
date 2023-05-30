@@ -257,4 +257,12 @@ class Setting extends CI_Controller
             redirect('setting/editAccount/' . $kode_akun);
         }
     }
+
+    public function employes()
+    {
+        $data['title'] = 'Setting / Employes';
+        $this->load->view('include/header', $data);
+        $this->load->view('setting/employes', $data);
+        $this->load->view('include/footer');
+    }
 }
