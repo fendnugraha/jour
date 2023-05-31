@@ -11,6 +11,9 @@
     <a href="<?= base_url('setting/accounts'); ?>" class="setting-icon-action">
         <h1><i class="fa-solid fa-book-open-reader"></i></h1> <span class="setting-icon-text"> Accounts</span>
     </a>
+    <a href="<?= base_url('setting/addWarehouse'); ?>" class="setting-icon-action">
+        <h1><i class="fa-solid fa-warehouse"></i></h1> <span class="setting-icon-text"> Warehouse</span>
+    </a>
     <a href="<?= base_url('setting/employes'); ?>" class="setting-icon-action">
         <h1><i class="fa-solid fa-users-line"></i></h1> <span class="setting-icon-text"> Employes</span>
     </a>

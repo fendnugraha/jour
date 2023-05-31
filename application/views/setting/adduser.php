@@ -16,6 +16,7 @@
                             <th>Level</th>
                             <th>Terdaftar Sejak</th>
                             <th>Aktivitas Terakhir</th>
+                            <th>Warehouse</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                                 <td><?= $usr['role']; ?></td>
                                 <td><?= date('Y-m-d H:m:s', $usr['date_reg']); ?></td>
                                 <td><?= date('Y-m-d H:m:s', $usr['last_login']); ?></td>
+                                <td><?= $usr['wr_id'] . " - " . $usr['warehouse_name']; ?></td>
                                 <td>
                                     <a href="<?= base_url('setting/edit_user/') . $usr['id']; ?>">Edit</a>
                                     <a href="<?= base_url('setting/userdetail/') . $usr['id']; ?>">Detail</a>
@@ -89,6 +91,18 @@
                                 <option value="1">Administrator</option>
                                 <option value="2">Kasir</option>
                                 <option value="3">Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-1 row">
+                        <label for="wr_id" class="col-sm col-form-label">Warehouse</label>
+                        <div class="col-sm-8">
+                            <select name="wr_id" class="form-control" id="wr_id">
+                                <?php
+                                foreach ($warehouse as $w) {
+                                ?>
+                                    <option value="<?= $w['id']; ?>"><?= $w['warehouse_code'] . ", " . $w['warehouse_name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

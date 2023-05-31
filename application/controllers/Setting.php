@@ -91,7 +91,9 @@ class Setting extends CI_Controller
 
     public function usermng()
     {
-        $data['usermng'] = $this->db->get('user')->result_array();
+        $data['usermng'] = $this->db->query("SELECT a.*,b.warehouse_name FROM user a LEFT JOIN warehouse b ON b.id = a.wr_id")->result_array();
+
+        $data['warehouse'] = $this->db->get('warehouse')->result_array();
 
         $this->form_validation->set_rules('username', 'Username', 'alpha_numeric|required|trim|is_unique[user.username]');
         $this->form_validation->set_rules('fullname', 'Full name', 'alpha_numeric_spaces|required|trim');
@@ -118,7 +120,8 @@ class Setting extends CI_Controller
             'role' => $this->input->post('role'),
             'date_reg' => time(),
             'last_login' => 0,
-            'status' => 1
+            'status' => 1,
+            'wr_id' => $this->input->post('wr_id')
         ];
 
         if ($this->db->insert('user', $data)) {
@@ -264,5 +267,35 @@ class Setting extends CI_Controller
         $this->load->view('include/header', $data);
         $this->load->view('setting/employes', $data);
         $this->load->view('include/footer');
+    }
+
+    public function addWarehouse()
+    {
+        $data['warehouse'] = $this->db->get('warehouse')->result_array();
+
+        $this->form_validation->set_rules('warehouse_name', 'Nama Gudang', 'required|max_length[30]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('warehouse_code', 'Kode Gudang', 'required|exact_length[3]|alpha_numeric_spaces|is_unique[warehouse.warehouse_code]');
+        $this->form_validation->set_rules('address', 'Alamat', 'required|max_length[160]|alpha_numeric_spaces');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Setting / Add Warehouse';
+            $this->load->view('include/header', $data);
+            $this->load->view('setting/add_warehouse', $data);
+            $this->load->view('include/footer');
+        } else {
+            $data = [
+                'id' => null,
+                'warehouse_code' => $this->input->post('warehouse_code'),
+                'warehouse_name' => $this->input->post('warehouse_name'),
+                'address' => $this->input->post('address'),
+            ];
+
+            $this->db->insert('warehouse', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Penambahan gudang berhasil.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('setting/addWarehouse');
+        }
     }
 }
