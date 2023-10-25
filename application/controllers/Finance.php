@@ -169,7 +169,7 @@ class Finance extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'user_id' => $user_id,
-                'wr_id' => $this->input->post('wr_id')
+                'wr_id' => 1
             ];
 
             $this->db->insert('account_trace', $data);

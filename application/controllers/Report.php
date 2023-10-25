@@ -115,4 +115,25 @@ class Report extends CI_Controller
         $this->load->view('report/generalledger', $data);
         $this->load->view('include/footer');
     }
+
+    public function cashflow()
+    {
+        if ($this->input->post('endDate') == "") {
+            $data['endDate'] = date('Y-m-d');
+        } else {
+            $data['endDate'] = $this->input->post('endDate');
+        }
+
+        $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
+
+        $data['arusmasuk'] = $this->db->query("SELECT DISTINCT cred_code FROM account_trace WHERE cred_code NOT LIKE '10100%' AND cred_code NOT LIKE '10200%' AND debt_code LIKE '10100%' OR debt_code LIKE '10200%'")->result_array();
+        $data['aruskeluar'] = $this->db->query("SELECT DISTINCT debt_code FROM account_trace WHERE debt_code NOT LIKE '10100%'")->result_array();
+        $data['liabilities'] = $this->db->get_where('accounts', ['type' => 'Liabilities'])->result_array();
+        $data['ekuitas'] = $this->db->get_where('accounts', ['type' => 'Ekuitas'])->result_array();
+
+        $data['title'] = 'Report / Arus Kas (Cashflow)';
+        $this->load->view('include/header', $data);
+        $this->load->view('report/cashflow', $data);
+        $this->load->view('include/footer');
+    }
 }

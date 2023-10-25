@@ -168,4 +168,20 @@ class Finance_model extends CI_Model
 
         return $result;
     }
+
+    public function cashflowCount($startDate, $endDate)
+    {
+        $saldoAwal = $this->db->query("SELECT SUM(st_balance) as stb FROM acc_coa WHERE acc_code LIKE '10100%' OR acc_code LIKE '10200%' ")->row_array();
+        $saldoAwal = $saldoAwal['stb'];
+
+        $debtCount = $this->db->query("SELECT SUM(jumlah) as dc_total FROM account_trace 
+        WHERE debt_code LIKE '10100%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 OR debt_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
+
+        $creditCount = $this->db->query("SELECT SUM(jumlah) as dc_total FROM account_trace 
+        WHERE cred_code LIKE '10100' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 OR cred_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
+
+        $result = $saldoAwal + $debtCount['dc_total'] - $creditCount['dc_total'];
+
+        return $result;
+    }
 }
