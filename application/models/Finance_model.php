@@ -178,9 +178,26 @@ class Finance_model extends CI_Model
         WHERE debt_code LIKE '10100%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 OR debt_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
 
         $creditCount = $this->db->query("SELECT SUM(jumlah) as dc_total FROM account_trace 
-        WHERE cred_code LIKE '10100' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 OR cred_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
+        WHERE cred_code LIKE '10100%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 OR cred_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1")->row_array();
 
         $result = $saldoAwal + $debtCount['dc_total'] - $creditCount['dc_total'];
+
+        return $result;
+    }
+
+    public function totalDebetCreditCashflowCount($kode_akun, $startDate, $endDate)
+    {
+        $aruskasmasuk = $this->db->query("SELECT sum(jumlah) as msk FROM account_trace WHERE 
+        debt_code LIKE '10100%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 AND cred_code LIKE '$kode_akun'
+        OR
+        debt_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 AND cred_code LIKE '$kode_akun'")->row_array();;
+
+        $aruskaskeluar = $this->db->query("SELECT sum(jumlah) as klr FROM account_trace WHERE 
+        cred_code LIKE '10100%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 AND debt_code LIKE '$kode_akun'
+        OR
+        cred_code LIKE '10200%' AND date(waktu) BETWEEN '$startDate' AND '$endDate' AND status =1 AND debt_code LIKE '$kode_akun'")->row_array();;
+
+        $result = $aruskasmasuk['msk'] - $aruskaskeluar['klr'];
 
         return $result;
     }

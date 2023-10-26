@@ -638,4 +638,43 @@ class Finance extends CI_Controller
             redirect('finance/py_detail/' . $contact_id);
         }
     }
+
+    //Isi Deposit
+    public function addDeposit()
+    {
+        $user_id = $this->session->userdata('user_id');
+        $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('acc_debet', 'Akun Debet', 'required');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|max_length[320]|trim');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Jurnal Umum / Add Deposit';
+            $this->load->view('include/header', $data);
+            $this->load->view('finance/adddeposit', $data);
+            $this->load->view('include/footer');
+        } else {
+            $data = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $this->finance_model->invoice_journal(),
+                'description' => 'Isi Saldo Deposit (' . $this->input->post('description') . ')',
+                'debt_code' => $this->input->post('acc_debet'),
+                'cred_code' => '20100-002',
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => 1,
+                'user_id' => $user_id,
+                'wr_id' => 1
+            ];
+
+            $this->db->insert('account_trace', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Journal telah berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('finance/addDeposit');
+        }
+    }
 }

@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<!-- <div class="row mb-3">
     <div class="col-sm">
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
@@ -16,14 +16,25 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="card">
     <div class="card-body">
-        <div class="control-nav mb-3">
-            <a href="<?= base_url('finance/addJournal'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Input Jurnal</a>
+        <div class="control-nav mb-3 d-flex gap-2">
+
+            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
+    + Tambah Kontak
+</button> -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Tambah Jurnal
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= base_url('finance/addJournal'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Jurnal Umum</a></li>
+                    <li><a href="<?= base_url('finance/addDeposit'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Deposit</a></li>
+                </ul>
+            </div>
             <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-info"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
             <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
-
         </div>
         <table class="table display">
             <thead class="thead-dark">
