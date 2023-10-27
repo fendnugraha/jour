@@ -39,7 +39,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a href="<?= base_url('finance/addReceivable'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Piutang</a></li>
-                    <li><a href="<?= base_url('finance/addReceivableSales'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Penjualan Kredit</a></li>
+                    <li><a href="<?= base_url('finance/addRcvDeposit'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Tambah Piutang Saldo</a></li>
                 </ul>
             </div>
             <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-success">Jurnal</a>

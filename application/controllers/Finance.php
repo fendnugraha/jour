@@ -169,7 +169,7 @@ class Finance extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'user_id' => $user_id,
-                'wr_id' => 1
+                'wh_id' => 1
             ];
 
             $this->db->insert('account_trace', $data);
@@ -303,6 +303,77 @@ class Finance extends CI_Controller
             </div>');
             }
             redirect('finance/addReceivable');
+        }
+    }
+
+    public function addRcvDeposit()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->like('acc_code', '10400-', 'after');
+        $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+
+        $this->db->like('acc_code', '10', 'after');
+        $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+        $data['contact'] = $this->db->get('contact')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('acc_debet', 'Akun Debet', 'required');
+        $this->form_validation->set_rules('acc_credit', 'Akun Credit', 'required|differs[acc_debet]');
+        $this->form_validation->set_rules('contact', 'Kontak', 'required');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|alpha_numeric_spaces|max_length[320]');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Jurnal Umum / Piutang / Tambah Piutang Saldo';
+            $this->load->view('include/header', $data);
+            $this->load->view('finance/addRcvDeposit', $data);
+            $this->load->view('include/footer');
+        } else {
+            $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+
+            $data = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'contact_id' => $this->input->post('contact'),
+                'description' => $this->input->post('description'),
+                'bill_amount' => $this->input->post('jumlah'),
+                'pay_amount' => 0,
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'rv_type' => $this->input->post('acc_credit')
+            ];
+
+            $data2 = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'description' => $this->input->post('description'),
+                'debt_code' => $this->input->post('acc_debet'),
+                'cred_code' => $this->input->post('acc_credit'),
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => 1,
+                'rvpy' => 'Receivable',
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'user_id' => $user_id
+            ];
+
+            $this->db->trans_begin();
+            $this->db->insert('receivable_tb', $data);
+            $this->db->insert('account_trace', $data2);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+
+                $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Piutang baru telah berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            }
+            redirect('finance/addRcvDeposit');
         }
     }
 

@@ -118,13 +118,15 @@ class Report extends CI_Controller
 
     public function cashflow()
     {
-        if ($this->input->post('endDate') == "") {
+        if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
+            $data['startDate'] = date('Y-m-d');
             $data['endDate'] = date('Y-m-d');
         } else {
+            $data['startDate'] = $this->input->post('startDate');
             $data['endDate'] = $this->input->post('endDate');
         }
 
-        $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
+        $data['startDateInput'] = date('Y-m-d', strtotime("Yesterday", strtotime($data['startDate'])));
 
         $data['arusmasuk'] = $this->db->query("SELECT DISTINCT cred_code FROM account_trace WHERE cred_code NOT LIKE '10100%' AND cred_code NOT LIKE '10200%' AND debt_code LIKE '10100%' OR debt_code LIKE '10200%' AND status =1")->result_array();
         $data['aruskeluar'] = $this->db->query("SELECT DISTINCT debt_code FROM account_trace WHERE debt_code NOT LIKE '10100%' AND debt_code NOT LIKE '10200%' AND status =1")->result_array();

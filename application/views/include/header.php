@@ -30,6 +30,9 @@
                     <!-- <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="<?= base_url('home'); ?> ">Dashboard</a>
                     </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="# ">Dashboard</a>
+                    </li>
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Transaksi
@@ -37,8 +40,6 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?= base_url('purchase'); ?>">Pembelian</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('sales'); ?>">Penjualan</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('finance/kas'); ?>">Kas</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a></li>
                         </ul>
                     </li> -->
                     <li class="nav-item">
