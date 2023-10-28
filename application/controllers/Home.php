@@ -10,10 +10,21 @@ class Home extends CI_Controller
         is_logged_in();
         $this->load->library('form_validation');
         $this->load->model('home_model');
+        $this->load->model('finance_model');
         // $this->load->helper('form');
     }
 
     public function index()
+    {
+        $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
+
+        $data['title'] = 'Dashboard';
+        $this->load->view('include/header', $data);
+        $this->load->view('home/dashboard', $data);
+        $this->load->view('include/footer');
+    }
+
+    public function dashboard()
     {
         $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
 

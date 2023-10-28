@@ -48,7 +48,7 @@ class Auth extends CI_Controller
                 ];
                 $this->session->set_userdata($data);
                 $this->db->where('username', $uname)->update('user', ['last_login' => $waktu]);
-                redirect('finance/jurnal');
+                redirect('home/dashboard');
             } else {
                 $this->session->set_flashdata('message', '<span class="text-danger">Password is incorrect !</span>');
                 redirect('auth');
