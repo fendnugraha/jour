@@ -135,6 +135,33 @@ class Finance_model extends CI_Model
         return $modalCount;
     }
 
+    public function modalCountNo($endDate)
+    {
+        $asset_awal = $this->db->query("SELECT SUM(st_balance) as asset_awal FROM acc_coa WHERE type = 'Assets'")->row_array();
+        $asset_plus = $this->db->query("SELECT SUM(jumlah) as asset_plus FROM account_trace WHERE debt_code LIKE '1%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+        $asset_minus = $this->db->query("SELECT SUM(jumlah) as asset_minus FROM account_trace WHERE cred_code LIKE '1%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+
+        $total_asset = $asset_awal['asset_awal'] + $asset_plus['asset_plus'] - $asset_minus['asset_minus'];
+
+        $liabilities_awal = $this->db->query("SELECT SUM(st_balance) as liabilities_awal FROM acc_coa WHERE type = 'liabilities'")->row_array();
+        $liabilities_plus = $this->db->query("SELECT SUM(jumlah) as liabilities_plus FROM account_trace WHERE debt_code LIKE '2%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+        $liabilities_minus = $this->db->query("SELECT SUM(jumlah) as liabilities_minus FROM account_trace WHERE cred_code LIKE '2%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+
+        $total_liabilities = $liabilities_awal['liabilities_awal'] - $liabilities_plus['liabilities_plus'] + $liabilities_minus['liabilities_minus'];
+
+
+        // $equity_awal = $this->db->query("SELECT SUM(st_balance) as equity_awal FROM acc_coa WHERE type = 'Ekuitas' and acc_name <> 'Modal (Ekuitas)'")->row_array();
+        // $equity_plus = $this->db->query("SELECT SUM(jumlah) as equity_plus FROM account_trace WHERE debt_code LIKE '30100%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+        // $equity_minus = $this->db->query("SELECT SUM(jumlah) as equity_minus FROM account_trace WHERE cred_code LIKE '30100%' and date(waktu) between '0000-00-00' and '$endDate' and status = 1 ")->row_array();
+
+        // $total_equity = $equity_plus['equity_plus'] + $equity_minus['equity_minus'];
+        // $total_equity = $equity_awal['equity_awal'] - $equity_plus['equity_plus'] + $equity_minus['equity_minus'];
+
+        $modalCount = $total_asset - $total_liabilities;
+
+        return $modalCount;
+    }
+
     public function totalDebetCredit($kode_akun, $type, $startDate, $endDate)
     {
         if ($type == "Debt") {
@@ -149,21 +176,34 @@ class Finance_model extends CI_Model
         return $debtCreditCount;
     }
 
-    public function accountGrowthMontly($endDate, $kode_akun)
+    public function accountGrowthMontly($endDate)
     {
-        $dataacc = $this->db->get_where('accounts', ['kode' => $kode_akun])->row_array();
         $startDate = date('Y-m-d', strtotime("Last day of last month", strtotime($endDate)));
+        $endDate = date('Y-m-d', strtotime($endDate));
+
+        // $startDatePL = date('Y-m-d', strtotime("First day of last month", strtotime($endDate)));
+        // $endDatePL = date('Y-m-d', strtotime("Last day of last month", strtotime($endDate)));
+
+        // $startDatePLend = date('Y-m-d', strtotime("First day of the month", strtotime($endDate)));
+        // $endDatePLend = date('Y-m-d', strtotime("Last day of the month", strtotime($endDate)));
 
         // $startBalance = $this->accountsCount($kode_akun, $dataacc['status'], '0000-00-00', $startDate);
         // $endBalance = $this->accountsCount($kode_akun, $dataacc['status'], '0000-00-00', $endDate);
 
-        $startBalance = $this->modalCount($startDate);
-        $endBalance = $this->modalCount($endDate);
+        $startBalance = $this->modalCountNo($startDate);
+        $endBalance = $this->modalCountNo($endDate);
+        // $startBalance = $this->accountsCount('30100', 'K', '0000-00-00', $startDate);
+        // $endBalance = $this->modalCountNo($endDate);
 
+        // if ($startBalance == 0) {
+        //     $result = 0;
+        // } else {
+        //     $result = ($endBalance);
+        // }
         if ($startBalance == 0) {
             $result = 0;
         } else {
-            $result = (($endBalance - $startBalance) / $startBalance) * 100;
+            $result = ($endBalance - $startBalance) / $startBalance * 100;
         }
 
         return $result;

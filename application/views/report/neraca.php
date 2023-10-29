@@ -7,7 +7,7 @@
         <button type="submit" class="btn btn-success">Proses</button>
     </div>
 </form>
-<!-- <?= round($this->finance_model->accountGrowthMontly($endDate, '30100-001'), 2) . "%"; ?> -->
+
 <div class="row">
     <div class="col-sm">
         <div class="card">
@@ -107,7 +107,7 @@
         <div class="card mt-2 bg-success text-bg-dark">
             <div class="card-body">
                 <span class="badge text-bg-warning">Equity Growth Rate</span>
-                <h1 class="text-end fw-bold"><?= round($this->finance_model->accountGrowthMontly($endDate, '30100'), 2) . " %"; ?></h1>
+                <h1 class="text-end fw-bold"><?= round($this->finance_model->accountGrowthMontly($endDate), 2) . " %"; ?></h1>
             </div>
         </div>
     </div>

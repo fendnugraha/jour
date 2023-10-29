@@ -98,6 +98,7 @@ class Report extends CI_Controller
         $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
         $data['liabilities'] = $this->db->get_where('accounts', ['type' => 'Liabilities'])->result_array();
         $data['ekuitas'] = $this->db->get_where('accounts', ['type' => 'Ekuitas'])->result_array();
+        // $data['bulan'] = $this->db->query("SELECT distinct month(waktu) as nomor FROM account_trace ORDER BY nomor")->result_array();
         $data['bulan'] = $this->db->get('bulan')->result_array();
 
         $data['title'] = 'Report / Neraca (Balance Sheet) Monthly';
