@@ -44,6 +44,7 @@ class Auth extends CI_Controller
                     'brand-name' => $setting['brand_name'],
                     'slogan' => $setting['slogan'],
                     'address' => $setting['address'],
+                    'periode' => $setting['periode'],
                     'phone' => $setting['phone']
                 ];
                 $this->session->set_userdata($data);

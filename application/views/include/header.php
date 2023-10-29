@@ -45,8 +45,39 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hutang Piutang
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('finance/payable'); ?>">Hutang</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('finance/receivable'); ?>">Piutang</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('report'); ?>">Report</a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Report
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('report/cashflow'); ?>">Cashflow</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="<?= base_url('report/neraca'); ?>">Neraca Lajur</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('report/neracaMonthly'); ?>">Neraca Bulanan</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="<?= base_url('report/profitLossStatement'); ?>">Laba Rugi</a></li>
+                            <li><a class="dropdown-item" href="<?= base_url('report/profitLossStatementMonthly'); ?>">Laba Rugi Bulanan</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="<?= base_url('report/generalLedger'); ?>">Buku Besar</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('setting'); ?>">Setting</a>

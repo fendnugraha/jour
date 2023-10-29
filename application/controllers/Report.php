@@ -52,6 +52,19 @@ class Report extends CI_Controller
         $this->load->view('include/footer');
     }
 
+    public function profitLossStatementMonthly()
+    {
+        $data['pendapatan'] = $this->db->get_where('accounts', ['type' => 'Pendapatan'])->result_array();
+        $data['hpp'] = $this->db->get_where('accounts', ['type' => 'Harga Pokok Produksi'])->result_array();
+        $data['biaya'] = $this->db->get_where('accounts', ['type' => 'Biaya'])->result_array();
+        $data['bulan'] = $this->db->get('bulan')->result_array();
+
+        $data['title'] = 'Report / Profit Loss Statement (Monthly)';
+        $this->load->view('include/header', $data);
+        $this->load->view('report/profitlossMonthly', $data);
+        $this->load->view('include/footer');
+    }
+
     public function neraca()
     {
         if ($this->input->post('endDate') == "") {
@@ -69,6 +82,27 @@ class Report extends CI_Controller
         $data['title'] = 'Report / Neraca (Balance Sheet)';
         $this->load->view('include/header', $data);
         $this->load->view('report/neraca', $data);
+        $this->load->view('include/footer');
+    }
+
+    public function neracaMonthly()
+    {
+        if ($this->input->post('endDate') == "") {
+            $data['endDate'] = date('Y-m-d');
+        } else {
+            $data['endDate'] = $this->input->post('endDate');
+        }
+
+        $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
+
+        $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
+        $data['liabilities'] = $this->db->get_where('accounts', ['type' => 'Liabilities'])->result_array();
+        $data['ekuitas'] = $this->db->get_where('accounts', ['type' => 'Ekuitas'])->result_array();
+        $data['bulan'] = $this->db->get('bulan')->result_array();
+
+        $data['title'] = 'Report / Neraca (Balance Sheet) Monthly';
+        $this->load->view('include/header', $data);
+        $this->load->view('report/neracaMonthly', $data);
         $this->load->view('include/footer');
     }
 

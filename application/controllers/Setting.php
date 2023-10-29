@@ -26,6 +26,7 @@ class Setting extends CI_Controller
         $this->form_validation->set_rules('brand-name', 'Brand Name', 'Required|max_length[15]');
         $this->form_validation->set_rules('slogan', 'Slogan', 'max_length[60]|alpha_numeric_spaces');
         $this->form_validation->set_rules('address', 'Alamat', 'Required|max_length[160]');
+        $this->form_validation->set_rules('periode', 'Periode', 'Required|exact_length[4]|numeric');
         $this->form_validation->set_rules('phone', 'Nomor Telepon', 'Required|max_length[15]|numeric');
 
         if ($this->form_validation->run() == false) {
@@ -39,6 +40,7 @@ class Setting extends CI_Controller
                 'slogan' => $this->input->post('slogan'),
                 'address' => $this->input->post('address'),
                 'phone' => $this->input->post('phone'),
+                'periode' => $this->input->post('periode'),
                 'kas_awal' => $this->input->post('kas_awal')
             ];
 

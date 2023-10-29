@@ -17,6 +17,23 @@
         </div>
     </div>
 </div> -->
+<form action="<?= base_url('finance/jurnal/'); ?>" class="row mb-2" method="post">
+    <div class="col-auto">
+        <label for="startDate">Dari</label>
+    </div>
+    <div class="col-auto">
+        <input type="text" name="startDate" id="startDate" class="form-control form-control-sm datepicker" value="<?= $startDate; ?>">
+    </div>
+    <div class="col-auto">
+        <label for="endDate">Sampai</label>
+    </div>
+    <div class="col-auto">
+        <input type="text" name="endDate" id="endDate" class="form-control form-control-sm datepicker" value="<?= $endDate; ?>">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-sm">Proses</button>
+    </div>
+</form>
 <div class="card">
     <div class="card-body">
         <div class="control-nav mb-3 d-flex gap-2">

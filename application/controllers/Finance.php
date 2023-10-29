@@ -126,10 +126,19 @@ class Finance extends CI_Controller
 
     public function jurnal()
     {
+        if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
+            $data['startDate'] = date('Y-m-d');
+            $data['endDate'] = date('Y-m-d');
+        } else {
+            $data['startDate'] = $this->input->post('startDate');
+            $data['endDate'] = $this->input->post('endDate');
+        }
+
         $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name');
         $this->db->join('user b', 'b.id = a.user_id', 'left');
         $this->db->join('acc_coa c', 'c.acc_code = a.debt_code', 'left');
         $this->db->join('acc_coa d', 'd.acc_code = a.cred_code', 'left');
+        $this->db->where("date(waktu) BETWEEN '" . $data['startDate'] . "' AND '" . $data['endDate'] . "'");
         // $this->db->order_by('id', 'DESC');
         $data['account_trace'] = $this->db->get('account_trace a')->result_array();
 
