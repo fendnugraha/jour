@@ -46,6 +46,7 @@
                     <th>DESKRIPSI</th>
                     <th>JUMLAH</th>
                     <th>PEMBAYARAN</th>
+                    <th>ACTION</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,6 +60,7 @@
                         <td><?= $rv['description']; ?></td>
                         <td><?= number_format($rv['bill_amount']); ?></td>
                         <td><?= number_format($rv['pay_amount']); ?></td>
+                        <td><a href="<?= base_url('finance/deletePay/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')">Delete</a></td>
                     </tr>
                 <?php }; ?>
             </tbody>

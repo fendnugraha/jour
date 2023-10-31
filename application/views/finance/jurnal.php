@@ -52,6 +52,7 @@
             </div>
             <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-info"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
             <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
+            <a href="<?= base_url('finance/cashTotal'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Cash Total</a>
         </div>
         <table class="table display">
             <thead class="thead-dark">
@@ -60,10 +61,8 @@
                     <th>WAKTU</th>
                     <th>INVOICE</th>
                     <th>DESKRIPSI</th>
-                    <th>ACCOUNT</th>
                     <th>JUMLAH</th>
                     <th>STATUS</th>
-                    <th>USER</th>
                     <th>OPSI</th>
                 </tr>
             </thead>
@@ -80,11 +79,13 @@
                         <td><?= $p['id']; ?></td>
                         <td><?= $p['waktu']; ?></td>
                         <td><?= $p['invoice']; ?></td>
-                        <td><?= $p['description']; ?></td>
-                        <td><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></td>
+                        <td>
+                            <?= ucwords($p['description']); ?><br>
+                            <span class='badge rounded-pill text-bg-primary'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
+                            <span class='badge rounded-pill text-bg-warning'><?= $p['username']; ?></span>
+                        </td>
                         <td><?= number_format($p['jumlah']); ?></td>
                         <td><?= $status; ?></td>
-                        <td><?= $p['username']; ?></td>
                         <td>
                             <div class="edit-journal-area" <?php if ($p['rvpy'] == !null) {
                                                                 echo "hidden";

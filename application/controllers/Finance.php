@@ -30,6 +30,24 @@ class Finance extends CI_Controller
         $this->load->view('include/footer');
     }
 
+    public function cashTotal()
+    {
+        if ($this->input->post('endDate') == "") {
+            $data['endDate'] = date('Y-m-d');
+        } else {
+            $data['endDate'] = $this->input->post('endDate');
+        }
+
+        $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
+
+        $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
+
+        $data['title'] = 'Finance / Cash Total';
+        $this->load->view('include/header', $data);
+        $this->load->view('finance/cashtotal', $data);
+        $this->load->view('include/footer');
+    }
+
     public function cashin()
     {
         $user_id = $this->session->userdata('user_id');
@@ -269,13 +287,14 @@ class Finance extends CI_Controller
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
 
             $data = [
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'contact_id' => $this->input->post('contact'),
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'bill_amount' => $this->input->post('jumlah'),
                 'pay_amount' => 0,
                 'pay_stats' => 0,
@@ -287,7 +306,7 @@ class Finance extends CI_Controller
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'debt_code' => $this->input->post('acc_debet'),
                 'cred_code' => $this->input->post('acc_credit'),
                 'jumlah' => $this->input->post('jumlah'),
@@ -295,7 +314,8 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'wh_id' => 1
             ];
 
             $this->db->trans_begin();
@@ -340,13 +360,14 @@ class Finance extends CI_Controller
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
 
             $data = [
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'contact_id' => $this->input->post('contact'),
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'bill_amount' => $this->input->post('jumlah'),
                 'pay_amount' => 0,
                 'pay_stats' => 0,
@@ -358,7 +379,7 @@ class Finance extends CI_Controller
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'debt_code' => $this->input->post('acc_debet'),
                 'cred_code' => $this->input->post('acc_credit'),
                 'jumlah' => $this->input->post('jumlah'),
@@ -383,6 +404,43 @@ class Finance extends CI_Controller
             </div>');
             }
             redirect('finance/addRcvDeposit');
+        }
+    }
+
+    public function deleteRcv($id)
+    {
+        $dtRcv = $this->db->get_where('receivable_tb', ['id' => $id])->row_array();
+        $invoice = $dtRcv['invoice'];
+        $pay_nth = $dtRcv['pay_nth'];
+        $cust_id = $dtRcv['contact_id'];
+
+        $paycheck = $this->db->query("SELECT sum(pay_amount) as paid FROM receivable_tb WHERE invoice  = '$invoice'")->row_array();
+        $paycheck = $paycheck['paid'];
+
+        if ($pay_nth == 0) {
+            if ($paycheck > 0) {
+                redirect('finance/rv_detail/' . $cust_id);
+            } else {
+                $this->db->trans_begin();
+                $this->db->delete('receivable_tb', ['id' => $id]);
+                $this->db->delete('account_trace', ['invoice' => $invoice]);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                } else {
+                    $this->db->trans_commit();
+                    redirect('finance/rv_detail/' . $cust_id);
+                }
+            }
+        } else {
+            $this->db->trans_begin();
+            $this->db->delete('receivable_tb', ['id' => $id]);
+            $this->db->query("DELETE FROM account_trace WHERE invoice = '$invoice' AND pay_nth = $pay_nth");
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+                redirect('finance/rv_detail/' . $cust_id);
+            }
         }
     }
 
@@ -411,6 +469,7 @@ class Finance extends CI_Controller
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
 
             $data = [
                 'id' => null,
@@ -486,6 +545,7 @@ class Finance extends CI_Controller
 
         $this->db->like('acc_code', '10100-', 'after');
         $this->db->or_like('acc_code', '10200-', 'after');
+        $this->db->or_like('acc_code', '20100-002', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $data['rv_stats'] = $this->db->select('sum(bill_amount) as billing, sum(pay_amount) as payments, sum(bill_amount-pay_amount) as rv_remain')->get_where('receivable_tb', ['contact_id' => $contact_id])->row_array();
@@ -595,13 +655,14 @@ class Finance extends CI_Controller
             $this->load->view('include/footer');
         } else {
             $invoice_no = $this->finance_model->invoice_payable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
 
             $data = [
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
                 'contact_id' => $this->input->post('contact'),
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'bill_amount' => $this->input->post('jumlah'),
                 'pay_amount' => 0,
                 'pay_stats' => 0,
@@ -613,7 +674,7 @@ class Finance extends CI_Controller
                 'id' => null,
                 'waktu' => $this->input->post('p_date'),
                 'invoice' => $invoice_no,
-                'description' => $this->input->post('description'),
+                'description' => $this->input->post('description') . '. ' . $contact_name['nama'],
                 'debt_code' => $this->input->post('acc_credit'),
                 'cred_code' => $this->input->post('acc_debet'),
                 'jumlah' => $this->input->post('jumlah'),
@@ -719,6 +780,43 @@ class Finance extends CI_Controller
         }
     }
 
+    public function deletePay($id)
+    {
+        $dtRcv = $this->db->get_where('payable_tb', ['id' => $id])->row_array();
+        $invoice = $dtRcv['invoice'];
+        $pay_nth = $dtRcv['pay_nth'];
+        $cust_id = $dtRcv['contact_id'];
+
+        $paycheck = $this->db->query("SELECT sum(pay_amount) as paid FROM payable_tb WHERE invoice  = '$invoice'")->row_array();
+        $paycheck = $paycheck['paid'];
+
+        if ($pay_nth == 0) {
+            if ($paycheck > 0) {
+                redirect('finance/py_detail/' . $cust_id);
+            } else {
+                $this->db->trans_begin();
+                $this->db->delete('payable_tb', ['id' => $id]);
+                $this->db->delete('account_trace', ['invoice' => $invoice]);
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                } else {
+                    $this->db->trans_commit();
+                    redirect('finance/py_detail/' . $cust_id);
+                }
+            }
+        } else {
+            $this->db->trans_begin();
+            $this->db->delete('payable_tb', ['id' => $id]);
+            $this->db->query("DELETE FROM account_trace WHERE invoice = '$invoice' AND pay_nth = $pay_nth");
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+                redirect('finance/py_detail/' . $cust_id);
+            }
+        }
+    }
+
     //Isi Deposit
     public function addDeposit()
     {
@@ -746,7 +844,7 @@ class Finance extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'user_id' => $user_id,
-                'wr_id' => 1
+                'wh_id' => 1
             ];
 
             $this->db->insert('account_trace', $data);

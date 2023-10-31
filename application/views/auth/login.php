@@ -19,7 +19,7 @@
 <body>
     <div class="container d-flex justify-content-center align-items-center">
         <div class="login-form">
-            <h1>APP JOUR by <strong class="text-danger">DNA Network</strong></h1>
+            <h1>App JOUR by <strong class="text-danger">Eightnite Studio <img src="<?= base_url() . 'assets/img/logo-long.png'; ?>"> </strong></h1>
             <form action="<?= base_url('auth'); ?>" method="post">
                 <div class="row">
                     <div class="col-sm">
