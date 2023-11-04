@@ -101,7 +101,7 @@
                                                     } else {
                                                         echo $c['invoice'];
                                                     }; ?>" <?= set_select('invoice', $c['invoice']); ?> <?php if ($c['remaining'] == 0) {
-                                                                                                            echo 'hidden';
+                                                                                                            echo 'disabled';
                                                                                                         }; ?>><?= $c['invoice']; ?> | <?= $c['waktu']; ?> | <?= $c['remaining']; ?></option>
                                 <?php
                                 }; ?>

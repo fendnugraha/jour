@@ -631,11 +631,12 @@ class Finance extends CI_Controller
         $data['contact_id'] = $contact_id;
         $data['rv_detail'] = $this->db->get_where('receivable_tb', ['contact_id' => $contact_id])->result_array();
 
-        $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM receivable_tb WHERE contact_id = $contact_id GROUP BY invoice")->result_array();
+        $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM receivable_tb WHERE contact_id = $contact_id GROUP BY invoice HAVING remaining <> 0 ")->result_array();
 
         $this->db->like('acc_code', '10100-', 'after');
         $this->db->or_like('acc_code', '10200-', 'after');
         $this->db->or_like('acc_code', '20100-002', 'after');
+        $this->db->or_like('acc_code', '30100-001', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $data['rv_stats'] = $this->db->select('sum(bill_amount) as billing, sum(pay_amount) as payments, sum(bill_amount-pay_amount) as rv_remain')->get_where('receivable_tb', ['contact_id' => $contact_id])->row_array();
@@ -875,10 +876,11 @@ class Finance extends CI_Controller
         $data['contact_id'] = $contact_id;
         $data['rv_detail'] = $this->db->get_where('payable_tb', ['contact_id' => $contact_id])->result_array();
 
-        $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice")->result_array();
+        $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice  HAVING remaining <> 0 ")->result_array();
 
         $this->db->like('acc_code', '10', 'after');
         $this->db->or_like('acc_code', '20100-002', 'after');
+        $this->db->or_like('acc_code', '30100-001', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $data['rv_stats'] = $this->db->select('sum(bill_amount) as billing, sum(pay_amount) as payments, sum(bill_amount-pay_amount) as rv_remain')->get_where('payable_tb', ['contact_id' => $contact_id])->row_array();
