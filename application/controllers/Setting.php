@@ -123,7 +123,7 @@ class Setting extends CI_Controller
             'date_reg' => time(),
             'last_login' => 0,
             'status' => 1,
-            'wr_id' => $this->input->post('wr_id')
+            'wh_id' => $this->input->post('wr_id')
         ];
 
         if ($this->db->insert('user', $data)) {

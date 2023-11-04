@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="mb-2 row">
-                <label for="phone" class="col-sm col-form-label">Tahun Periode</label>
+                <label for="periode" class="col-sm col-form-label">Tahun Periode</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" name="periode" id="periode" value="<?= $general['periode']; ?>">
                 </div>

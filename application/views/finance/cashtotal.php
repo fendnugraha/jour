@@ -28,7 +28,9 @@
                             $acc_code = $as['kode'] . '%';
                             $acc_coa = $this->db->query("SELECT * FROM acc_coa WHERE acc_code LIKE '$acc_code'")->result_array();
                             foreach ($acc_coa as $c) {; ?>
-                                <tr>
+                                <tr <?php if ($this->finance_model->endBalance($c['acc_code'], $c['status'], '0000-00-00', $endDate) == 0) {
+                                        echo 'hidden';
+                                    }; ?>>
                                     <td colspan="2"></td>
                                     <td><?= $c['acc_code']; ?></td>
                                     <td><?= $c['acc_name']; ?></td>

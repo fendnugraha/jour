@@ -36,7 +36,7 @@
 </form>
 <div class="card">
     <div class="card-body">
-        <div class="control-nav mb-3 d-flex gap-2">
+        <div class="control-nav mb-3 d-flex gap-2 justify-content-between">
 
             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
     + Tambah Kontak
@@ -48,16 +48,18 @@
                 <ul class="dropdown-menu">
                     <li><a href="<?= base_url('finance/addJournal'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Jurnal Umum</a></li>
                     <li><a href="<?= base_url('finance/addDeposit'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Deposit</a></li>
+                    <li><a href="<?= base_url('sales/addSalesValues'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Penjualan Barang (Values)</a></li>
                 </ul>
             </div>
-            <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-info"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
-            <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
-            <a href="<?= base_url('finance/cashTotal'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Cash Total</a>
+            <div class="link-list-finance">
+                <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-success"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
+                <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-success"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
+                <a href="<?= base_url('finance/cashTotal'); ?>" class=" btn btn-success"> <i class="fa-solid fa-wallet"></i> Cash & Bank</a>
+            </div>
         </div>
         <table class="table display">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
                     <th>WAKTU</th>
                     <th>INVOICE</th>
                     <th>DESKRIPSI</th>
@@ -76,12 +78,10 @@
                     };
                 ?>
                     <tr>
-                        <td><?= $p['id']; ?></td>
                         <td><?= $p['waktu']; ?></td>
                         <td><?= $p['invoice']; ?></td>
-                        <td>
-                            <?= ucwords($p['description']); ?><br>
-                            <span class='badge rounded-pill text-bg-primary'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
+                        <td>#<?= $p['id']; ?>. <?= ucwords($p['description']); ?><br>
+                            <span class='badge rounded-pill text-bg-secondary'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
                             <span class='badge rounded-pill text-bg-warning'><?= $p['username']; ?></span>
                         </td>
                         <td><?= number_format($p['jumlah']); ?></td>

@@ -40,9 +40,11 @@ class Finance extends CI_Controller
 
         $data['startDate'] = date('Y-m-d', strtotime("Last day of last month", strtotime($data['endDate'])));
 
-        $data['assets'] = $this->db->get_where('accounts', ['type' => 'Assets'])->result_array();
+        $this->db->like('kode', '10100', 'after');
+        $this->db->or_like('kode', '10200', 'after');
+        $data['assets'] = $this->db->get('accounts')->result_array();
 
-        $data['title'] = 'Finance / Cash Total';
+        $data['title'] = 'Finance / Cash & Bank';
         $this->load->view('include/header', $data);
         $this->load->view('finance/cashtotal', $data);
         $this->load->view('include/footer');
@@ -160,8 +162,8 @@ class Finance extends CI_Controller
         // $this->db->order_by('id', 'DESC');
         $data['account_trace'] = $this->db->get('account_trace a')->result_array();
 
-        $data['total_po'] = $this->db->query("SELECT sum(purchases*price) as total FROM product_trace WHERE status = 1")->row_array();
-        $data['total_inv'] = $this->db->query('SELECT sum(beli*stok) as total_inv FROM inventory')->row_array();
+        // $data['total_po'] = $this->db->query("SELECT sum(purchases*price) as total FROM product_trace WHERE status = 1")->row_array();
+        // $data['total_inv'] = $this->db->query('SELECT sum(beli*stok) as total_inv FROM inventory')->row_array();
 
         $data['title'] = 'Dashboard / Jurnal Umum';
         $this->load->view('include/header', $data);
@@ -246,6 +248,24 @@ class Finance extends CI_Controller
         }
     }
 
+    public function jr_detail($jr_id)
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name');
+        $this->db->join('user b', 'b.id = a.user_id', 'left');
+        $this->db->join('acc_coa c', 'c.acc_code = a.debt_code', 'left');
+        $this->db->join('acc_coa d', 'd.acc_code = a.cred_code', 'left');
+        // $this->db->where("date(waktu) BETWEEN '" . $data['startDate'] . "' AND '" . $data['endDate'] . "'");
+        // $this->db->order_by('id', 'DESC');
+        $data['account_trace'] = $this->db->get_where('account_trace a', ['a.id' => $jr_id])->row_array();
+
+        $data['title'] = 'Dashboard / Jurnal Umum / Jurnal Detail';
+        $this->load->view('include/header', $data);
+        $this->load->view('finance/jr_detail', $data);
+        $this->load->view('include/footer');
+    }
+
     // Receivable AREA
 
     public function receivable()
@@ -299,7 +319,7 @@ class Finance extends CI_Controller
                 'pay_amount' => 0,
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'rv_type' => $this->input->post('acc_credit')
+                'rv_type' => $this->input->post('acc_debet')
             ];
 
             $data2 = [
@@ -332,6 +352,76 @@ class Finance extends CI_Controller
             </div>');
             }
             redirect('finance/addReceivable');
+        }
+    }
+
+    public function addReceivableSt()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->like('acc_code', '10400-', 'after');
+        $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+
+        $data['contact'] = $this->db->get('contact')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('acc_debet', 'Akun Debet', 'required');
+        $this->form_validation->set_rules('contact', 'Kontak', 'required');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|alpha_numeric_spaces|max_length[320]');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Jurnal Umum / Piutang / Tambah Piutang Awal';
+            $this->load->view('include/header', $data);
+            $this->load->view('finance/addReceivableSt', $data);
+            $this->load->view('include/footer');
+        } else {
+            $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
+
+            $data = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'contact_id' => $this->input->post('contact'),
+                'description' => 'Saldo Awal Piutang . ' . $this->input->post('description') . '. ' . $contact_name['nama'],
+                'bill_amount' => $this->input->post('jumlah'),
+                'pay_amount' => 0,
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'rv_type' => $this->input->post('acc_debet')
+            ];
+
+            $data2 = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'description' => 'Saldo Awal Piutang . ' . $this->input->post('description') . '. ' . $contact_name['nama'],
+                'debt_code' => $this->input->post('acc_debet'),
+                'cred_code' => '30100-001',
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => 1,
+                'rvpy' => 'Receivable',
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'user_id' => $user_id,
+                'wh_id' => 1
+            ];
+
+            $this->db->trans_begin();
+            $this->db->insert('receivable_tb', $data);
+            $this->db->insert('account_trace', $data2);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+
+                $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Piutang baru telah berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            }
+            redirect('finance/addReceivableSt');
         }
     }
 
@@ -564,7 +654,12 @@ class Finance extends CI_Controller
         } else {
             $invoice_no = $this->input->post('invoice');
             $rcv = $this->db->get_where('account_trace', ['invoice' => $invoice_no, 'pay_nth' => 0])->row_array();
-            $rv_account = $rcv['debt_code'];
+            $dtrcv = $this->db->get_where('receivable_tb', ['invoice' => $invoice_no, 'pay_nth' => 0])->row_array();
+            if ($rcv['debt_code'] == null) {
+                $rv_account = $dtrcv['rv_type'];
+            } else {
+                $rv_account = $rcv['debt_code'];
+            }
             $pay_nth = $this->db->query("SELECT MAX(pay_nth) as pay_max FROM receivable_tb WHERE invoice = '$invoice_no' and pay_stats < 3")->row_array();
             $pay_nth = $pay_nth['pay_max'] + 1;
 
@@ -702,6 +797,76 @@ class Finance extends CI_Controller
         }
     }
 
+    public function addPayableSt()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->like('acc_code', '20', 'after');
+        $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+
+        $data['contact'] = $this->db->get('contact')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('acc_credit', 'Akun Credit', 'required');
+        $this->form_validation->set_rules('contact', 'Kontak', 'required');
+        $this->form_validation->set_rules('description', 'Deskripsi', 'required|alpha_numeric_spaces|max_length[320]');
+        $this->form_validation->set_rules('jumlah', 'Jumlah', 'required|numeric|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Jurnal Umum / Hutang / Tambah Hutang Awal';
+            $this->load->view('include/header', $data);
+            $this->load->view('finance/addPayableSt', $data);
+            $this->load->view('include/footer');
+        } else {
+            $invoice_no = $this->finance_model->invoice_receivable($this->input->post('contact'));
+            $contact_name = $this->db->get_where('contact', ['id' => $this->input->post('contact')])->row_array();
+
+            $data = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'contact_id' => $this->input->post('contact'),
+                'description' => 'Saldo Awal Hutang . ' . $this->input->post('description') . '. ' . $contact_name['nama'],
+                'bill_amount' => $this->input->post('jumlah'),
+                'pay_amount' => 0,
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'rv_type' => $this->input->post('acc_credit')
+            ];
+
+            $data2 = [
+                'id' => null,
+                'waktu' => $this->input->post('p_date'),
+                'invoice' => $invoice_no,
+                'description' => 'Saldo Awal Hutang . ' . $this->input->post('description') . '. ' . $contact_name['nama'],
+                'debt_code' => '30100-001',
+                'cred_code' => $this->input->post('acc_credit'),
+                'jumlah' => $this->input->post('jumlah'),
+                'status' => 1,
+                'rvpy' => 'Payable',
+                'pay_stats' => 0,
+                'pay_nth' => 0,
+                'user_id' => $user_id,
+                'wh_id' => 1
+            ];
+
+            $this->db->trans_begin();
+            $this->db->insert('payable_tb', $data);
+            $this->db->insert('account_trace', $data2);
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+            } else {
+                $this->db->trans_commit();
+
+                $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Hutang baru telah berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            }
+            redirect('finance/addPayableSt');
+        }
+    }
+
     public function py_detail($contact_id)
     {
         $user_id = $this->session->userdata('user_id');
@@ -713,6 +878,7 @@ class Finance extends CI_Controller
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice")->result_array();
 
         $this->db->like('acc_code', '10', 'after');
+        $this->db->or_like('acc_code', '20100-002', 'after');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $data['rv_stats'] = $this->db->select('sum(bill_amount) as billing, sum(pay_amount) as payments, sum(bill_amount-pay_amount) as rv_remain')->get_where('payable_tb', ['contact_id' => $contact_id])->row_array();

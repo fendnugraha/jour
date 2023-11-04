@@ -52,6 +52,24 @@ class Report extends CI_Controller
         $this->load->view('include/footer');
     }
 
+    public function profitLossStatementDaily()
+    {
+        if ($this->input->post('bulan') == "" || $this->input->post('tahun') == "") {
+            $data['bulan'] = date('m');
+            $data['tahun'] = date('Y');
+        } else {
+            $data['bulan'] = $this->input->post('bulan');
+            $data['tahun'] = $this->input->post('tahun');
+        }
+
+        $data['tb_bulan'] = $this->db->get('bulan')->result_array();
+
+        $data['title'] = 'Report / Profit Loss Statement (Daily)';
+        $this->load->view('include/header', $data);
+        $this->load->view('report/dailyprofit', $data);
+        $this->load->view('include/footer');
+    }
+
     public function profitLossStatementMonthly()
     {
         $data['pendapatan'] = $this->db->get_where('accounts', ['type' => 'Pendapatan'])->result_array();

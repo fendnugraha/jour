@@ -28,13 +28,18 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <div class="control-nav mb-3 d-flex gap-2">
-            <a href="<?= base_url('finance/addPayable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Tambah Hutang</a>
-            <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
+        <div class="control-nav mb-3 d-flex gap-2 justify-content-between">
+            <div class="payable-button-list">
+                <a href="<?= base_url('finance/addPayable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
+                <a href="<?= base_url('finance/addPayableSt'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-circle-plus"></i> Hutang Awal</a>
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
                 + Tambah Kontak
             </button> -->
-            <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-success">Jurnal</a>
-            <a href="<?= base_url('finance/receivable'); ?>" class="btn btn-warning">Piutang</a>
+            </div>
+            <div class="back-list">
+                <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-success"><i class="fa-solid fa-circle-arrow-left"></i> Jurnal</a>
+                <a href="<?= base_url('finance/receivable'); ?>" class="btn btn-warning"><i class="fa-solid fa-circle-arrow-left"></i> Piutang</a>
+            </div>
         </div>
         <table class="table display">
             <thead class="thead-dark">

@@ -10,6 +10,7 @@ class Sales extends CI_Controller
         is_logged_in();
         $this->load->library('form_validation');
         $this->load->model('sales_model');
+        $this->load->model('finance_model');
     }
 
     public function index()
@@ -157,6 +158,62 @@ class Sales extends CI_Controller
             </div>');
             }
             redirect('sales/edit_sales/' . $po_id);
+        }
+    }
+
+    public function addSalesValues()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        $this->db->like('acc_code', '10100-', 'after');
+        $this->db->or_like('acc_code', '10200-', 'after');
+        $this->db->or_like('acc_code', '20100-002', 'after');
+        $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
+
+        $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
+        $this->form_validation->set_rules('cash_account', 'Cash Account', 'required');
+        $this->form_validation->set_rules('sales', 'Sales', 'required|numeric');
+        $this->form_validation->set_rules('cost', 'Cost', 'required|numeric');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Dashboard / Sales / Add Sales Values';
+            $this->load->view('include/header', $data);
+            $this->load->view('sales/sales_input', $data);
+            $this->load->view('include/footer');
+        } else {
+            $data = [
+                [
+                    'id' => null,
+                    'waktu' => $this->input->post('p_date'),
+                    'invoice' => $this->finance_model->invoice_journal(),
+                    'description' => 'Penjualan Barang',
+                    'debt_code' => $this->input->post('cash_account'),
+                    'cred_code' => '40100-001',
+                    'jumlah' => $this->input->post('sales'),
+                    'status' => 1,
+                    'user_id' => $user_id,
+                    'wh_id' => 1
+                ],
+                [
+                    'id' => null,
+                    'waktu' => $this->input->post('p_date'),
+                    'invoice' => $this->finance_model->invoice_journal(),
+                    'description' => 'Penjualan Barang',
+                    'debt_code' => '50100-001',
+                    'cred_code' => '10600-001',
+                    'jumlah' => $this->input->post('cost'),
+                    'status' => 1,
+                    'user_id' => $user_id,
+                    'wh_id' => 1
+                ]
+            ];
+
+            $this->db->insert_batch('account_trace', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Penjualan Barang telah berhasil ditambahkan.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('sales/addSalesValues');
         }
     }
 }

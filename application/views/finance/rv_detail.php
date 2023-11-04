@@ -3,7 +3,7 @@
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
                 <p>Total Piutang</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-warehouse"></i> <b><?= number_format($rv_stats['billing']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-file-invoice"></i> <b><?= number_format($rv_stats['billing']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="card bg-success text-bg-dark">
             <div class="card-body">
                 <p>Total Pembayaran</p>
-                <h2 class="d-flex justify-content-between"><i class="fas fa-cash-register"></i> <b><?= number_format($rv_stats['payments']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-money-bill"></i> <b><?= number_format($rv_stats['payments']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="card bg-danger text-bg-dark">
             <div class="card-body">
                 <p>Sisa Piutang</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-sack-dollar"></i> <b><?= number_format($rv_stats['rv_remain']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-receipt"></i> <b><?= number_format($rv_stats['rv_remain']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -60,7 +60,7 @@
                         <td><?= $rv['description']; ?></td>
                         <td><?= number_format($rv['bill_amount']); ?></td>
                         <td><?= number_format($rv['pay_amount']); ?></td>
-                        <td><a href="<?= base_url('finance/deleteRcv/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')">Delete</a></td>
+                        <td><a href="<?= base_url('finance/deleteRcv/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')"><i class="fa-solid fa-trash-can text-danger"></i></a></td>
                     </tr>
                 <?php }; ?>
             </tbody>
@@ -100,7 +100,9 @@
                                                         echo '';
                                                     } else {
                                                         echo $c['invoice'];
-                                                    }; ?>" <?= set_select('invoice', $c['invoice']); ?>><?= $c['invoice']; ?> | <?= $c['waktu']; ?> | <?= $c['remaining']; ?></option>
+                                                    }; ?>" <?= set_select('invoice', $c['invoice']); ?> <?php if ($c['remaining'] == 0) {
+                                                                                                            echo 'hidden';
+                                                                                                        }; ?>><?= $c['invoice']; ?> | <?= $c['waktu']; ?> | <?= $c['remaining']; ?></option>
                                 <?php
                                 }; ?>
                             </select>
