@@ -3,9 +3,9 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gsmtron1/public_html/jour
     - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp -R /application/controller $DEPLOYPATH
+    - /bin/cp -R /application/controllers $DEPLOYPATH
     - /bin/cp -R /application/helpers $DEPLOYPATH
-    - /bin/cp -R /application/model $DEPLOYPATH
+    - /bin/cp -R /application/models $DEPLOYPATH
     - /bin/cp -R /application/views $DEPLOYPATH
     - /bin/cp -R /assets/img $DEPLOYPATH
     - /bin/cp /assets/css/mycss.scss $DEPLOYPATH
