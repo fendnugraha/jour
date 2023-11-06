@@ -6,8 +6,8 @@ deployment:
     - /bin/cp -R /application/controllers $DEPLOYPATH
     - /bin/cp -R /application/helpers $DEPLOYPATH
     - /bin/cp -R /application/models $DEPLOYPATH
-    - /bin/cp -R /application/views $DEPLOYPATH
-    - /bin/cp -R /assets/img $DEPLOYPATH
+    - /bin/cp -R /application/views/* $DEPLOYPATH
+    - /bin/cp -R /assets/img/* $DEPLOYPATH
     - /bin/cp /assets/css/mycss.scss $DEPLOYPATH
     - /bin/cp /assets/css/mycss.css.map $DEPLOYPATH
     - /bin/cp /assets/css/mycss.css $DEPLOYPATH
