@@ -2,9 +2,9 @@
 deployment:
   tasks:
     - export APP=/home/gsmtron1/public_html/jour/aplication/
-    - /bin/cp -R /application/controllers $APP
-    - /bin/cp -R /application/helpers $APP
-    - /bin/cp -R /application/models $APP
-    - /bin/cp -R /application/views $APP
+    - /bin/cp -R application/controllers $APP
+    - /bin/cp -R application/helpers $APP
+    - /bin/cp -R application/models $APP
+    - /bin/cp -R application/views $APP
     - export ASSETS=/home/gsmtron1/public_html/jour/
     - /bin/cp -R assets $ASSETS
