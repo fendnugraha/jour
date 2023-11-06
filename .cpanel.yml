@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export APP=/home/gsmtron1/public_html/jour/aplication/
+    - export APP=/home/gsmtron1/public_html/jour/application/
     - /bin/cp -R application/controllers $APP
     - /bin/cp -R application/helpers $APP
     - /bin/cp -R application/models $APP
