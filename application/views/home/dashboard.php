@@ -32,7 +32,7 @@
     <div class="col-sm">
         <div class="card bg-warning text-bg-light">
             <div class="card-body">
-                <p>Laba Rugi</p>
+                <p>Net Profit</p>
                 <h5 class="d-flex justify-content-between"><i class="fa-solid fa-sack-dollar"></i> <b><?= number_format($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d'))); ?> ,-</b></h5>
             </div>
         </div>
