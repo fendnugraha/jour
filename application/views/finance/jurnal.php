@@ -81,7 +81,8 @@
                         <td><?= $p['waktu']; ?></td>
                         <td><?= $p['invoice']; ?></td>
                         <td>#<?= $p['id']; ?>. <?= ucwords($p['description']); ?><br>
-                            <span class='badge rounded-pill text-bg-secondary'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
+                            <span class='badge rounded-pill text-bg-dark'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
+                            <span class='badge rounded-pill text-bg-secondary'><?= $p['warehouse_name']; ?></span>
                             <span class='badge rounded-pill text-bg-warning'><?= $p['username']; ?></span>
                         </td>
                         <td><?= number_format($p['jumlah']); ?></td>

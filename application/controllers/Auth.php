@@ -41,6 +41,7 @@ class Auth extends CI_Controller
                     'uname' => $user['username'],
                     'role_id' => $user['role'],
                     'fullname' => $user['fullname'],
+                    'wh_id' => $user['wh_id'],
                     'brand-name' => $setting['brand_name'],
                     'slogan' => $setting['slogan'],
                     'address' => $setting['address'],
@@ -95,7 +96,8 @@ class Auth extends CI_Controller
             'role' => $this->input->post('role'),
             'date_reg' => time(),
             'last_login' => 0,
-            'status' => 1
+            'status' => 1,
+            'wh_id' => 1
         ];
 
         if ($this->db->insert('user', $data)) {

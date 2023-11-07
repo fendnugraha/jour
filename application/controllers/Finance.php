@@ -154,10 +154,11 @@ class Finance extends CI_Controller
             $data['endDate'] = $this->input->post('endDate');
         }
 
-        $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name');
+        $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name, e.warehouse_name');
         $this->db->join('user b', 'b.id = a.user_id', 'left');
         $this->db->join('acc_coa c', 'c.acc_code = a.debt_code', 'left');
         $this->db->join('acc_coa d', 'd.acc_code = a.cred_code', 'left');
+        $this->db->join('warehouse e', 'e.id = a.wh_id', 'left');
         $this->db->where("date(waktu) BETWEEN '" . $data['startDate'] . "' AND '" . $data['endDate'] . "'");
         // $this->db->order_by('id', 'DESC');
         $data['account_trace'] = $this->db->get('account_trace a')->result_array();
@@ -198,7 +199,7 @@ class Finance extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'user_id' => $user_id,
-                'wh_id' => 1
+                'wh_id' => $this->session->userdata('wh_id')
             ];
 
             $this->db->insert('account_trace', $data);
@@ -335,7 +336,7 @@ class Finance extends CI_Controller
                 'pay_stats' => 0,
                 'pay_nth' => 0,
                 'user_id' => $user_id,
-                'wh_id' => 1
+                'wh_id' => $this->session->userdata('wh_id')
             ];
 
             $this->db->trans_begin();
@@ -405,7 +406,7 @@ class Finance extends CI_Controller
                 'pay_stats' => 0,
                 'pay_nth' => 0,
                 'user_id' => $user_id,
-                'wh_id' => 1
+                'wh_id' => $this->session->userdata('wh_id')
             ];
 
             $this->db->trans_begin();
@@ -851,7 +852,7 @@ class Finance extends CI_Controller
                 'pay_stats' => 0,
                 'pay_nth' => 0,
                 'user_id' => $user_id,
-                'wh_id' => 1
+                'wh_id' => $this->session->userdata('wh_id')
             ];
 
             $this->db->trans_begin();
@@ -1017,7 +1018,7 @@ class Finance extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
                 'user_id' => $user_id,
-                'wh_id' => 1
+                'wh_id' => $this->session->userdata('wh_id')
             ];
 
             $this->db->insert('account_trace', $data);

@@ -93,7 +93,7 @@ class Setting extends CI_Controller
 
     public function usermng()
     {
-        $data['usermng'] = $this->db->query("SELECT a.*,b.warehouse_name FROM user a LEFT JOIN warehouse b ON b.id = a.wr_id")->result_array();
+        $data['usermng'] = $this->db->query("SELECT a.*,b.warehouse_name FROM user a LEFT JOIN warehouse b ON b.id = a.wh_id")->result_array();
 
         $data['warehouse'] = $this->db->get('warehouse')->result_array();
 
@@ -137,6 +137,7 @@ class Setting extends CI_Controller
     {
         $data['usermng'] = $this->db->get_where('user', ['id' => $id])->row_array();
         $data['user_role'] = $this->db->get('user_role')->result_array();
+        $data['warehouse'] = $this->db->get('warehouse')->result_array();
 
         $this->form_validation->set_rules('fullname', 'Full name', 'alpha_numeric_spaces|required|trim');
 
@@ -148,7 +149,8 @@ class Setting extends CI_Controller
         } else {
             $data = [
                 'fullname' => $this->input->post('fullname'),
-                'role' => $this->input->post('role')
+                'role' => $this->input->post('role'),
+                'wh_id' => $this->input->post('wh_id')
             ];
             $this->db->update('user', $data, ['id' => $id]);
             $this->session->set_flashdata('message', '<div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -275,9 +277,12 @@ class Setting extends CI_Controller
     {
         $data['warehouse'] = $this->db->get('warehouse')->result_array();
 
+        $data['accounts'] = $this->db->like('acc_code', '10100', 'after')->get('acc_coa')->result_array();
+
         $this->form_validation->set_rules('warehouse_name', 'Nama Gudang', 'required|max_length[30]|alpha_numeric_spaces');
         $this->form_validation->set_rules('warehouse_code', 'Kode Gudang', 'required|exact_length[3]|alpha_numeric_spaces|is_unique[warehouse.warehouse_code]');
         $this->form_validation->set_rules('address', 'Alamat', 'required|max_length[160]|alpha_numeric_spaces');
+        $this->form_validation->set_rules('cash_id', 'Cash Account', 'required');
 
         if ($this->form_validation->run() == false) {
             $data['title'] = 'Setting / Add Warehouse';
@@ -290,6 +295,7 @@ class Setting extends CI_Controller
                 'warehouse_code' => $this->input->post('warehouse_code'),
                 'warehouse_name' => $this->input->post('warehouse_name'),
                 'address' => $this->input->post('address'),
+                'cash_id' => $this->input->post('cash_id')
             ];
 
             $this->db->insert('warehouse', $data);

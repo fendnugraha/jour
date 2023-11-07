@@ -29,7 +29,7 @@
                                 <td><?= $usr['role']; ?></td>
                                 <td><?= date('Y-m-d H:m:s', $usr['date_reg']); ?></td>
                                 <td><?= date('Y-m-d H:m:s', $usr['last_login']); ?></td>
-                                <td><?= $usr['wr_id'] . " - " . $usr['warehouse_name']; ?></td>
+                                <td><?= $usr['wh_id'] . " - " . $usr['warehouse_name']; ?></td>
                                 <td>
                                     <a href="<?= base_url('setting/edit_user/') . $usr['id']; ?>">Edit</a>
                                     <a href="<?= base_url('setting/userdetail/') . $usr['id']; ?>">Detail</a>

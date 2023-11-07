@@ -12,6 +12,7 @@
                     <th>Code</th>
                     <th>Name</th>
                     <th>Address</th>
+                    <th>Cash ID</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -24,6 +25,7 @@
                         <td><?= $w['warehouse_code']; ?></td>
                         <td><?= $w['warehouse_name']; ?></td>
                         <td><?= $w['address']; ?></td>
+                        <td><?= $w['cash_id']; ?></td>
                         <td><i class="fa-solid fa-list-check"></i></td>
 
                     </tr>
@@ -62,6 +64,20 @@
                         <div class="col-sm-8">
                             <textarea type="text" class="form-control" name="address" id="address" value="<?= set_value('address'); ?>">
                             </textarea>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <label for="cash_id" class="col-sm col-form-label">Cash Account</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="cash_id" id="cash_id">
+                                <option value="">- Pilih Akun Kas -</option>
+                                <?php
+                                foreach ($accounts as $c) {
+                                ?>
+                                    <option value="<?= $c['acc_code']; ?>" <?= set_select('cash_id', $c['acc_code']); ?>><?= $c['acc_name']; ?> | <?= $c['acc_code']; ?></option>
+                                <?php
+                                }; ?>
+                            </select>
                         </div>
                     </div>
             </div>

@@ -40,6 +40,22 @@
                     </select>
                 </div>
             </div>
+            <div class="mb-2 row">
+                        <label for="wh_id" class="col-sm col-form-label">Warehouse (Gudang)</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="wh_id" id="wh_id">
+                                <option value="">- Gudang -</option>
+                                <?php
+                                foreach ($warehouse as $w) {
+                                ?>
+                                    <option value="<?= $w['id']; ?>" <?php if ($usermng['wh_id'] == $w['id']) {
+                                                                    echo "selected";
+                                                                }; ?>><?= $w['warehouse_name']; ?> | <?= $w['warehouse_code']; ?></option>
+                                <?php
+                                }; ?>
+                            </select>
+                        </div>
+                    </div>
             <div class="d-flex align-items-center justify-content-between">
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <span><a href="<?= base_url('setting/usermng'); ?>">Kembali</a></span>
