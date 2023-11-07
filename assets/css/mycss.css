@@ -24,7 +24,11 @@ a.setting-link {
 
 .card.card-page-title,
 .card.card-setting-menu {
-  padding: 10px 20px 10px 20px;
+  padding: 5px 40px 5px 40px;
+  background-color: rgb(249, 226, 114);
+  color: rgb(99, 99, 246);
+  font-weight: bold;
+  border-radius: 0 0px 30px 30px;
 }
 .card.card-page-title p,
 .card.card-page-title h4,
@@ -52,6 +56,9 @@ a.setting-icon-action {
   justify-content: center;
   text-decoration: none;
   color: black;
+}
+a.setting-icon-action h1 {
+  font-size: 3.5rem;
 }
 
 @media (min-width: 992px) {

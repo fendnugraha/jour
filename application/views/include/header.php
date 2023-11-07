@@ -19,7 +19,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-lg">
         <div class="container">
             <a class="navbar-brand" href="#"><?= $this->session->userdata('brand-name'); ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= base_url('home'); ?> ">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="<?= base_url('home'); ?> "><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="# ">Dashboard</a>
@@ -43,11 +43,11 @@
                         </ul>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('finance/jurnal'); ?>">Jurnal</a>
+                        <a class="nav-link" href="<?= base_url('finance/jurnal'); ?>"><i class="fa-solid fa-book"></i> Jurnal</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Hutang Piutang
+                            <i class="fa-solid fa-money-bill-transfer"></i> Hutang Piutang
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?= base_url('finance/payable'); ?>">Hutang</a></li>
@@ -59,7 +59,7 @@
                     </li> -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Report
+                            <i class="fa-solid fa-clipboard-list"></i> Report
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?= base_url('report/cashflow'); ?>">Cashflow</a></li>
@@ -81,20 +81,20 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('setting'); ?>">Setting</a>
+                        <a class="nav-link" href="<?= base_url('setting'); ?>"><i class="fa-solid fa-screwdriver-wrench"></i> Setting</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-warning active" href="#">Sign as <strong><?= $this->session->userdata('fullname'); ?></strong></a>
+                        <a class="nav-link text-warning active" href="#"><i class="fa-solid fa-masks-theater"></i> <strong><?= $this->session->userdata('fullname'); ?></strong></a>
                     </li>
                 </ul>
             </div>
             <div class="d-flex">
-                <a class="nav-link text-light text-username" href="<?= base_url('auth/logout'); ?>">Logout</a>
+                <a class="nav-link text-light text-username" href="<?= base_url('auth/logout'); ?>"><i class="fa-solid fa-power-off"></i></a>
             </div>
         </div>
 
     </nav>
-    <div class="container mt-3">
+    <div class="container mt-0">
         <div class="card card-page-title">
             <p><?= $title; ?></p>
         </div>

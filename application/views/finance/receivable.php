@@ -51,7 +51,7 @@
         <table class="table display">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>NO</th>
                     <th>CONTACT</th>
                     <th>JUMLAH</th>
                     <th>STATUS</th>
@@ -60,6 +60,7 @@
             </thead>
             <tbody class="table-group-divider">
                 <?php
+                $no = 1;
                 foreach ($receivable as $rv) {
                     if ($rv['bill_total'] == 0) {
                         $status = "<span class='badge rounded-pill text-bg-success'>Fullpaid</span>";
@@ -68,7 +69,7 @@
                     };
                 ?>
                     <tr>
-                        <td><?= $rv['id']; ?></td>
+                        <td><?= $no++; ?></td>
                         <td><?= $rv['ct_name']; ?></td>
                         <td><?= number_format($rv['bill_total']); ?></td>
                         <td><?= $status; ?></td>

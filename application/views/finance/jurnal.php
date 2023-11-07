@@ -52,8 +52,8 @@
                 </ul>
             </div>
             <div class="link-list-finance">
-                <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-success"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
-                <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-success"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
+                <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Piutang</a>
+                <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-warning"> <i class="fa-solid fa-circle-plus"></i> Hutang</a>
                 <a href="<?= base_url('finance/cashTotal'); ?>" class=" btn btn-success"> <i class="fa-solid fa-wallet"></i> Cash & Bank</a>
             </div>
         </div>

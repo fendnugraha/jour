@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm-8">
                 <div class="control-nav mb-3">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContact">
                         + Tambah Kontak

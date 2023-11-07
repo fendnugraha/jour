@@ -21,7 +21,7 @@
 
         a {
             text-decoration: none;
-            color: black;
+            color: blue;
         }
 
         a:hover {
@@ -37,11 +37,11 @@
             <form action="<?= base_url('auth'); ?>" method="post">
                 <div class="row">
                     <div class="col-sm">
-                        <label for="username" class="form-label">Username</label>
+                        <label for="username" class="form-label"><i class="fa-solid fa-face-smile"></i> Username</label>
                         <input type="text" class="form-control" name="username" id="username">
                     </div>
                     <div class="col-sm">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label"><i class="fa-solid fa-key"></i> Password</label>
                         <input type="password" class="form-control" name="password" id="password">
                     </div>
                 </div>

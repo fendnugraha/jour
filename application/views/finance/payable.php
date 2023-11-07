@@ -3,15 +3,15 @@
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
                 <p>Total Hutang</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['bill']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-credit-card"></i> <b><?= number_format($dt_payable['bill']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
     <div class="col-sm">
-        <div class="card bg-info text-bg-light">
+        <div class="card bg-warning text-bg-light">
             <div class="card-body">
                 <p>Total Pembayaran</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['got_paid']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-money-check-dollar"></i> <b><?= number_format($dt_payable['got_paid']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="card bg-dark text-bg-dark">
             <div class="card-body">
                 <p>Sisa Hutang</p>
-                <h2 class="d-flex justify-content-between">Rp <b><?= number_format($dt_payable['remaining']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-file-invoice-dollar"></i> <b><?= number_format($dt_payable['remaining']); ?> ,-</b></h2>
 
             </div>
         </div>
@@ -44,7 +44,7 @@
         <table class="table display">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>NO</th>
                     <th>CONTACT</th>
                     <th>JUMLAH</th>
                     <th>STATUS</th>
@@ -53,6 +53,7 @@
             </thead>
             <tbody class="table-group-divider">
                 <?php
+                $no = 1;
                 foreach ($payable as $rv) {
                     if ($rv['bill_total'] == 0) {
                         $status = "<span class='badge rounded-pill text-bg-success'>Fullpaid</span>";
@@ -61,7 +62,7 @@
                     };
                 ?>
                     <tr>
-                        <td><?= $rv['id']; ?></td>
+                        <td><?= $no++; ?></td>
                         <td><?= $rv['ct_name']; ?></td>
                         <td><?= number_format($rv['bill_total']); ?></td>
                         <td><?= $status; ?></td>

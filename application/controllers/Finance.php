@@ -629,7 +629,10 @@ class Finance extends CI_Controller
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
-        $data['rv_detail'] = $this->db->get_where('receivable_tb', ['contact_id' => $contact_id])->result_array();
+
+        $this->db->select('a.*, b.acc_name');
+        $this->db->join('acc_coa b', 'b.acc_code = a.rv_type', 'left');
+        $data['rv_detail'] = $this->db->get_where('receivable_tb a', ['contact_id' => $contact_id])->result_array();
 
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM receivable_tb WHERE contact_id = $contact_id GROUP BY invoice HAVING remaining <> 0 ")->result_array();
 
@@ -874,7 +877,9 @@ class Finance extends CI_Controller
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
-        $data['rv_detail'] = $this->db->get_where('payable_tb', ['contact_id' => $contact_id])->result_array();
+        $this->db->select('a.*, b.acc_name');
+        $this->db->join('acc_coa b', 'b.acc_code = a.rv_type', 'left');
+        $data['rv_detail'] = $this->db->get_where('payable_tb a', ['contact_id' => $contact_id])->result_array();
 
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice  HAVING remaining <> 0 ")->result_array();
 

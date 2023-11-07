@@ -40,9 +40,9 @@
         <table class="table display">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>NO</th>
                     <th>WAKTU</th>
-                    <th>INVOICE</th>
+                    <!-- <th>INVOICE</th> -->
                     <th>DESKRIPSI</th>
                     <th>JUMLAH</th>
                     <th>PEMBAYARAN</th>
@@ -51,13 +51,14 @@
             </thead>
             <tbody>
                 <?php
+                $no = 1;
                 foreach ($rv_detail as $rv) {
                 ?>
-                    <tr>
-                        <td><?= $rv['id']; ?></td>
+                    <tr class="align-middle">
+                        <td><?= $no++; ?></td>
                         <td><?= $rv['waktu']; ?></td>
-                        <td><?= $rv['invoice']; ?></td>
-                        <td><?= $rv['description']; ?></td>
+                        <!-- <td><?= $rv['invoice']; ?></td> -->
+                        <td><?= '<span class="badge rounded-pill text-bg-secondary">#' . $rv['id'] . '</span><br><span class="fw-bold text-success">' . $rv['invoice'] . ' | ' . $rv['rv_type'] . ' ' . $rv['acc_name'] . '</span><br>' . $rv['description']; ?></td>
                         <td><?= number_format($rv['bill_amount']); ?></td>
                         <td><?= number_format($rv['pay_amount']); ?></td>
                         <td><a href="<?= base_url('finance/deleteRcv/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')"><i class="fa-solid fa-trash-can text-danger"></i></a></td>
