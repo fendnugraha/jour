@@ -18,6 +18,22 @@ class Home extends CI_Controller
     {
         $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
 
+        $liabilities = $this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d'));
+        $assets = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'));
+        $cashAR = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) - $this->finance_model->accountsCount('10600%', 'D', '0000-00-00', date('Y-m-d'));
+
+        if($liabilities > 0){
+            $data['currentRatio'] = round(($assets / $liabilities) *100, 2);
+        }else{
+            $data['currentRatio'] = 0;
+        }
+
+        if($liabilities > 0){
+            $data['quickRatio'] = round(($cashAR / $liabilities) *100, 2);
+        }else{
+            $data['quickRatio'] = 0;
+        }
+
         $data['title'] = 'Dashboard';
         $this->load->view('include/header', $data);
         $this->load->view('home/dashboard', $data);

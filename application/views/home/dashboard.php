@@ -32,7 +32,7 @@
     <div class="col-sm">
         <div class="card bg-warning text-bg-light">
             <div class="card-body">
-                <p>Net Profit</p>
+                <p>Laba Rugi</p>
                 <h5 class="d-flex justify-content-between"><i class="fa-solid fa-sack-dollar"></i> <b><?= number_format($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d'))); ?> ,-</b></h5>
             </div>
         </div>
@@ -108,7 +108,7 @@
         <div class="card bbg-secondary text-bg-secondary">
             <div class="card-body">
                 <p>Current Ratio (Current Assets/Current Liabilities)</p>
-                <h2 class="d-flex justify-content-between"><i class="fas fa-warehouse"></i> <b><?= round($this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?> %</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fas fa-warehouse"></i> <b><?= $currentRatio; ?> %</b></h2>
 
             </div>
         </div>
@@ -119,7 +119,7 @@
         <div class="card bg-secondary text-bg-secondary">
             <div class="card-body">
                 <p>Quick Ratio (Cash, AR/Current Liabilities)</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-cash-register"></i> <b><?= round(($this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) - $this->finance_model->accountsCount('10600%', 'D', '0000-00-00', date('Y-m-d'))) / $this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?> %</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-cash-register"></i> <b><?= $quickRatio; ?> %</b></h2>
             </div>
         </div>
     </div>
