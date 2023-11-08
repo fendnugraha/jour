@@ -37,7 +37,7 @@
                 <a href="<?= base_url('finance/payable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Hutang</a>
             </div>
         </div>
-        <table class="table display">
+        <table class="table display-noorder">
             <thead>
                 <tr>
                     <th>NO</th>

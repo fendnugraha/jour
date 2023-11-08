@@ -160,7 +160,7 @@ class Finance extends CI_Controller
         $this->db->join('acc_coa d', 'd.acc_code = a.cred_code', 'left');
         $this->db->join('warehouse e', 'e.id = a.wh_id', 'left');
         $this->db->where("date(waktu) BETWEEN '" . $data['startDate'] . "' AND '" . $data['endDate'] . "'");
-        // $this->db->order_by('id', 'DESC');
+        $this->db->order_by('id', 'DESC');
         $data['account_trace'] = $this->db->get('account_trace a')->result_array();
 
         // $data['total_po'] = $this->db->query("SELECT sum(purchases*price) as total FROM product_trace WHERE status = 1")->row_array();
@@ -429,6 +429,7 @@ class Finance extends CI_Controller
     public function addRcvDeposit()
     {
         $user_id = $this->session->userdata('user_id');
+        $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '10400-', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -478,7 +479,8 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'wh_id' => $wh_id
             ];
 
             $this->db->trans_begin();
@@ -538,6 +540,7 @@ class Finance extends CI_Controller
     public function addReceivableSales()
     {
         $user_id = $this->session->userdata('user_id');
+        $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '10400-', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -588,7 +591,8 @@ class Finance extends CI_Controller
                     'rvpy' => 'Receivable',
                     'pay_stats' => 0,
                     'pay_nth' => 0,
-                    'user_id' => $user_id
+                    'user_id' => $user_id,
+                    'wh_id' => $wh_id
                 ],
                 [
                     'id' => null,
@@ -602,7 +606,8 @@ class Finance extends CI_Controller
                     'rvpy' => 'Receivable',
                     'pay_stats' => 0,
                     'pay_nth' => 0,
-                    'user_id' => $user_id
+                    'user_id' => $user_id,
+                    'wh_id' => $wh_id
                 ]
 
             ];
@@ -627,12 +632,15 @@ class Finance extends CI_Controller
     public function rv_detail($contact_id)
     {
         $user_id = $this->session->userdata('user_id');
+        $wh_id = $this->session->userdata('wh_id');
+        
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
 
         $this->db->select('a.*, b.acc_name');
         $this->db->join('acc_coa b', 'b.acc_code = a.rv_type', 'left');
+        $this->db->order_by('waktu', 'DESC');
         $data['rv_detail'] = $this->db->get_where('receivable_tb a', ['contact_id' => $contact_id])->result_array();
 
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM receivable_tb WHERE contact_id = $contact_id GROUP BY invoice HAVING remaining <> 0 ")->result_array();
@@ -693,7 +701,8 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 1,
                 'pay_nth' => $pay_nth,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'wh_id' => $wh_id
             ];
 
             $this->db->trans_begin();
@@ -733,6 +742,7 @@ class Finance extends CI_Controller
     public function addPayable()
     {
         $user_id = $this->session->userdata('user_id');
+        $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '20', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -782,7 +792,8 @@ class Finance extends CI_Controller
                 'rvpy' => 'Payable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'wh_id' => $wh_id
             ];
 
             $this->db->trans_begin();
@@ -875,11 +886,14 @@ class Finance extends CI_Controller
     public function py_detail($contact_id)
     {
         $user_id = $this->session->userdata('user_id');
+        $wh_id = $this->session->userdata('wh_id');
+
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
         $this->db->select('a.*, b.acc_name');
         $this->db->join('acc_coa b', 'b.acc_code = a.rv_type', 'left');
+        $this->db->order_by('waktu', 'DESC');
         $data['rv_detail'] = $this->db->get_where('payable_tb a', ['contact_id' => $contact_id])->result_array();
 
         $data['rv_remain'] = $this->db->query("SELECT invoice, waktu, sum(bill_amount-pay_amount) as remaining FROM payable_tb WHERE contact_id = $contact_id GROUP BY invoice  HAVING remaining <> 0 ")->result_array();
@@ -934,7 +948,8 @@ class Finance extends CI_Controller
                 'rvpy' => 'Payable',
                 'pay_stats' => 1,
                 'pay_nth' => $pay_nth,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'wh_id' => $wh_id
             ];
 
             $this->db->trans_begin();

@@ -57,7 +57,7 @@
                 <a href="<?= base_url('finance/cashTotal'); ?>" class=" btn btn-success"> <i class="fa-solid fa-wallet"></i> Cash & Bank</a>
             </div>
         </div>
-        <table class="table display">
+        <table class="table display-noorder">
             <thead class="thead-dark">
                 <tr>
                     <th>WAKTU</th>

@@ -37,7 +37,7 @@
                 <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Piutang</a>
             </div>
         </div>
-        <table class="table display">
+        <table class="table display-noorder">
             <thead>
                 <tr>
                     <th>NO</th>
@@ -64,7 +64,7 @@
                         <td><a href="<?= base_url('finance/deleteRcv/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')"><i class="fa-solid fa-trash-can text-danger"></i></a></td>
                     </tr>
                 <?php }; ?>
-            </tbody>
+            </tbody> 
         </table>
         <div class="info-addproduct col-sm">
             <?php echo validation_errors(); ?>
