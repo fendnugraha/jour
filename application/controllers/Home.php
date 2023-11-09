@@ -22,15 +22,15 @@ class Home extends CI_Controller
         $assets = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'));
         $cashAR = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) - $this->finance_model->accountsCount('10600%', 'D', '0000-00-00', date('Y-m-d'));
 
-        if($liabilities > 0){
-            $data['currentRatio'] = round(($assets / $liabilities) *100, 2);
-        }else{
+        if ($liabilities > 0) {
+            $data['currentRatio'] = round(($assets / $liabilities) * 100, 2);
+        } else {
             $data['currentRatio'] = 0;
         }
 
-        if($liabilities > 0){
-            $data['quickRatio'] = round(($cashAR / $liabilities) *100, 2);
-        }else{
+        if ($liabilities > 0) {
+            $data['quickRatio'] = round(($cashAR / $liabilities) * 100, 2);
+        } else {
             $data['quickRatio'] = 0;
         }
 
