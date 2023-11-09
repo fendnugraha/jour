@@ -8,6 +8,12 @@
     <title>App JOUR</title>
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/bootstrap.css">
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+        * {
+            font-family: "Quicksand", sans-serif;
+        }
+
         html,
         body,
         .container {
