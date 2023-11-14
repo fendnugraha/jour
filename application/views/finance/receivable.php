@@ -44,8 +44,9 @@
                 </ul>
             </div>
             <div class="back-list">
-                <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-success"><i class="fa-solid fa-circle-arrow-left"></i> Jurnal</a>
-                <a href="<?= base_url('finance/payable'); ?>" class="btn btn-info"><i class="fa-solid fa-circle-arrow-left"></i> Hutang</a>
+                <a href="<?= base_url('finance/jurnal'); ?>" class="btn btn-primary"><i class="fa-solid fa-circle-arrow-left"></i> Jurnal</a>
+                <a href="<?= base_url('finance/payable'); ?>" class="btn btn-primary"><i class="fa-solid fa-circle-arrow-left"></i> Hutang</a>
+                <a href="<?= base_url('finance/expExcelRcv'); ?>" class="btn btn-success"><i class="fa-solid fa-file-excel"></i> Export Excel</a>
             </div>
         </div>
         <table class="table display">

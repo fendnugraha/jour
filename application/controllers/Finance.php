@@ -633,7 +633,7 @@ class Finance extends CI_Controller
     {
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
-        
+
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
         $data['contact_id'] = $contact_id;
@@ -722,8 +722,54 @@ class Finance extends CI_Controller
         }
     }
 
+    public function expExcelRcv()
+    {
+        $this->db->select('a.*, sum(a.bill_amount-a.pay_amount) as bill_total, b.nama as ct_name');
+        $this->db->join('contact b', 'b.id = a.contact_id', 'left');
+        $data['receivable'] = $this->db->group_by('contact_id')->get('receivable_tb a')->result_array();
 
-    // Payable Area
+        require(APPPATH . '\PHPExcel/Classes/PHPExcel.php');
+        require(APPPATH . '\PHPExcel/Classes/PHPExcel/Writer/Excel2007.php');
+
+        $object =  new PHPExcel();
+        $object->getProperties()->setCreator('Fend');
+        $object->getProperties()->setLastModifiedBy('Eightnite Studio');
+        $object->getProperties()->setTitle('Receivable List ' . date('Y-m-d H:i:s'));
+
+        $object->setActiveSheetIndex(0);
+        $object->getActiveSheet()->setCellValue('A1', 'NO');
+        $object->getActiveSheet()->setCellValue('B1', 'CONTACT');
+        $object->getActiveSheet()->setCellValue('C1', 'JUMLAH');
+        $object->getActiveSheet()->setCellValue('D1', 'STATUS');
+
+        $baris = 2;
+        $no = 1;
+        foreach ($data['receivable'] as $acc) {
+            if ($acc['bill_total'] == 0) {
+                $status = "Fullpaid";
+            } else {
+                $status = "Unpaid";
+            };
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $acc['ct_name']);
+            $object->getActiveSheet()->setCellValue('C' . $baris, number_format($acc['bill_total']));
+            $object->getActiveSheet()->setCellValue('D' . $baris, $status);
+            $baris++;
+        }
+
+        $filename = 'Receivable List ' . date('Y-m-d H:i:s') . '.xlsx';
+        $object->getActiveSheet()->setTitle('Receivable List');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer =  PHPExcel_IOFactory::createWriter($object, 'Excel2007');
+        $writer->save('php://output');
+    }
+
+
+    // Payable Area-----------------------------------------------------------------------------------------------------------------
 
     public function payable()
     {
