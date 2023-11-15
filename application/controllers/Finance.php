@@ -731,19 +731,27 @@ class Finance extends CI_Controller
         require(APPPATH . 'PHPExcel/Classes/PHPExcel.php');
         require(APPPATH . 'PHPExcel/Classes/PHPExcel/Writer/Excel2007.php');
 
-        $style = [
-            'borders' => [
-                'allborders' => [
-                    'style' => PHPExcel_Style_Border::BORDER_THIN
-                ]
-            ]
-        ];
-
         $object =  new PHPExcel();
-        $object->getProperties()->setCreator('JOur');
+        $object->getProperties()->setCreator('Jour');
         $object->getProperties()->setLastModifiedBy('Eightnite Studio');
         $object->getProperties()->setTitle('Receivable List ' . date('Y-m-d H:i:s'));
-        $object->getDefaultStyle()->applyFromArray($style);
+
+        $object->getDefaultStyle()
+            ->getBorders()
+            ->getTop()
+            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $object->getDefaultStyle()
+            ->getBorders()
+            ->getBottom()
+            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $object->getDefaultStyle()
+            ->getBorders()
+            ->getLeft()
+            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $object->getDefaultStyle()
+            ->getBorders()
+            ->getRight()
+            ->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
         $object->setActiveSheetIndex(0);
         $object->getActiveSheet()->setCellValue('A1', 'NO');
