@@ -80,10 +80,10 @@
                     <tr>
                         <td><?= $p['waktu']; ?></td>
                         <td><?= $p['invoice']; ?></td>
-                        <td>#<?= $p['id']; ?>. <?= ucwords($p['description']); ?><br>
-                            <span class='badge rounded-pill text-bg-dark'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
+                        <td><span class='badge rounded-pill text-bg-success'><?= $p['debt_name']; ?> X <?= $p['cred_name']; ?></span>
                             <span class='badge rounded-pill text-bg-secondary'><?= $p['warehouse_name']; ?></span>
-                            <span class='badge rounded-pill text-bg-warning'><?= $p['username']; ?></span>
+                            <span class='badge rounded-pill text-bg-warning'><?= $p['username']; ?></span><br>
+                            #<?= $p['id']; ?>. <?= ucwords($p['description']); ?>
                         </td>
                         <td><?= number_format($p['jumlah']); ?></td>
                         <td><?= $status; ?></td>
@@ -91,10 +91,10 @@
                             <div class="edit-journal-area" <?php if ($p['rvpy'] == !null) {
                                                                 echo "hidden";
                                                             }; ?>>
-                                <a href="<?= base_url('finance/editJournal/') . $p['id']; ?> ">Edit</a>
+                                <a href="<?= base_url('finance/editJournal/') . $p['id']; ?> " class="text-decoration-none"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 
                             </div>
-                            <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> ">Detail</a>
+                            <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> " class="text-decoration-none"><i class="fa-solid fa-circle-info"></i> Detail</a>
                         </td>
                     </tr>
                 <?php }; ?>

@@ -9,10 +9,10 @@
 </form>
 
 <div class="row">
-    <div class="col-sm">
+    <div class="col-sm-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">TOTAL KAS & BANK</h4>
+                <h4 class="card-title">KAS & BANK</h4>
                 <table class="table">
                     <?php
                     foreach ($assets as $as) {; ?>
