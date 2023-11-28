@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Setting extends CI_Controller
 {
+    public $settings;
+
     public function __construct()
     {
         parent::__construct();
@@ -13,6 +15,7 @@ class Setting extends CI_Controller
 
     public function index()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['title'] = 'Setting';
         $this->load->view('include/header', $data);
         $this->load->view('setting/index', $data);
@@ -21,6 +24,7 @@ class Setting extends CI_Controller
 
     public function general()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['general'] = $this->db->get_where('setting', ['id' => 1])->row_array();
 
         $this->form_validation->set_rules('brand-name', 'Brand Name', 'Required|max_length[15]');
@@ -55,6 +59,7 @@ class Setting extends CI_Controller
 
     public function contact()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['contact'] = $this->db->get('contact')->result_array();
 
         $data['title'] = 'Setting / Contact Management';
@@ -65,6 +70,7 @@ class Setting extends CI_Controller
 
     public function addContact()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $this->form_validation->set_rules('ct_name', 'Nama Kontak', 'required|alpha_numeric_spaces|trim|max_length[60]');
         $this->form_validation->set_rules('ct_desc', 'Deskripsi', 'alpha_numeric_spaces|trim|max_length[160]');
 
@@ -93,6 +99,7 @@ class Setting extends CI_Controller
 
     public function usermng()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['usermng'] = $this->db->query("SELECT a.*,b.warehouse_name FROM user a LEFT JOIN warehouse b ON b.id = a.wh_id")->result_array();
 
         $data['warehouse'] = $this->db->get('warehouse')->result_array();
@@ -114,6 +121,7 @@ class Setting extends CI_Controller
 
     private function _register_input()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data = [
             'id' => null,
             'username' => $this->input->post('username'),
@@ -135,6 +143,7 @@ class Setting extends CI_Controller
 
     public function edit_user($id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['usermng'] = $this->db->get_where('user', ['id' => $id])->row_array();
         $data['user_role'] = $this->db->get('user_role')->result_array();
         $data['warehouse'] = $this->db->get('warehouse')->result_array();
@@ -163,6 +172,7 @@ class Setting extends CI_Controller
 
     public function resetpassword($id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['dtuser'] = $this->db->get_where('user', ['id' => $id])->row_array();
 
         $this->form_validation->set_rules('password', 'Password', 'min_length[6]|required');
@@ -181,6 +191,7 @@ class Setting extends CI_Controller
 
     public function accounts()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['acc_coa'] = $this->db->get('acc_coa')->result_array();
         $data['accounts'] = $this->db->get('accounts')->result_array();
 
@@ -200,6 +211,7 @@ class Setting extends CI_Controller
 
     public function _addaccount()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $main_acc = $this->input->post('main_acc');
         $accounts = $this->db->get_where('accounts', ['nama' => $main_acc])->row_array();
         $querycode = "SELECT MAX(RIGHT(acc_code,3)) AS kd_max FROM acc_coa
@@ -240,6 +252,7 @@ class Setting extends CI_Controller
 
     public function editAccount($kode_akun)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['accounts'] = $this->db->get_where('acc_coa', ['acc_code' => $kode_akun])->row_array();
 
         $this->form_validation->set_rules('acc_name', 'Account Name', 'Required|max_length[60]|trim');
@@ -267,6 +280,7 @@ class Setting extends CI_Controller
 
     public function employes()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['title'] = 'Setting / Employes';
         $this->load->view('include/header', $data);
         $this->load->view('setting/employes', $data);
@@ -275,6 +289,7 @@ class Setting extends CI_Controller
 
     public function addWarehouse()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['warehouse'] = $this->db->get('warehouse')->result_array();
 
         $data['accounts'] = $this->db->like('acc_code', '10100', 'after')->get('acc_coa')->result_array();

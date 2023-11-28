@@ -15,15 +15,15 @@
 </head>
 
 <body>
-    <header class="p-3 mb-3 border-bottom">
+    <header class="p-3 mb-3 border-bottom" style="background-color: rgba(85, 110, 255, 0.1);">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="<?= base_url('home'); ?>" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none me-3">
-                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" />
+                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" /> <strong class="text-primary">&nbsp;|&nbsp;<?= $setting['brand_name']; ?></strong>
                     <!-- <img src="<?= base_url('assets'); ?>/img/logo.png" alt="logo" height="32" /> -->
                 </a>
 
-                <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0 me-5">
+                <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0 me-5 font-weight-bold">
                     <li>
                         <a href="<?= base_url('home'); ?>" class="nav-link px-2 link-secondary">Dashboard</a>
                     </li>
@@ -65,9 +65,10 @@
                 </ul>
 
                 <div class="dropdown text-end">
-                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a href="#" class="d-block link-body-emphasis" id="user-email-addr-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" /> -->
-                        <span id="user-email-addr"><i class="fa-solid fa-masks-theater"></i> <strong><?= $this->session->userdata('fullname'); ?></strong></span>
+                        <span id="user-email-addr"><i class="fa-solid fa-masks-theater"></i> <strong><?= strtolower($this->session->userdata('fullname')); ?></strong> <small><i class="fa-solid fa-chevron-down"></i></small></span>
+
                     </a>
                     <ul class="dropdown-menu text-small dropdown-menu-end">
                         <li><a class="dropdown-item" href="<?= base_url('setting'); ?>">Settings</a></li>

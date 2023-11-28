@@ -11,10 +11,12 @@ class Finance extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('home_model');
         $this->load->model('finance_model');
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
     }
 
     public function index()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
 
         $data['total_inv'] = $this->db->query('SELECT sum(beli*stok) as total_inv FROM inventory')->row_array();
@@ -32,6 +34,7 @@ class Finance extends CI_Controller
 
     public function cashTotal()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('endDate') == "") {
             $data['endDate'] = date('Y-m-d');
         } else {
@@ -52,6 +55,7 @@ class Finance extends CI_Controller
 
     public function cashin()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $invoice = $this->home_model->invoice_so();
 
@@ -82,6 +86,7 @@ class Finance extends CI_Controller
 
     public function cashout()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $invoice = $this->home_model->invoice_po();
 
@@ -112,6 +117,7 @@ class Finance extends CI_Controller
 
     public function edit_cashflow($id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['cashflow'] = $this->db->get_where('cashflow', ['id' => $id])->row_array();
         $data['status'] = $this->db->get('status')->result_array();
 
@@ -146,6 +152,7 @@ class Finance extends CI_Controller
 
     public function jurnal()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
             $data['startDate'] = date('Y-m-d');
             $data['endDate'] = date('Y-m-d');
@@ -174,6 +181,7 @@ class Finance extends CI_Controller
 
     public function addJournal()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
@@ -213,6 +221,7 @@ class Finance extends CI_Controller
 
     public function editJournal($j_id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
         $data['journal'] = $this->db->get_where('account_trace', ['id' => $j_id, 'rvpy' => null])->row_array();
@@ -251,6 +260,7 @@ class Finance extends CI_Controller
 
     public function jr_detail($jr_id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
 
         $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name');
@@ -271,6 +281,7 @@ class Finance extends CI_Controller
 
     public function receivable()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $this->db->select('a.*, sum(a.bill_amount-a.pay_amount) as bill_total, b.nama as ct_name');
         $this->db->join('contact b', 'b.id = a.contact_id', 'left');
         $data['receivable'] = $this->db->group_by('contact_id')->get('receivable_tb a')->result_array();
@@ -285,6 +296,7 @@ class Finance extends CI_Controller
 
     public function addReceivable()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '10400-', 'after');
@@ -358,6 +370,7 @@ class Finance extends CI_Controller
 
     public function addReceivableSt()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '10400-', 'after');
@@ -428,6 +441,7 @@ class Finance extends CI_Controller
 
     public function addRcvDeposit()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
@@ -502,6 +516,7 @@ class Finance extends CI_Controller
 
     public function deleteRcv($id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $dtRcv = $this->db->get_where('receivable_tb', ['id' => $id])->row_array();
         $invoice = $dtRcv['invoice'];
         $pay_nth = $dtRcv['pay_nth'];
@@ -539,6 +554,7 @@ class Finance extends CI_Controller
 
     public function addReceivableSales()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
@@ -631,6 +647,7 @@ class Finance extends CI_Controller
 
     public function rv_detail($contact_id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
@@ -724,6 +741,7 @@ class Finance extends CI_Controller
 
     public function expExcelRcv()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $this->db->select('a.*, sum(a.bill_amount-a.pay_amount) as bill_total, b.nama as ct_name');
         $this->db->join('contact b', 'b.id = a.contact_id', 'left');
         $data['receivable'] = $this->db->group_by('contact_id')->get('receivable_tb a')->result_array();
@@ -790,6 +808,7 @@ class Finance extends CI_Controller
 
     public function payable()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $this->db->select('a.*, sum(a.bill_amount-a.pay_amount) as bill_total, b.nama as ct_name');
         $this->db->join('contact b', 'b.id = a.contact_id', 'left');
         $data['payable'] = $this->db->group_by('contact_id')->get('payable_tb a')->result_array();
@@ -804,6 +823,7 @@ class Finance extends CI_Controller
 
     public function addPayable()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
@@ -878,6 +898,7 @@ class Finance extends CI_Controller
 
     public function addPayableSt()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '20', 'after');
@@ -948,6 +969,7 @@ class Finance extends CI_Controller
 
     public function py_detail($contact_id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
@@ -1034,6 +1056,7 @@ class Finance extends CI_Controller
 
     public function deletePay($id)
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $dtRcv = $this->db->get_where('payable_tb', ['id' => $id])->row_array();
         $invoice = $dtRcv['invoice'];
         $pay_nth = $dtRcv['pay_nth'];
@@ -1072,6 +1095,7 @@ class Finance extends CI_Controller
     //Isi Deposit
     public function addDeposit()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 

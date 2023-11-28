@@ -14,6 +14,7 @@ class Report extends CI_Controller
 
     public function index()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['title'] = 'Report';
         $this->load->view('include/header', $data);
         $this->load->view('report/index', $data);
@@ -22,6 +23,7 @@ class Report extends CI_Controller
 
     public function profitLossProduct()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['dailyprofit'] = $this->db->query("SELECT date(waktu) as tanggal, sum(sales*cost) as modal, sum(sales*price) as jual FROM product_trace Where status = 1 group by date(waktu) ")->result_array();
         $data['monthlyprofit'] = $this->db->query("SELECT month(waktu) as bulan, year(waktu) as tahun, sum(sales*cost) as modal, sum(sales*price) as jual FROM product_trace Where status = 1 group by month(waktu), year(waktu) ")->result_array();
         $data['yearlyprofit'] = $this->db->query("SELECT year(waktu) as tanggal, sum(sales*cost) as modal, sum(sales*price) as jual FROM product_trace Where status = 1 group by year(waktu) ")->result_array();
@@ -34,6 +36,7 @@ class Report extends CI_Controller
 
     public function profitLossStatement()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
             $data['startDate'] = date('Y-m-d');
             $data['endDate'] = date('Y-m-d');
@@ -54,6 +57,7 @@ class Report extends CI_Controller
 
     public function profitLossStatementDaily()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('bulan') == "" || $this->input->post('tahun') == "") {
             $data['bulan'] = date('m');
             $data['tahun'] = date('Y');
@@ -72,6 +76,7 @@ class Report extends CI_Controller
 
     public function profitLossStatementMonthly()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['pendapatan'] = $this->db->get_where('accounts', ['type' => 'Pendapatan'])->result_array();
         $data['hpp'] = $this->db->get_where('accounts', ['type' => 'Harga Pokok Produksi'])->result_array();
         $data['biaya'] = $this->db->get_where('accounts', ['type' => 'Biaya'])->result_array();
@@ -85,6 +90,7 @@ class Report extends CI_Controller
 
     public function neraca()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('endDate') == "") {
             $data['endDate'] = date('Y-m-d');
         } else {
@@ -105,6 +111,7 @@ class Report extends CI_Controller
 
     public function neracaMonthly()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('endDate') == "") {
             $data['endDate'] = date('Y-m-d');
         } else {
@@ -127,6 +134,7 @@ class Report extends CI_Controller
 
     public function generalLedger()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         // $kode_akun = $this->input->post('kode_akun');
 
         if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
@@ -171,6 +179,7 @@ class Report extends CI_Controller
 
     public function cashflow()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         if ($this->input->post('startDate') == "" || $this->input->post('endDate') == "") {
             $data['startDate'] = date('Y-m-d');
             $data['endDate'] = date('Y-m-d');

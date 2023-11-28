@@ -136,12 +136,12 @@ if ($cfpercent > 0) {
                 <td><?= number_format($this->finance_model->totalDebetCreditCashflowCount('30100%', $startDate, $endDate)); ?></td>
             </tr>
 
-            <tr class="bg-primary text-light">
+            <tr class="table-primary text-light">
                 <th>SALDO AWAL KAS</th>
                 <th><i class="fa-solid fa-rupiah-sign"></i></th>
                 <th><?= number_format($this->finance_model->cashflowCount('0000-00-00', $startDateInput)); ?></th>
             </tr>
-            <tr class="bg-warning text-dark">
+            <tr class="table-warning text-dark">
                 <th>SALDO AKHIR KAS</th>
                 <th><i class="fa-solid fa-rupiah-sign"></i></th>
                 <th><?= number_format($this->finance_model->cashflowCount('0000-00-00', $endDate)); ?></th>

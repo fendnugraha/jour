@@ -17,6 +17,7 @@ class Home extends CI_Controller
     public function index()
     {
         $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
 
         $liabilities = $this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d'));
         $assets = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'));
@@ -43,6 +44,7 @@ class Home extends CI_Controller
     public function dashboard()
     {
         $data['product'] = $this->db->query('SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id')->result_array();
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
 
         $data['total_inv'] = $this->db->query('SELECT sum(beli*stok) as total_inv FROM inventory')->row_array();
         $data['total_so'] = $this->db->query("SELECT sum(sales*price) as total FROM product_trace WHERE status = 1")->row_array();
@@ -80,6 +82,7 @@ class Home extends CI_Controller
 
     public function addProduct()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['cat_product'] = $this->db->get('product_cat')->result_array();
         $kode = "";
 
@@ -114,6 +117,7 @@ class Home extends CI_Controller
     public function pr_detail($pr_id)
     {
         $data['product'] = $this->db->query("SELECT *, inventory.id as inv_id FROM inventory JOIN product_cat ON product_cat.id = inventory.cat_id WHERE inventory.id = '$pr_id'")->row_array();
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
 
         $this->db->select('a.*, b.nama as supplier, c.nama as product, d.username');
         $this->db->join('contact b', 'b.id = a.contact_id', 'left');

@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-$myprimary-color: rgb(52, 83, 255);
-$mysecondary-color: rgb(85, 85, 85);
-$mysuccess-color: rgb(0, 199, 99);
+$myprimary-color: rgb(85, 110, 255);
+$mysecondary-color: rgb(107, 107, 107);
+$mysuccess-color: rgb(29, 233, 131);
 $mywarning-color: rgb(252, 217, 103);
-$mydanger-color: rgb(226, 45, 91);
+$mydanger-color: rgb(245, 72, 115);
 $mywhite-color: rgba(255,255,255,0.8);
 
 body {
   font-family: 'Quicksand', sans-serif;
-  // background-color: rgb(228, 228, 228);
-  background-color: white;
+  background-color: rgb(233, 233, 233);
 
   #login-failed-alert {
     bottom: 10vh;
@@ -23,10 +22,56 @@ body {
   }
 }
 
+.nav-link {
+  font-weight: 700;
+}
+
+header {
+  .dropdown{
+      a#user-email-addr-dropdown{
+        background-color: rgb(71, 74, 255);
+        text-decoration: none;
+        padding: 5px 15px 5px 15px;
+        border-radius: 25px;
+        border: 0;
+        transition: 0.2s;
+
+        #user-email-addr {
+          color: white;
+        }
+
+        &:hover {
+          background-color: rgb(56, 59, 255);
+
+          #user-email-addr {
+          color: white;
+        }
+        }
+      }
+
+      .dropdown-menu {
+        background-color: rgba(71, 74, 255, 1);
+
+        a.dropdown-item {
+          color: white;
+        }
+
+        hr {
+          background-color: white;
+        }
+
+        a.dropdown-item:hover {
+          background-color: rgb(56, 59, 255);
+        }
+      }
+  }
+}
+
 .card {
+  // background-color: rgba($color: #000000, $alpha: 0.2);
   border-radius: 25px;
   border: none;
-  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+  box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.2);
 }
 
 a.setting-link {

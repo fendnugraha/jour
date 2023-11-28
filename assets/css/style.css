@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 body {
   font-family: "Quicksand", sans-serif;
-  background-color: white;
+  background-color: rgb(233, 233, 233);
 }
 body #login-failed-alert {
   bottom: 10vh;
@@ -12,10 +12,44 @@ body table tr {
   font-size: 0.7em;
 }
 
+.nav-link {
+  font-weight: 700;
+}
+
+header .dropdown a#user-email-addr-dropdown {
+  background-color: rgb(71, 74, 255);
+  text-decoration: none;
+  padding: 5px 15px 5px 15px;
+  border-radius: 25px;
+  border: 0;
+  transition: 0.2s;
+}
+header .dropdown a#user-email-addr-dropdown #user-email-addr {
+  color: white;
+}
+header .dropdown a#user-email-addr-dropdown:hover {
+  background-color: rgb(56, 59, 255);
+}
+header .dropdown a#user-email-addr-dropdown:hover #user-email-addr {
+  color: white;
+}
+header .dropdown .dropdown-menu {
+  background-color: rgb(71, 74, 255);
+}
+header .dropdown .dropdown-menu a.dropdown-item {
+  color: white;
+}
+header .dropdown .dropdown-menu hr {
+  background-color: white;
+}
+header .dropdown .dropdown-menu a.dropdown-item:hover {
+  background-color: rgb(56, 59, 255);
+}
+
 .card {
   border-radius: 25px;
   border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 a.setting-link {
@@ -60,7 +94,7 @@ a.setting-icon-action h1 {
   font-weight: 700;
 }
 .container .card-dashboard-neraca {
-  background-color: rgb(52, 83, 255);
+  background-color: rgb(85, 110, 255);
 }
 .container .dashboard {
   height: 200px;
@@ -73,10 +107,10 @@ a.setting-icon-action h1 {
 .container .dashboard .card.card-kas {
   grid-area: kas;
   background-color: rgba(255, 255, 255, 0.8);
-  color: rgb(52, 83, 255);
+  color: rgb(85, 110, 255);
 }
 .container .dashboard .card.card-kas h1 {
-  color: rgb(226, 45, 91);
+  color: rgb(245, 72, 115);
   font-weight: 600;
 }
 .container .dashboard .card.card-kas h2 {
@@ -116,7 +150,7 @@ a.setting-icon-action h1 {
 }
 .container .card-dashboard-right .card-finance-indicator-icon {
   grid-area: icon;
-  background-color: rgb(52, 83, 255);
+  background-color: rgb(85, 110, 255);
   color: white;
   border-radius: 20px;
   width: 65px;
@@ -131,7 +165,7 @@ a.setting-icon-action h1 {
 }
 .container .card-dashboard-right .card-finance-indicator-content {
   grid-area: content;
-  color: rgb(85, 85, 85);
+  color: rgb(107, 107, 107);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -155,7 +189,7 @@ a.setting-icon-action h1 {
 }
 .container .dashboard-profitloss .card.card-revenue {
   grid-area: revenue;
-  background-color: rgb(0, 199, 99);
+  background-color: rgb(29, 233, 131);
 }
 .container .dashboard-profitloss .card.card-revenue span {
   font-weight: 700;
@@ -163,7 +197,7 @@ a.setting-icon-action h1 {
 }
 .container .dashboard-profitloss .card.card-cost-of-sales {
   grid-area: cost;
-  background-color: rgb(226, 45, 91);
+  background-color: rgb(245, 72, 115);
 }
 .container .dashboard-profitloss .card.card-cost-of-sales span {
   font-weight: 700;
@@ -180,7 +214,7 @@ a.setting-icon-action h1 {
 }
 .container .dashboard-profitloss .card.card-expense {
   grid-area: expense;
-  background-color: rgb(85, 85, 85);
+  background-color: rgb(107, 107, 107);
 }
 .container .dashboard-profitloss .card.card-expense span {
   font-weight: 700;

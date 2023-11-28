@@ -17,7 +17,7 @@
         </div>
     </div>
 </div> -->
-<form action="<?= base_url('finance/jurnal/'); ?>" class="row mb-2" method="post">
+<form action="<?= base_url('finance/jurnal/'); ?>" class="row mb-3" method="post">
     <div class="col-auto">
         <label for="startDate">Dari</label>
     </div>
@@ -94,7 +94,7 @@
                                 <a href="<?= base_url('finance/editJournal/') . $p['id']; ?> " class="text-decoration-none"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 
                             </div>
-                            <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> " class="text-decoration-none"><i class="fa-solid fa-circle-info"></i> Detail</a>
+                            <a href="<?= base_url('finance/jr_detail/') . $p['id']; ?> " class="text-decoration-none" target="_blank"><i class="fa-solid fa-circle-info"></i> Detail</a>
                         </td>
                     </tr>
                 <?php }; ?>

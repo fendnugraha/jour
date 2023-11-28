@@ -13,6 +13,7 @@ class Purchase extends CI_Controller
 
     public function index()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $this->db->select('a.*, b.nama as supplier, c.nama as product, d.username');
         $this->db->join('contact b', 'b.id = a.contact_id', 'left');
         $this->db->join('inventory c', 'c.id = a.product_id', 'left');
@@ -30,6 +31,7 @@ class Purchase extends CI_Controller
 
     public function addPurchase()
     {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
         $data['product'] = $this->db->get('inventory')->result_array();
         $data['contact'] = $this->db->get('contact')->result_array();
         $user_id = $this->session->userdata('user_id');
