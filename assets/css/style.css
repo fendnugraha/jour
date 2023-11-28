@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: white;
+}
+body #login-failed-alert {
+  bottom: 10vh;
+  right: 2%;
+  width: 25vw;
+}
+body table tr {
+  font-size: 0.7em;
+}
+
+.card {
+  border-radius: 25px;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+a.setting-link {
+  text-decoration: none;
+  color: black;
+}
+
+.card.card-page-title,
+.card.card-setting-menu {
+  padding: 5px 40px 5px 40px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(99, 99, 246);
+  font-weight: bold;
+  border-radius: 0 0px 30px 30px;
+}
+.card.card-page-title p,
+.card.card-page-title h4,
+.card.card-setting-menu p,
+.card.card-setting-menu h4 {
+  margin: 0;
+}
+
+a.setting-icon-action {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  height: 13rem;
+  width: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+a.setting-icon-action h1 {
+  font-size: 3.5rem;
+}
+
+.container h4 {
+  font-weight: 700;
+}
+.container .card-dashboard-neraca {
+  background-color: rgb(52, 83, 255);
+}
+.container .dashboard {
+  height: 200px;
+  display: grid;
+  grid-template-areas: "kas piutang" "kas hutang";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1em;
+}
+.container .dashboard .card.card-kas {
+  grid-area: kas;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgb(52, 83, 255);
+}
+.container .dashboard .card.card-kas h1 {
+  color: rgb(226, 45, 91);
+  font-weight: 600;
+}
+.container .dashboard .card.card-kas h2 {
+  font-weight: 700;
+}
+.container .dashboard .card.card-piutang {
+  grid-area: piutang;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.container .dashboard .card.card-piutang span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.container .dashboard .card.card-hutang {
+  grid-area: hutang;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.container .dashboard .card.card-hutang span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.container .card-dashboard-right {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #ddd;
+  padding: 15px;
+}
+.container .card-dashboard-right .card-finance-indicator {
+  display: grid;
+  grid-template-areas: "icon content";
+  grid-template-columns: 75px 1fr;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  align-items: center;
+  padding: 10px;
+}
+.container .card-dashboard-right .card-finance-indicator-icon {
+  grid-area: icon;
+  background-color: rgb(52, 83, 255);
+  color: white;
+  border-radius: 20px;
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.container .card-dashboard-right .card-finance-indicator-icon span {
+  font-size: 2em;
+}
+.container .card-dashboard-right .card-finance-indicator-content {
+  grid-area: content;
+  color: rgb(85, 85, 85);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
+}
+.container .card-dashboard-right .card-finance-indicator-content h5 {
+  font-size: 0.8em;
+}
+.container .card-dashboard-right .card-finance-indicator-content span {
+  font-size: 1.6em;
+  font-weight: 700;
+}
+.container .dashboard-profitloss {
+  min-height: 200px;
+  display: grid;
+  grid-template-areas: "revenue cost" "profit expense";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1em;
+}
+.container .dashboard-profitloss .card.card-revenue {
+  grid-area: revenue;
+  background-color: rgb(0, 199, 99);
+}
+.container .dashboard-profitloss .card.card-revenue span {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+.container .dashboard-profitloss .card.card-cost-of-sales {
+  grid-area: cost;
+  background-color: rgb(226, 45, 91);
+}
+.container .dashboard-profitloss .card.card-cost-of-sales span {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+.container .dashboard-profitloss .card.card-profit-loss {
+  grid-area: profit;
+  background-color: rgb(252, 217, 103);
+  color: #000000;
+}
+.container .dashboard-profitloss .card.card-profit-loss span {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+.container .dashboard-profitloss .card.card-expense {
+  grid-area: expense;
+  background-color: rgb(85, 85, 85);
+}
+.container .dashboard-profitloss .card.card-expense span {
+  font-weight: 700;
+  font-size: 1.5em;
+}/*# sourceMappingURL=style.css.map */

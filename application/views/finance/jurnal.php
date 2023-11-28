@@ -88,9 +88,9 @@
                         <td><?= number_format($p['jumlah']); ?></td>
                         <td><?= $status; ?></td>
                         <td>
-                            <div class="edit-journal-area" <?php if ($p['rvpy'] == !null) {
-                                                                echo "hidden";
-                                                            }; ?>>
+                            <div class="edit-journal-area d-inline" <?php if ($p['rvpy'] == !null) {
+                                                                        echo "hidden";
+                                                                    }; ?>>
                                 <a href="<?= base_url('finance/editJournal/') . $p['id']; ?> " class="text-decoration-none"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
 
                             </div>

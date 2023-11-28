@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+$myprimary-color: rgb(52, 83, 255);
+$mysecondary-color: rgb(85, 85, 85);
+$mysuccess-color: rgb(0, 199, 99);
+$mywarning-color: rgb(252, 217, 103);
+$mydanger-color: rgb(226, 45, 91);
+$mywhite-color: rgba(255,255,255,0.8);
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  // background-color: rgb(228, 228, 228);
+  background-color: white;
+
+  #login-failed-alert {
+    bottom: 10vh;
+    right: 2%;
+    width: 25vw;
+  }
+
+  table tr{
+    font-size: 0.7em;
+  }
+}
+
+.card {
+  border-radius: 25px;
+  border: none;
+  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+}
+
+a.setting-link {
+  text-decoration: none;
+  color: black;
+}
+
+.card.card-page-title,
+.card.card-setting-menu {
+  padding: 5px 40px 5px 40px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(99, 99, 246);
+  font-weight: bold;
+  border-radius: 0 0px 30px 30px;
+
+  p,
+  h4 {
+    margin: 0;
+    // letter-spacing: 1px;
+  }
+}
+
+a.setting-icon-action {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  height: 13rem;
+  width: 13rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.2);
+
+  h1 {
+    font-size: 3.5rem;
+  }
+}
+
+.container {
+
+  h4{
+    font-weight: 700;
+    // letter-spacing: 1px;
+  }
+  .card-dashboard-neraca {
+    background-color: $myprimary-color;
+  }
+  .dashboard {
+    height: 200px;
+    display: grid;
+    grid-template-areas:
+      "kas piutang"
+      "kas hutang";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+
+    .card.card-kas {
+      grid-area: kas;
+      background-color: $mywhite-color;
+      color: $myprimary-color;
+
+      h1 {
+        color: $mydanger-color;
+        font-weight: 600;
+      }
+
+      h2 {
+        font-weight: 700;
+      }
+      
+    }
+
+    .card.card-piutang {
+      grid-area: piutang;
+      background-color: $mywhite-color;
+
+      span {
+        font-weight: 700;
+        font-size: 1.2em;
+      }
+    }
+
+    .card.card-hutang {
+      grid-area: hutang;
+      background-color: $mywhite-color;
+
+      span {
+        font-weight: 700;
+        font-size: 1.2em;
+      }
+    }
+  }
+
+ .card-dashboard-right {
+    width: 100%;
+    border-radius: 10px;
+    // min-height: 100%;
+    background-color: #ddd;
+    // color: white;
+    // position:relative;
+    padding: 15px;
+
+    .card-finance-indicator {
+      display: grid;
+      grid-template-areas: "icon content";
+      grid-template-columns: 75px 1fr;
+      // height: 75px;
+      justify-content: space-between;
+      background-color: $mywhite-color;
+      border-radius: 20px;
+      align-items: center;
+      padding: 10px;
+
+      &-icon {
+        grid-area: icon;
+        background-color: $myprimary-color; 
+        color:white;
+        border-radius: 20px;
+        width: 65px;
+        height: 65px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+
+        span {
+          font-size: 2em;
+        }
+      }
+
+      &-content {
+        grid-area: content;
+        // background-color: #000000;
+        color: $mysecondary-color;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: end;
+        width: 100%;
+
+        h5 {
+          font-size: 0.8em;
+        }
+
+        span {
+          font-size: 1.6em;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .dashboard-profitloss {
+    min-height: 200px;
+    display: grid;
+    grid-template-areas:
+      "revenue cost"
+      "profit expense";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+
+    .card.card-revenue {
+      grid-area: revenue;
+      background-color: $mysuccess-color;
+
+      span {
+        font-weight: 700;
+        font-size: 1.5em;
+      }
+    }
+
+    .card.card-cost-of-sales {
+      grid-area: cost;
+      background-color: $mydanger-color;
+
+      span {
+        font-weight: 700;
+        font-size: 1.5em;
+      }
+    }
+
+    .card.card-profit-loss {
+      grid-area: profit;
+      background-color: $mywarning-color;
+      color: #000000;
+
+      span {
+        font-weight: 700;
+        font-size: 1.5em;
+      }
+    }
+
+    .card.card-expense {
+      grid-area: expense;
+      background-color: $mysecondary-color;
+
+      span {
+        font-weight: 700;
+        font-size: 1.5em;
+      }
+    }
+  }
+}

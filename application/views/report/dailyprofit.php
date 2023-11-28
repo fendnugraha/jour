@@ -29,7 +29,7 @@
         <button type="submit" class="btn btn-primary btn-sm">Proses</button>
     </div>
 </form>
-<div class="card overflow-auto" style="height: 60vh;">
+<div class="card overflow-auto" style="height: 80vh;">
     <div class="card-body">
         <div class="row">
             <div class="col-sm-8">

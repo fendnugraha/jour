@@ -56,7 +56,10 @@ class Auth extends CI_Controller
                 redirect('auth');
             }
         } else {
-            $this->session->set_flashdata('message', '<span class="text-danger">Username or Password is incorrect !</span>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show position-absolute" id="login-failed-alert" role="alert">
+            <strong class="d-block"><i class="fa-solid fa-circle-exclamation"></i> Login Failed!</strong> Username or Password is incorrect.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
             redirect('auth');
         }
     }

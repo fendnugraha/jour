@@ -2,72 +2,71 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App JOUR</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url(); ?>assets/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url(); ?>assets/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url(); ?>assets/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="<?= base_url(); ?>assets/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="<?= base_url(); ?>assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/bootstrap.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jour Apps</title>
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/all.min.css" />
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/style.css" />
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-
-        * {
-            font-family: "Quicksand", sans-serif;
-        }
-
-        html,
-        body,
-        .container {
-            height: 100vh;
-        }
-
         body {
-            background: rgb(255, 255, 255);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 70%, rgba(255, 147, 45, 1) 95%, rgba(245, 81, 81, 1) 100%);
-        }
-
-        a {
-            text-decoration: none;
-            color: blue;
-        }
-
-        a:hover {
-            font-weight: bold;
+            background-color: rgb(255, 255, 255);
         }
     </style>
 </head>
 
 <body>
-    <div class="container d-flex justify-content-center align-items-center">
-        <div class="login-form">
-            <h4><img src="<?= base_url() . 'assets/img/jour-logo.png'; ?>" height="64rem"> Apps <sup>by</sup> <img src="<?= base_url() . 'assets/img/logo-long.png'; ?>" height="64rem"> &trade;</h4>
-            <form action="<?= base_url('auth'); ?>" method="post">
-                <div class="row">
-                    <div class="col-sm">
-                        <label for="username" class="form-label"><i class="fa-solid fa-face-smile"></i> Username</label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-                    <div class="col-sm">
-                        <label for="password" class="form-label"><i class="fa-solid fa-key"></i> Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
+    <div class="container">
+        <?= $this->session->flashdata('message'); ?>
+        <div class="row justify-content-center align-items-center" style="height: 100vh">
+            <div class="col-lg-5">
+                <div class="card pt-3 pb-3" style="background-color: rgba(0, 0, 0, 0.3); border-radius: 15px">
+                    <div class="card-body">
+                        <div class="text-center mb-3 text-light">
+                            <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" srcset="" height="80" />
+                            <sup>&trade;</sup><strong>Accounting</strong>
+                            <p class="mt-3 fs-6">Sign in to your account.</p>
+                        </div>
+                        <form action="<?= base_url('auth'); ?>" method="post">
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username" autofocus />
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-secondary mt-3 d-inline-block">
+                                    <i class="fa-solid fa-right-to-bracket"></i> Sign in
+                                </button>
+                                <span class="text-light">Need an account?
+                                    <strong class="text-warning">Click Here !</strong></span>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-dark mt-1">Sign in</button>
-                <?= $this->session->flashdata('message'); ?>
-            </form>
-            <p class="mt-2">Need an account? <a href="<?= base_url("auth/register"); ?> ">Click here!</a></p>
+            </div>
         </div>
-
     </div>
-
-
-    <script src="<?= base_url(); ?>/assets/js/bootstrap.js"></script>
+    <nav class="navbar fixed-bottom">
+        <div class="container">
+            <p class="ms-auto me-auto">
+                Jour by
+                <img src="<?= base_url('assets'); ?>/img/logo.png" alt="logo" srcset="" height="25" />
+                Copyright &copy; 2023. All right reserved.
+            </p>
+        </div>
+    </nav>
+    <script src="<?= base_url('assets'); ?>/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/jquery-3.7.0.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/dataTables.bootstrap5.min.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/jquery-ui.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/fontawesome.min.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/all.min.js"></script>
+    <script src="<?= base_url('assets'); ?>/js/myjs.js"></script>
 </body>
 
 </html>

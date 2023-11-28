@@ -7,11 +7,11 @@
             </div>
             <div class="account-info">
                 <span class="badge text-bg-success">Total Debet</span>
-                <h4 class="fw-bold">Rp. <?= number_format($debt_total); ?></h4>
+                <h4 class="fw-bold">Rp. <?= number_format(floatval($debt_total)); ?></h4>
             </div>
             <div class="account-info">
                 <span class="badge text-bg-danger">Total Credit</span>
-                <h4 class="fw-bold">Rp. <?= number_format($cred_total); ?></h4>
+                <h4 class="fw-bold">Rp. <?= number_format(floatval($cred_total)); ?></h4>
             </div>
             <div class="account-info">
                 <span class="badge text-bg-warning">Saldo Akhir</span>
