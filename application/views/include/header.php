@@ -19,7 +19,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="<?= base_url('home'); ?>" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none me-3">
-                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" /> <strong class="text-primary">&nbsp;|&nbsp;<?= $setting['brand_name']; ?></strong>
+                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" /> <strong class="text-secondary">&nbsp;X&nbsp;<?= $setting['brand_name']; ?></strong>
                     <!-- <img src="<?= base_url('assets'); ?>/img/logo.png" alt="logo" height="32" /> -->
                 </a>
 
@@ -67,7 +67,7 @@
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-body-emphasis" id="user-email-addr-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" /> -->
-                        <span id="user-email-addr"><i class="fa-solid fa-masks-theater"></i> <strong><?= strtolower($this->session->userdata('fullname')); ?></strong> <small><i class="fa-solid fa-chevron-down"></i></small></span>
+                        <span id="user-email-addr"><i class="fa-solid fa-masks-theater"></i> <strong><?= strtolower($this->session->userdata('fullname')); ?></strong> <sup><i class="fa-solid fa-sort-down"></i></sup></span>
 
                     </a>
                     <ul class="dropdown-menu text-small dropdown-menu-end">
@@ -84,4 +84,7 @@
         </div>
     </header>
     <div class="container">
-        <p><?= $title; ?></p>
+        <div class="breadchrumb d-flex justify-content-between mb-3">
+            <pspan><?= $title; ?></pspan>
+            <span class="float-end">Role: <?= $this->session->userdata('role_name'); ?>. Warehouse: <?= $this->session->userdata('warehouse_name'); ?></span>
+        </div>

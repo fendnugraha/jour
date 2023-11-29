@@ -31,7 +31,10 @@ class Auth extends CI_Controller
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $sql = "SELECT * FROM user WHERE username ='$uname'";
+                $sql = "SELECT a.*, b.role as rolename, c.warehouse_name FROM user a 
+                LEFT JOIN user_role b ON b.id = a.role
+                LEFT JOIN warehouse c ON c.id = a.wh_id
+                WHERE a.username ='$uname'";
 
                 $user = $this->db->query($sql)->row_array();
                 $setting = $this->db->get_where('setting', ['id' => 1])->row_array();
@@ -42,6 +45,8 @@ class Auth extends CI_Controller
                     'role_id' => $user['role'],
                     'fullname' => $user['fullname'],
                     'wh_id' => $user['wh_id'],
+                    'role_name' => $user['rolename'],
+                    'warehouse_name' => $user['warehouse_name'],
                     'brand-name' => $setting['brand_name'],
                     'slogan' => $setting['slogan'],
                     'address' => $setting['address'],

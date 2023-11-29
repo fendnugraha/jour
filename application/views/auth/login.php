@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/style.css" />
     <style>
         body {
-            background-color: rgb(255, 255, 255);
+            background: rgb(4, 85, 237);
+            background: linear-gradient(180deg, rgba(4, 85, 237, 1) 0%, rgba(255, 255, 255, 1) 100%);
         }
     </style>
 </head>
@@ -21,7 +22,7 @@
         <?= $this->session->flashdata('message'); ?>
         <div class="row justify-content-center align-items-center" style="height: 100vh">
             <div class="col-lg-5">
-                <div class="card pt-3 pb-3" style="background-color: rgba(0, 0, 0, 0.3); border-radius: 15px">
+                <div class="card pt-3 pb-3" style="background-color: rgba(0, 0, 0, 0.25); border-radius: 15px">
                     <div class="card-body">
                         <div class="text-center mb-3 text-light">
                             <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" srcset="" height="80" />
@@ -42,7 +43,7 @@
                                     <i class="fa-solid fa-right-to-bracket"></i> Sign in
                                 </button>
                                 <span class="text-light">Need an account?
-                                    <strong class="text-warning">Click Here !</strong></span>
+                                    <strong class="text-warning"><a href="#">Click Here !</a></strong></span>
                             </div>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 $myprimary-color: rgb(85, 110, 255);
-$mysecondary-color: rgb(107, 107, 107);
+$mysecondary-color: rgb(95, 95, 95);
 $mysuccess-color: rgb(29, 233, 131);
 $mywarning-color: rgb(252, 217, 103);
 $mydanger-color: rgb(245, 72, 115);
@@ -74,6 +74,18 @@ header {
   box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.2);
 }
 
+.card-icon-db{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  color: $mysecondary-color;
+  font-size: 1.7em;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 a.setting-link {
   text-decoration: none;
   color: black;
@@ -122,6 +134,7 @@ a.setting-icon-action {
   .card-dashboard-neraca {
     background-color: $myprimary-color;
   }
+
   .dashboard {
     height: 200px;
     display: grid;
@@ -134,11 +147,11 @@ a.setting-icon-action {
 
     .card.card-kas {
       grid-area: kas;
-      background-color: $mywhite-color;
-      color: $myprimary-color;
+      background-color: $mysecondary-color;
+      color: $mywhite-color;
 
       h1 {
-        color: $mydanger-color;
+        // color: $mydanger-color;
         font-weight: 600;
       }
 
@@ -193,7 +206,7 @@ a.setting-icon-action {
         grid-area: icon;
         background-color: $myprimary-color; 
         color:white;
-        border-radius: 20px;
+        border-radius: 50%;
         width: 65px;
         height: 65px;
         display: flex;
@@ -240,7 +253,7 @@ a.setting-icon-action {
 
     .card.card-revenue {
       grid-area: revenue;
-      background-color: $mysuccess-color;
+      background-color: $myprimary-color;
 
       span {
         font-weight: 700;
@@ -250,7 +263,7 @@ a.setting-icon-action {
 
     .card.card-cost-of-sales {
       grid-area: cost;
-      background-color: $mydanger-color;
+      background-color: $myprimary-color;
 
       span {
         font-weight: 700;
@@ -271,7 +284,7 @@ a.setting-icon-action {
 
     .card.card-expense {
       grid-area: expense;
-      background-color: $mysecondary-color;
+      background-color: $myprimary-color;
 
       span {
         font-weight: 700;
