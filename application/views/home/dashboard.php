@@ -1,105 +1,97 @@
 <!-- Main Content -->
-<div class="row">
-    <div class="col-sm-8">
-
-        <div class="row mb-5 mt-3">
-            <div class="col-sm">
-                <div class="card card-dashboard-neraca text-light">
-                    <div class="card-body">
-                        <h5 style="font-weight: 700;">Assets</h5>
-                        <i class="fa-solid fa-vault"></i> <span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="col-sm">
-                    <div class="card card-dashboard-neraca text-light">
-                        <div class="card-body">
-                            <h5 style="font-weight: 700;">Liabilities</h5>
-                            <span><i class="fa-solid fa-file-invoice"></i></span><span class="float-end"><sup>Rp</sup>
-                                <?= number_format($this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="col-sm">
-                    <div class="card card-dashboard-neraca text-light">
-                        <div class="card-body">
-                            <h5 style="font-weight: 700;">Equity</h5>
-                            <span><i class="fa-solid fa-briefcase"></i></span><span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('30%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
-                        </div>
-                    </div>
-                </div>
+<div class="dashboard-area">
+    <div class="card dashboard-area-assets">
+        <div class="card-body d-flex flex-column justify-content-between">
+            <h5 style="font-weight: 700;">Assets</h5>
+            <div class="account-value">
+                <h2><i class="fa-solid fa-vault"></i></h2>
+                <span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
             </div>
         </div>
-
-        <h4>Arus Kas</h4>
-        <div class="dashboard mb-5">
-            <div class="card card-kas">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <span>Cash & Bank</span>
-                    <h1 class="mb-3"><i class="fa-solid fa-wallet"></i></h1>
-                    <h2><sup>Rp</sup>
-                        <?= number_format($this->finance_model->cashflowCount('0000-00-00', date('Y-m-d'))); ?></h2>
-                </div>
-            </div>
-            <div class="card card-piutang">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Piutang</h5>
-                    <span><i class="fa-solid fa-file-invoice-dollar"></i></span><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->accountsCount('10400%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-            <div class="card card-hutang">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Hutang</h5>
-                    <span><i class="fa-solid fa-credit-card"></i></span><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->accountsCount('20100%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-        </div>
-
-
-        <h4>Profit Loss</h4>
-        <div class="dashboard-profitloss mb-5">
-            <div class="card card-revenue text-light">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Revenue</h5>
-                    <div class="card-icon-db"><i class="fa-solid fa-cash-register"></i></div><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-            <div class="card card-cost-of-sales text-light">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Cost of sales</h5>
-                    <div class="card-icon-db"><i class="fa-solid fa-money-bills"></i></div><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->accountsCount('50%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-            <div class="card card-profit-loss">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Net Profit</h5>
-                    <div class="card-icon-db"><i class="fa-solid fa-sack-dollar"></i></div><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-            <div class="card card-expense text-light">
-                <div class="card-body">
-                    <h5 style="font-weight: 700;">Expenses</h5>
-                    <div class="card-icon-db"><i class="fa-solid fa-tags"></i></div><span class="float-end"><sup>Rp</sup>
-                        <?= number_format($this->finance_model->accountsCount('60%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
-                </div>
-            </div>
-        </div>
-
     </div>
-    <div class="col-sm">
-        <div class="card-dashboard-right">
-            <h4>Financial Indicator</h4>
-            <div class="card-finance-indicator mt-3 mt-2">
+    <div class="card dashboard-area-liabilities">
+        <div class="card-body d-flex flex-column justify-content-between">
+            <h5 style="font-weight: 700;">Liabilities</h5>
+            <div class="account-value">
+                <h2><i class="fa-solid fa-file-invoice"></i></h2>
+                <span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="card dashboard-area-equity">
+        <div class="card-body d-flex flex-column justify-content-between">
+            <h5 style="font-weight: 700;">Equity</h5>
+            <div class="account-value">
+                <h2><i class="fa-solid fa-briefcase"></i></h2>
+                <span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('30%', 'C', '0000-00-00', date('Y-m-d'))); ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="card dashboard-area-kas">
+        <div class="card-body d-flex flex-column justify-content-between">
+            <h5 style="font-weight: 700;">Overall Balance</h5>
+            <div class="account-value">
+                <span class="float-end"><sup><i class="fa-solid fa-wallet"></i> </sup> <?= number_format($this->finance_model->cashflowCount('0000-00-00', date('Y-m-d'))); ?></span>
+            </div>
+            <div class="card-cash-list">
+                <div class="card-cash-list-items mb-2 d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Total in Cash</span>
+                    <span><?= number_format($this->finance_model->accountsCount('10100%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
+                </div>
+                <div class="card-cash-list-items d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Total in Bank</span>
+                    <span><?= number_format($this->finance_model->accountsCount('10200%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card dashboard-area-piutang">
+        <div class="card-body d-flex flex-column justify-content-evenly">
+            <h2><i class="fa-solid fa-file-invoice-dollar"></i></h2>
+            <h3 class="text-end font-weight-bold"><?= number_format($this->finance_model->accountsCount('10400%', 'D', '0000-00-00', date('Y-m-d'))); ?></h3>
+            <h5>Piutang</h5>
+        </div>
+    </div>
+    <div class="card dashboard-area-hutang">
+        <div class="card-body d-flex flex-column justify-content-evenly">
+            <h2><i class="fa-solid fa-credit-card"></i></h2>
+            <h3 class="text-end font-weight-bold"><?= number_format($this->finance_model->accountsCount('20100%', 'C', '0000-00-00', date('Y-m-d'))); ?></h3>
+            <h5>Hutang</h5>
+        </div>
+    </div>
+    <div class="card dashboard-area-revenue">
+        <div class="card-body">
+            <h5 style="font-weight: 700;">Pendapatan</h5>
+            <h2><i class="fa-solid fa-cash-register"></i></h2>
+            <h4 class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d'))); ?></h4>
+        </div>
+    </div>
+    <div class="card dashboard-area-hpp">
+        <div class="card-body">
+            <h5 style="font-weight: 700;">Hpp</h5>
+            <h2><i class="fa-solid fa-money-bills"></i></h2>
+            <h4 class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('50%', 'D', '0000-00-00', date('Y-m-d'))); ?></h4>
+        </div>
+    </div>
+    <div class="card dashboard-area-profit">
+        <div class="card-body">
+            <h5 style="font-weight: 700;">Net Profit</h5>
+            <h2><i class="fa-solid fa-sack-dollar"></i></h2>
+            <h4 class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d'))); ?></h4>
+        </div>
+    </div>
+    <div class="card dashboard-area-expense">
+        <div class="card-body">
+            <h5 style="font-weight: 700;">Pengeluaran</h5>
+            <h2><i class="fa-solid fa-tags"></i></h2>
+            <h4 class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->accountsCount('60%', 'D', '0000-00-00', date('Y-m-d'))); ?></h4>
+        </div>
+    </div>
+    <div class="card dashboard-area-finance">
+        <div class="card-body overflow-auto">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
-                    <span><i class="fa-solid fa-file-invoice"></i></span>
+                    <small><i class="fa-solid fa-file-invoice"></i></small>
                 </div>
                 <div class="card-finance-indicator-content">
                     <h5>Debt Ratio</h5>
@@ -107,7 +99,7 @@
                         <?= round($this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) * 100, 2); ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-            <div class="card-finance-indicator mt-3 mt-2">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
                     <span><i class="fa-solid fa-coins"></i></span>
                 </div>
@@ -117,7 +109,7 @@
                         <?= $currentRatio; ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-            <div class="card-finance-indicator mt-3 mt-2">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
                     <span><i class="fa-solid fa-money-bills"></i></span>
                 </div>
@@ -127,7 +119,7 @@
                         <?= $quickRatio; ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-            <div class="card-finance-indicator mt-3 mt-2">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
                     <span><i class="fa-solid fa-money-check-dollar"></i></span>
                 </div>
@@ -137,9 +129,9 @@
                         <?= round($this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('30%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-            <div class="card-finance-indicator mt-3 mt-2">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
-                    <span><i class="fa-regular fa-gem"></i></span>
+                    <span><i class="fa-solid fa-gem"></i></span>
                 </div>
                 <div class="card-finance-indicator-content">
                     <h5>Return on Equity Ratio</h5>
@@ -147,9 +139,9 @@
                         <?= round($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('30%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-            <div class="card-finance-indicator mt-3 mt-2">
+            <div class="card-finance-indicator">
                 <div class="card-finance-indicator-icon">
-                    <span><i class="fa-solid fa-sack-dollar"></i></span>
+                    <span><i class="fa-solid fa-coins"></i></span>
                 </div>
                 <div class="card-finance-indicator-content">
                     <h5>Net Profit Margin Ratio</h5>
@@ -157,17 +149,7 @@
                         <?= round($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?>% <i class="fa-solid fa-circle-up text-success"></i></span>
                 </div>
             </div>
-
-            <!-- <div class="card mt-5">
-            <div class="card-body">
-              <h3 class="text-center" style="font-weight: 1000;">Your company is healthy</h3>
-            </div>
-          </div> -->
         </div>
-
-
     </div>
-</div>
-
 </div>
 <!-- End Main Content -->

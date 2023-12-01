@@ -56,7 +56,7 @@ header .dropdown .dropdown-menu a.dropdown-item:hover {
   width: 50px;
   height: 50px;
   background-color: white;
-  color: rgb(95, 95, 95);
+  color: rgb(85, 85, 85);
   font-size: 1.7em;
   border-radius: 50%;
   display: flex;
@@ -102,132 +102,155 @@ a.setting-icon-action h1 {
   font-size: 3.5rem;
 }
 
-.container h4 {
-  font-weight: 700;
-}
-.container .card-dashboard-neraca {
-  background-color: rgb(85, 110, 255);
-}
-.container .dashboard {
-  height: 200px;
+.dashboard-area {
+  height: 80vh;
   display: grid;
-  grid-template-areas: "kas piutang" "kas hutang";
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr 1.5fr;
+  grid-template-areas: "assets liabilities equity finance" "kas kas piutang finance" "kas kas hutang finance" "revenue hpp profit expense";
+  gap: 15px;
 }
-.container .dashboard .card.card-kas {
-  grid-area: kas;
-  background-color: rgb(95, 95, 95);
+.dashboard-area-assets {
+  background-color: rgb(52, 83, 255);
   color: rgba(255, 255, 255, 0.8);
+  grid-area: assets;
 }
-.container .dashboard .card.card-kas h1 {
-  font-weight: 600;
-}
-.container .dashboard .card.card-kas h2 {
-  font-weight: 700;
-}
-.container .dashboard .card.card-piutang {
-  grid-area: piutang;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-.container .dashboard .card.card-piutang span {
-  font-weight: 700;
+.dashboard-area-assets span {
   font-size: 1.2em;
-}
-.container .dashboard .card.card-hutang {
-  grid-area: hutang;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-.container .dashboard .card.card-hutang span {
   font-weight: 700;
-  font-size: 1.2em;
 }
-.container .card-dashboard-right {
-  width: 100%;
-  border-radius: 10px;
-  background-color: #ddd;
+.dashboard-area-liabilities {
+  background-color: rgb(52, 83, 255);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: liabilities;
+}
+.dashboard-area-liabilities span {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+.dashboard-area-equity {
+  background-color: rgb(52, 83, 255);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: equity;
+}
+.dashboard-area-equity span {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+.dashboard-area-kas {
+  background-color: rgb(52, 83, 255);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: kas;
+}
+.dashboard-area-kas .account-value span {
+  font-size: 3.3em;
+  color: rgb(252, 217, 103);
+}
+.dashboard-area-kas .card-cash-list {
+  overflow: auto;
+}
+.dashboard-area-kas .card-cash-list .card-cash-list-items {
+  background-color: rgb(121, 141, 255);
   padding: 15px;
+  border-radius: 25px;
 }
-.container .card-dashboard-right .card-finance-indicator {
-  display: grid;
-  grid-template-areas: "icon content";
-  grid-template-columns: 75px 1fr;
-  justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  align-items: center;
+.dashboard-area-kas .card-cash-list .card-cash-list-items span {
+  font-size: 1em;
+}
+.dashboard-area-kas table {
+  width: 100%;
+  font-size: 0.9em;
+  height: 100%;
+}
+.dashboard-area-kas table tr, .dashboard-area-kas table th, .dashboard-area-kas table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.425);
   padding: 10px;
 }
-.container .card-dashboard-right .card-finance-indicator-icon {
-  grid-area: icon;
-  background-color: rgb(85, 110, 255);
-  color: white;
-  border-radius: 50%;
-  width: 65px;
-  height: 65px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-.container .card-dashboard-right .card-finance-indicator-icon span {
+.dashboard-area-kas span {
   font-size: 2em;
+  font-weight: 700;
 }
-.container .card-dashboard-right .card-finance-indicator-content {
-  grid-area: content;
-  color: rgb(95, 95, 95);
+.dashboard-area-piutang {
+  background-color: rgb(85, 85, 85);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: piutang;
+}
+.dashboard-area-piutang h3 {
+  font-weight: 700;
+  color: rgb(252, 217, 103);
+}
+.dashboard-area-hutang {
+  background-color: rgb(85, 85, 85);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: hutang;
+}
+.dashboard-area-hutang h3 {
+  font-weight: 700;
+  color: rgb(252, 217, 103);
+}
+.dashboard-area-revenue {
+  background-color: rgb(250, 38, 84);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: revenue;
+}
+.dashboard-area-hpp {
+  background-color: rgb(250, 38, 84);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: hpp;
+}
+.dashboard-area-profit {
+  background-color: rgb(250, 38, 84);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: profit;
+}
+.dashboard-area-expense {
+  background-color: rgb(250, 38, 84);
+  color: rgba(255, 255, 255, 0.8);
+  grid-area: expense;
+}
+.dashboard-area-finance {
+  grid-area: finance;
+  background-color: #ddd;
+}
+.dashboard-area-finance .card-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: end;
-  width: 100%;
 }
-.container .card-dashboard-right .card-finance-indicator-content h5 {
+.dashboard-area-finance .card-body .card-finance-indicator {
+  background-color: white;
+  padding: 5px 15px 5px 15px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dashboard-area-finance .card-body .card-finance-indicator-icon {
+  background-color: rgb(52, 83, 255);
+  border-radius: 50%;
+  color: wheat;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard-area-finance .card-body .card-finance-indicator-content {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.dashboard-area-finance .card-body .card-finance-indicator-content span {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+.dashboard-area-finance .card-body .card-finance-indicator h5 {
   font-size: 0.8em;
 }
-.container .card-dashboard-right .card-finance-indicator-content span {
-  font-size: 1.6em;
-  font-weight: 700;
-}
-.container .dashboard-profitloss {
-  min-height: 200px;
-  display: grid;
-  grid-template-areas: "revenue cost" "profit expense";
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1em;
-}
-.container .dashboard-profitloss .card.card-revenue {
-  grid-area: revenue;
-  background-color: rgb(85, 110, 255);
-}
-.container .dashboard-profitloss .card.card-revenue span {
-  font-weight: 700;
-  font-size: 1.5em;
-}
-.container .dashboard-profitloss .card.card-cost-of-sales {
-  grid-area: cost;
-  background-color: rgb(85, 110, 255);
-}
-.container .dashboard-profitloss .card.card-cost-of-sales span {
-  font-weight: 700;
-  font-size: 1.5em;
-}
-.container .dashboard-profitloss .card.card-profit-loss {
-  grid-area: profit;
-  background-color: rgb(252, 217, 103);
-  color: #000000;
-}
-.container .dashboard-profitloss .card.card-profit-loss span {
-  font-weight: 700;
-  font-size: 1.5em;
-}
-.container .dashboard-profitloss .card.card-expense {
-  grid-area: expense;
-  background-color: rgb(85, 110, 255);
-}
-.container .dashboard-profitloss .card.card-expense span {
-  font-weight: 700;
-  font-size: 1.5em;
+
+@media (max-width: 991.98px) {
+  .dashboard-area {
+    display: flex;
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=style.css.map */

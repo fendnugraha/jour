@@ -1,3 +1,4 @@
+</div>
 </body>
 <script src="<?= base_url('assets'); ?>/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url('assets'); ?>/js/jquery-3.7.0.js"></script>

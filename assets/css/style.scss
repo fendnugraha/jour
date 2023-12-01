@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-$myprimary-color: rgb(85, 110, 255);
-$mysecondary-color: rgb(95, 95, 95);
-$mysuccess-color: rgb(29, 233, 131);
+$myprimary-color: rgb(52, 83, 255);
+$mysecondary-color: rgb(85, 85, 85);
+$mysuccess-color: rgb(0, 199, 99);
 $mywarning-color: rgb(252, 217, 103);
-$mydanger-color: rgb(245, 72, 115);
+$mydanger-color: rgb(250, 38, 84);
 $mywhite-color: rgba(255,255,255,0.8);
 
 body {
@@ -125,171 +125,190 @@ a.setting-icon-action {
   }
 }
 
-.container {
+// Dashboard GRID
+.dashboard-area {
+  height: 80vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr 2fr 1.5fr;
+  grid-template-areas: 
+  "assets liabilities equity finance"
+  "kas kas piutang finance"
+  "kas kas hutang finance"
+  "revenue hpp profit expense";
+  gap: 15px;
 
-  h4{
-    font-weight: 700;
-    // letter-spacing: 1px;
-  }
-  .card-dashboard-neraca {
+  @mixin myprimary-color {
     background-color: $myprimary-color;
+    color: $mywhite-color;
   }
 
-  .dashboard {
-    height: 200px;
-    display: grid;
-    grid-template-areas:
-      "kas piutang"
-      "kas hutang";
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 1em;
+  @mixin mysecondary-color {
+    background-color: $mysecondary-color;
+    color: $mywhite-color;
+  }
 
-    .card.card-kas {
-      grid-area: kas;
-      background-color: $mysecondary-color;
-      color: $mywhite-color;
+  @mixin mydanger-color {
+    background-color: $mydanger-color;
+    color: $mywhite-color;
+  }
 
-      h1 {
-        // color: $mydanger-color;
-        font-weight: 600;
-      }
+ &-assets {
+  @include myprimary-color;
+  grid-area: assets;
 
-      h2 {
-        font-weight: 700;
-      }
-      
+  span {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+ }
+ &-liabilities {
+  @include myprimary-color;
+  grid-area: liabilities;
+
+  span {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+ } 
+ &-equity {
+  @include myprimary-color;
+  grid-area: equity;
+
+  span {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+ } 
+ &-kas {
+  @include myprimary-color;
+  grid-area: kas;
+
+  .account-value {
+    span {
+      font-size: 3.3em;
+      color: $mywarning-color;
     }
+  }
+  .card-cash-list {
+    overflow: auto;
 
-    .card.card-piutang {
-      grid-area: piutang;
-      background-color: $mywhite-color;
+    .card-cash-list { 
+      &-items{
+      background-color: rgb(121, 141, 255);
+      padding: 15px;
+      border-radius: 25px;
 
-      span {
-        font-weight: 700;
-        font-size: 1.2em;
+      span{
+      font-size: 1em;
       }
-    }
-
-    .card.card-hutang {
-      grid-area: hutang;
-      background-color: $mywhite-color;
-
-      span {
-        font-weight: 700;
-        font-size: 1.2em;
       }
     }
   }
 
- .card-dashboard-right {
+  table {
     width: 100%;
-    border-radius: 10px;
-    // min-height: 100%;
-    background-color: #ddd;
-    // color: white;
-    // position:relative;
-    padding: 15px;
+    font-size: 0.9em;
+    height: 100%;
 
-    .card-finance-indicator {
-      display: grid;
-      grid-template-areas: "icon content";
-      grid-template-columns: 75px 1fr;
-      // height: 75px;
-      justify-content: space-between;
-      background-color: $mywhite-color;
-      border-radius: 20px;
-      align-items: center;
+    tr, th, td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.425);
       padding: 10px;
-
-      &-icon {
-        grid-area: icon;
-        background-color: $myprimary-color; 
-        color:white;
-        border-radius: 50%;
-        width: 65px;
-        height: 65px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-
-        span {
-          font-size: 2em;
-        }
-      }
-
-      &-content {
-        grid-area: content;
-        // background-color: #000000;
-        color: $mysecondary-color;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: end;
-        width: 100%;
-
-        h5 {
-          font-size: 0.8em;
-        }
-
-        span {
-          font-size: 1.6em;
-          font-weight: 700;
-        }
-      }
     }
   }
 
-  .dashboard-profitloss {
-    min-height: 200px;
-    display: grid;
-    grid-template-areas:
-      "revenue cost"
-      "profit expense";
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 1em;
+  span {
+    font-size: 2em;
+    font-weight: 700;
+  }
+ } 
+ &-piutang {
+  @include mysecondary-color;
+  grid-area: piutang;
 
-    .card.card-revenue {
-      grid-area: revenue;
+  h3 {
+    font-weight: 700;
+    color: $mywarning-color
+  }
+  
+ } 
+ &-hutang {
+  @include mysecondary-color;
+  grid-area: hutang;
+
+  h3 {
+    font-weight: 700;
+    color: $mywarning-color
+  }
+ }
+ &-revenue {
+  @include mydanger-color;
+  grid-area: revenue;
+ }
+ &-hpp {
+  @include mydanger-color;
+  grid-area: hpp;
+ } 
+ &-profit {
+  @include mydanger-color;
+  grid-area: profit;
+ } 
+ &-expense {
+  @include mydanger-color;
+  grid-area: expense;
+ } 
+ &-finance {
+  grid-area: finance;
+  background-color: #ddd;
+
+  .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .card-finance-indicator {
+    background-color: white;
+    padding: 5px 15px 5px 15px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // height: 80px;
+
+    &-icon {
       background-color: $myprimary-color;
+      border-radius: 50%;
+      color: wheat;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
 
       span {
+        font-size: 1.4em;
         font-weight: 700;
-        font-size: 1.5em;
       }
     }
 
-    .card.card-cost-of-sales {
-      grid-area: cost;
-      background-color: $myprimary-color;
-
-      span {
-        font-weight: 700;
-        font-size: 1.5em;
-      }
-    }
-
-    .card.card-profit-loss {
-      grid-area: profit;
-      background-color: $mywarning-color;
-      color: #000000;
-
-      span {
-        font-weight: 700;
-        font-size: 1.5em;
-      }
-    }
-
-    .card.card-expense {
-      grid-area: expense;
-      background-color: $myprimary-color;
-
-      span {
-        font-weight: 700;
-        font-size: 1.5em;
-      }
+    h5 {
+      font-size: 0.8em;
     }
   }
 }
+ } 
+}
+
+@media (max-width: 991.98px) {
+  .dashboard-area {
+    display: flex;
+    flex-direction: column;
+  }
+}
+// End Dashboard GRID
