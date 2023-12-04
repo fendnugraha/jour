@@ -3,7 +3,7 @@
         <div class="card bg-primary text-bg-dark">
             <div class="card-body">
                 <p>Total Hutang</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-credit-card"></i> <b><?= number_format($dt_payable['bill']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-credit-card"></i> <b><?= custom_number($dt_payable['bill']); ?> ,-</b></h2>
             </div>
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="card bg-warning text-bg-light">
             <div class="card-body">
                 <p>Total Pembayaran</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-money-check-dollar"></i> <b><?= number_format($dt_payable['got_paid']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-money-check-dollar"></i> <b><?= custom_number($dt_payable['got_paid']); ?> ,-</b></h2>
 
             </div>
         </div>
