@@ -10,9 +10,17 @@
 
 <div class="row">
     <div class="col-sm">
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="text-end">
+                    Total Assets: <?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', $endDate)); ?>
+                </h5>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">ASSETS</h4>
+
                 <table class="table">
                     <?php
                     foreach ($assets as $as) {; ?>
@@ -48,6 +56,13 @@
         </div>
     </div>
     <div class="col-sm">
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="text-end">
+                    Total Liabilities: <?= number_format($this->finance_model->accountsCount('20%', 'C', '0000-00-00', $endDate) + $this->finance_model->accountsCount('30%', 'C', '0000-00-00', $endDate)); ?>
+                </h5>
+            </div>
+        </div>
         <div class="card mb-3">
             <div class="card-body">
                 <h4 class="card-title">LIABILITIES</h4>
