@@ -10,16 +10,16 @@
 
 <div class="row">
     <div class="col-sm">
-        <div class="card mb-2">
+        <div class="card mb-2 text-bg-success">
             <div class="card-body">
-                <h5 class="text-end">
-                    Total Assets: <?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', $endDate)); ?>
+                <h5>
+                    Total Assets
                 </h5>
+                <h4 class="text-end" style="font-weight:700"><?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', $endDate)); ?></h4>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">ASSETS</h4>
 
                 <table class="table">
                     <?php
@@ -49,23 +49,25 @@
                                     <td class="text-end"><?= number_format($this->finance_model->endBalance($c['acc_code'], $c['status'], '0000-00-00', $endDate)); ?></td>
                                 </tr>
                             <?php }; ?>
-                        <?php }; ?>
                         </tbody>
+                    <?php }; ?>
                 </table>
             </div>
         </div>
     </div>
     <div class="col-sm">
-        <div class="card mb-2">
+        <div class="card mb-2 text-bg-success">
             <div class="card-body">
-                <h5 class="text-end">
-                    Total Liabilities: <?= number_format($this->finance_model->accountsCount('20%', 'C', '0000-00-00', $endDate) + $this->finance_model->accountsCount('30%', 'C', '0000-00-00', $endDate)); ?>
+                <h5>
+                    Total Liabilities
                 </h5>
+                <h4 class="text-end" style="font-weight:700">
+                    <?= number_format($this->finance_model->accountsCount('20%', 'C', '0000-00-00', $endDate) + $this->finance_model->accountsCount('30%', 'C', '0000-00-00', $endDate)); ?>
+                </h4>
             </div>
         </div>
         <div class="card mb-3">
             <div class="card-body">
-                <h4 class="card-title">LIABILITIES</h4>
                 <table class="table">
                     <?php
                     foreach ($liabilities as $lb) {; ?>
@@ -130,7 +132,7 @@
         <div class="card mt-2 bg-success text-bg-dark">
             <div class="card-body">
                 <span class="badge text-bg-warning">Equity Growth Rate</span>
-                <h1 class="text-end fw-bold"><?= round($this->finance_model->accountGrowthMontly($endDate), 2) . " %"; ?></h1>
+                <h1 class="text-end fw-bold"><?= $this->finance_model->accountGrowthMontly($endDate) . "%"; ?></h1>
             </div>
         </div>
     </div>
