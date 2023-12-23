@@ -9,9 +9,10 @@ class Finance_model extends CI_Model
         // $data['tanggal'] = date('Y-m-d');
         $user = $this->db->query($sql)->row_array();
         $user_id = $user['id'];
+        $hariini = date('Y-m-d');
 
         $querycode = "SELECT MAX(RIGHT(invoice,7)) AS kd_max FROM account_trace
-                    WHERE user_id = '$user_id'";
+                    WHERE user_id = '$user_id' and date(waktu) = '$hariini'";
         $q = $this->db->query($querycode);
         if ($q->num_rows() > 0) {
             $k = $q->row_array();

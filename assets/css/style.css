@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat&family=Quicksand:wght@300;400;500;600;700&display=swap");
 body {
   font-family: "Quicksand", sans-serif;
   background-color: rgb(233, 233, 233);
@@ -16,6 +16,10 @@ body table tr {
   font-weight: 700;
 }
 
+header #brand-name-title {
+  font-family: "caveat";
+  font-size: 1.3em;
+}
 header .dropdown a#user-email-addr-dropdown {
   background-color: rgb(71, 74, 255);
   text-decoration: none;

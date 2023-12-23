@@ -19,7 +19,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="<?= base_url('home'); ?>" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none me-3">
-                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" /> <strong class="text-secondary">&nbsp;X&nbsp;<?= $setting['brand_name']; ?></strong>
+                    <img src="<?= base_url('assets'); ?>/img/jour-logo.png" alt="logo" height="32" /> <strong class="text-secondary" id="brand-name-title">&nbsp;X&nbsp;<?= ucwords($setting['brand_name']); ?></strong>
                     <!-- <img src="<?= base_url('assets'); ?>/img/logo.png" alt="logo" height="32" /> -->
                 </a>
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 $myprimary-color: rgb(52, 83, 255);
 $mysecondary-color: rgb(85, 85, 85);
@@ -27,6 +27,13 @@ body {
 }
 
 header {
+
+  #brand-name-title {
+    font-family: 'caveat';
+    font-size: 1.3em;
+    // text-transform: lowercase;
+  }
+
   .dropdown{
       a#user-email-addr-dropdown{
         background-color: rgb(71, 74, 255);
