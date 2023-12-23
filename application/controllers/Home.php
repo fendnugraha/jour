@@ -22,17 +22,20 @@ class Home extends CI_Controller
         $liabilities = $this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d'));
         $assets = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d'));
         $cashAR = $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) - $this->finance_model->accountsCount('10600%', 'D', '0000-00-00', date('Y-m-d'));
-
-        if ($liabilities > 0) {
-            $data['currentRatio'] = round(($assets / $liabilities) * 100, 2);
+        if ($this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d')) > 0) {
+            $data['netProfitMargin'] = $this->finance_model->profitLossCount('0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d')) * 100;
         } else {
-            $data['currentRatio'] = 0;
+            $data['netProfitMargin'] = 0;
         }
 
         if ($liabilities > 0) {
+            $data['currentRatio'] = round(($assets / $liabilities) * 100, 2);
             $data['quickRatio'] = round(($cashAR / $liabilities) * 100, 2);
+            $data['debtRatio'] = round(($liabilities / $assets) * 100, 2);
         } else {
+            $data['currentRatio'] = 0;
             $data['quickRatio'] = 0;
+            $data['debtRatio'] = 0;
         }
 
         $data['title'] = 'Dashboard';

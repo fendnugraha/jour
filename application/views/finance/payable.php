@@ -20,7 +20,7 @@
         <div class="card bg-dark text-bg-dark">
             <div class="card-body">
                 <p>Sisa Hutang</p>
-                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-file-invoice-dollar"></i> <b><?= number_format($dt_payable['remaining']); ?> ,-</b></h2>
+                <h2 class="d-flex justify-content-between"><i class="fa-solid fa-file-invoice-dollar"></i> <b><?= number_format(floatval($dt_payable['remaining'])); ?> ,-</b></h2>
 
             </div>
         </div>

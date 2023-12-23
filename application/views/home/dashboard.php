@@ -96,7 +96,7 @@
                 <div class="card-finance-indicator-content">
                     <h5>Debt Ratio</h5>
                     <span>
-                        <?= round($this->finance_model->accountsCount('20%', 'C', '0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('10%', 'D', '0000-00-00', date('Y-m-d')) * 100, 2); ?>%</span>
+                        <?= round($debtRatio); ?>%</span>
                 </div>
             </div>
             <div class="card-finance-indicator">
@@ -146,7 +146,7 @@
                 <div class="card-finance-indicator-content">
                     <h5>Net Profit Margin Ratio</h5>
                     <span>
-                        <?= round($this->finance_model->profitLossCount('0000-00-00', date('Y-m-d')) / $this->finance_model->accountsCount('40%', 'C', '0000-00-00', date('Y-m-d')) * 100, 2); ?>%</span>
+                        <?= round($netProfitMargin, 2); ?>%</span>
                 </div>
             </div>
         </div>
