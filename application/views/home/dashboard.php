@@ -96,7 +96,7 @@
                 <div class="card-finance-indicator-content">
                     <h5>Debt Ratio</h5>
                     <span>
-                        <?= round($debtRatio); ?>%</span>
+                        <?= round($debtRatio, 2); ?>%</span>
                 </div>
             </div>
             <div class="card-finance-indicator">
