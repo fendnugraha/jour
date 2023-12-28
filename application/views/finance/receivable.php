@@ -41,6 +41,7 @@
                     <li><a href="<?= base_url('finance/addReceivable'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Piutang</a></li>
                     <li><a href="<?= base_url('finance/addReceivableSt'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Piutang Awal</a></li>
                     <li><a href="<?= base_url('finance/addRcvDeposit'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Piutang Saldo</a></li>
+                    <li><a href="<?= base_url('finance/addReceivableSales'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Piutang Penjualan</a></li>
                 </ul>
             </div>
             <div class="back-list">
