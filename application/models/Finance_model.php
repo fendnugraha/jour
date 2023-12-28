@@ -12,7 +12,7 @@ class Finance_model extends CI_Model
         $hariini = date('Y-m-d');
 
         $querycode = "SELECT MAX(RIGHT(invoice,7)) AS kd_max FROM account_trace
-                    WHERE user_id = '$user_id' and date(waktu) = '$hariini'";
+                    WHERE user_id = '$user_id'";
         $q = $this->db->query($querycode);
         if ($q->num_rows() > 0) {
             $k = $q->row_array();
