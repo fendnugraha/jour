@@ -653,6 +653,7 @@ class Finance extends CI_Controller
 
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
+        $data['contact_name'] = $contact['nama'];
         $data['contact_id'] = $contact_id;
 
         $this->db->select('a.*, b.acc_name');
@@ -975,6 +976,7 @@ class Finance extends CI_Controller
 
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
 
+        $data['contact_name'] = $contact['nama'];
         $data['contact_id'] = $contact_id;
         $this->db->select('a.*, b.acc_name');
         $this->db->join('acc_coa b', 'b.acc_code = a.rv_type', 'left');

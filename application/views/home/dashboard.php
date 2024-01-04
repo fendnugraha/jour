@@ -29,18 +29,18 @@
     </div>
     <div class="card dashboard-area-kas">
         <div class="card-body d-flex flex-column justify-content-between">
-            <h5 style="font-weight: 700;">Overall Balance</h5>
+            <h5 style="font-weight: 700;">Overall Balance <i class="fa-solid fa-wallet"></i></h5>
             <div class="account-value">
-                <span class="float-end"><sup><i class="fa-solid fa-wallet"></i> </sup> <?= custom_number($this->finance_model->cashflowCount('0000-00-00', date('Y-m-d'))); ?></span>
+                <span class="float-end"><sup>Rp</sup> <?= number_format($this->finance_model->cashflowCount('0000-00-00', date('Y-m-d'))); ?></span>
             </div>
             <div class="card-cash-list">
                 <div class="card-cash-list-items mb-2 d-flex justify-content-between align-items-center">
                     <span class="text-muted">Total in Cash</span>
-                    <span><?= custom_number($this->finance_model->accountsCount('10100%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
+                    <span><?= number_format($this->finance_model->accountsCount('10100%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
                 </div>
                 <div class="card-cash-list-items d-flex justify-content-between align-items-center">
                     <span class="text-muted">Total in Bank</span>
-                    <span><?= custom_number($this->finance_model->accountsCount('10200%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
+                    <span><?= number_format($this->finance_model->accountsCount('10200%', 'D', '0000-00-00', date('Y-m-d'))); ?></span>
                 </div>
             </div>
         </div>

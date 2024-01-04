@@ -15,7 +15,7 @@
                 <h5>
                     Total Assets
                 </h5>
-                <h4 class="text-end" style="font-weight:700"><?= number_format($this->finance_model->accountsCount('10%', 'D', '0000-00-00', $endDate)); ?></h4>
+                <h4 class="text-end" style="font-weight:700"><?= number_format($this->finance_model->accountsCount('1%', 'D', '0000-00-00', $endDate)); ?></h4>
             </div>
         </div>
         <div class="card">

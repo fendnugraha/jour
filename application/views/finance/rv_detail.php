@@ -30,10 +30,11 @@
 <div class="card">
     <div class="card-body">
         <div class="control-nav mb-3 d-flex justify-content-between">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRvPayment">
-                <i class="fa-solid fa-circle-plus"></i> Input Pembayaran
-            </button>
+            <h3><?= $contact_name; ?></h3>
             <div class="control-nav-info">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRvPayment">
+                    <i class="fa-solid fa-circle-plus"></i> Input Pembayaran
+                </button>
                 <a href="<?= base_url('finance/receivable'); ?>" class=" btn btn-primary"> <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Piutang</a>
             </div>
         </div>
@@ -64,7 +65,7 @@
                         <td><a href="<?= base_url('finance/deleteRcv/' . $rv['id']); ?>" onclick="return  confirm('Do you want to delete Y/N')"><i class="fa-solid fa-trash-can text-danger"></i></a></td>
                     </tr>
                 <?php }; ?>
-            </tbody> 
+            </tbody>
         </table>
         <div class="info-addproduct col-sm">
             <?php echo validation_errors(); ?>

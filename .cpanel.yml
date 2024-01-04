@@ -19,3 +19,12 @@ deployment:
     - export ASSETSKTR=/home/gsmtron1/public_html/jour_ktr/
     - /bin/cp -R assets $ASSETSKTR
     - /bin/cp -R system $ASSETSKTR
+    - export APPSSC=/home/gsmtron1/public_html/jour_ssc/application/
+    - /bin/cp -R application/controllers $APPSSC
+    - /bin/cp -R application/helpers $APPSSC
+    - /bin/cp -R application/models $APPSSC
+    - /bin/cp -R application/views $APPSSC
+    - /bin/cp -R application/third_party $APPSSC
+    - export ASSETSSSC=/home/gsmtron1/public_html/jour_ssc/
+    - /bin/cp -R assets $ASSETSSSC
+    - /bin/cp -R system $ASSETSSSC
