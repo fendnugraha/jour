@@ -7,6 +7,7 @@ deployment:
     - /bin/cp -R application/models $APP
     - /bin/cp -R application/views $APP
     - /bin/cp -R application/third_party $APP
+    - /bin/cp -R application/libraries $APP
     - export ASSETS=/home/gsmtron1/public_html/jour/
     - /bin/cp -R assets $ASSETS
     - /bin/cp -R system $ASSETS
@@ -16,6 +17,7 @@ deployment:
     - /bin/cp -R application/models $APPKTR
     - /bin/cp -R application/views $APPKTR
     - /bin/cp -R application/third_party $APPKTR
+    - /bin/cp -R application/libraries $APPKTR
     - export ASSETSKTR=/home/gsmtron1/public_html/jour_ktr/
     - /bin/cp -R assets $ASSETSKTR
     - /bin/cp -R system $ASSETSKTR
@@ -25,6 +27,7 @@ deployment:
     - /bin/cp -R application/models $APPSSC
     - /bin/cp -R application/views $APPSSC
     - /bin/cp -R application/third_party $APPSSC
+    - /bin/cp -R application/libraries $APPSSC
     - export ASSETSSSC=/home/gsmtron1/public_html/jour_ssc/
     - /bin/cp -R assets $ASSETSSSC
     - /bin/cp -R system $ASSETSSSC

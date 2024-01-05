@@ -3,6 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Finance extends CI_Controller
 {
+    protected $setting;
+    protected $user_id;
     public function __construct()
     {
         parent::__construct();
@@ -11,6 +13,7 @@ class Finance extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('home_model');
         $this->load->model('finance_model');
+        $this->load->library('excel');
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
     }
 
@@ -56,7 +59,6 @@ class Finance extends CI_Controller
     public function cashin()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $invoice = $this->home_model->invoice_so();
 
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
@@ -76,7 +78,7 @@ class Finance extends CI_Controller
                 'status' => 1,
                 'deskripsi' => $this->input->post('deskripsi'),
                 'date_modified' => time(),
-                'user_id' => $user_id
+                'user_id' => $this->user_id
             ];
 
             $this->db->insert('cashflow', $data);
@@ -87,7 +89,6 @@ class Finance extends CI_Controller
     public function cashout()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $invoice = $this->home_model->invoice_po();
 
         $this->form_validation->set_rules('tanggal', 'Tanggal', 'required');
@@ -107,7 +108,7 @@ class Finance extends CI_Controller
                 'status' => 1,
                 'deskripsi' => $this->input->post('deskripsi'),
                 'date_modified' => time(),
-                'user_id' => $user_id
+                'user_id' => $this->user_id
             ];
 
             $this->db->insert('cashflow', $data);
@@ -182,7 +183,6 @@ class Finance extends CI_Controller
     public function addJournal()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
@@ -206,7 +206,7 @@ class Finance extends CI_Controller
                 'cred_code' => $this->input->post('acc_credit'),
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $this->session->userdata('wh_id')
             ];
 
@@ -222,7 +222,6 @@ class Finance extends CI_Controller
     public function editJournal($j_id)
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
         $data['journal'] = $this->db->get_where('account_trace', ['id' => $j_id, 'rvpy' => null])->row_array();
         $data['status'] = $this->db->get('status')->result_array();
@@ -246,7 +245,7 @@ class Finance extends CI_Controller
                 'cred_code' => $this->input->post('acc_credit'),
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => $this->input->post('status'),
-                'user_id' => $user_id
+                'user_id' => $this->user_id
             ];
 
             $this->db->update('account_trace', $data, ['id' => $j_id]);
@@ -261,7 +260,6 @@ class Finance extends CI_Controller
     public function jr_detail($jr_id)
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
 
         $this->db->select('a.*, b.username, c.acc_name as debt_name, d.acc_name as cred_name');
         $this->db->join('user b', 'b.id = a.user_id', 'left');
@@ -297,7 +295,6 @@ class Finance extends CI_Controller
     public function addReceivable()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '10400-', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -347,7 +344,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $this->session->userdata('wh_id')
             ];
 
@@ -371,7 +368,6 @@ class Finance extends CI_Controller
     public function addReceivableSt()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '10400-', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -418,7 +414,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $this->session->userdata('wh_id')
             ];
 
@@ -442,7 +438,6 @@ class Finance extends CI_Controller
     public function addRcvDeposit()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '10400-', 'after');
@@ -493,7 +488,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $wh_id
             ];
 
@@ -555,7 +550,6 @@ class Finance extends CI_Controller
     public function addReceivableSales()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '10400-', 'after');
@@ -607,7 +601,7 @@ class Finance extends CI_Controller
                     'rvpy' => 'Receivable',
                     'pay_stats' => 0,
                     'pay_nth' => 0,
-                    'user_id' => $user_id,
+                    'user_id' => $this->user_id,
                     'wh_id' => $wh_id
                 ],
                 [
@@ -622,7 +616,7 @@ class Finance extends CI_Controller
                     'rvpy' => 'Receivable',
                     'pay_stats' => 0,
                     'pay_nth' => 0,
-                    'user_id' => $user_id,
+                    'user_id' => $this->user_id,
                     'wh_id' => $wh_id
                 ]
 
@@ -648,7 +642,6 @@ class Finance extends CI_Controller
     public function rv_detail($contact_id)
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
@@ -719,7 +712,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Receivable',
                 'pay_stats' => 1,
                 'pay_nth' => $pay_nth,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $wh_id
             ];
 
@@ -825,7 +818,6 @@ class Finance extends CI_Controller
     public function addPayable()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
         $this->db->like('acc_code', '20', 'after');
@@ -876,7 +868,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Payable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $wh_id
             ];
 
@@ -900,7 +892,6 @@ class Finance extends CI_Controller
     public function addPayableSt()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
 
         $this->db->like('acc_code', '20', 'after');
         $data['acc_rv'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
@@ -947,7 +938,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Payable',
                 'pay_stats' => 0,
                 'pay_nth' => 0,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $this->session->userdata('wh_id')
             ];
 
@@ -971,7 +962,6 @@ class Finance extends CI_Controller
     public function py_detail($contact_id)
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $wh_id = $this->session->userdata('wh_id');
 
         $contact = $this->db->get_where('contact', ['id' => $contact_id])->row_array();
@@ -1035,7 +1025,7 @@ class Finance extends CI_Controller
                 'rvpy' => 'Payable',
                 'pay_stats' => 1,
                 'pay_nth' => $pay_nth,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $wh_id
             ];
 
@@ -1098,7 +1088,6 @@ class Finance extends CI_Controller
     public function addDeposit()
     {
         $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
-        $user_id = $this->session->userdata('user_id');
         $data['accounts'] = $this->db->order_by('acc_code', 'ASC')->get('acc_coa')->result_array();
 
         $this->form_validation->set_rules('p_date', 'Tanggal', 'required');
@@ -1121,7 +1110,7 @@ class Finance extends CI_Controller
                 'cred_code' => '20100-002',
                 'jumlah' => $this->input->post('jumlah'),
                 'status' => 1,
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'wh_id' => $this->session->userdata('wh_id')
             ];
 
@@ -1131,6 +1120,76 @@ class Finance extends CI_Controller
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>');
             redirect('finance/addDeposit');
+        }
+    }
+
+    public function importJurnal()
+    {
+        $data['setting'] = $this->db->get_where('setting', ['id' => 1])->row_array();
+        $data['wh'] = $this->db->get('warehouse')->result_array();
+        $data['title'] = 'Dashboard / Jurnal Umum / Import Journal';
+        $this->load->view('include/header', $data);
+        $this->load->view('finance/importjr', $data);
+        $this->load->view('include/footer');
+    }
+
+    public function importJurnalAction()
+    {
+        if (isset($_FILES["file"]["name"])) {
+            // upload
+            $file_tmp = $_FILES['file']['tmp_name'];
+            $file_name = $_FILES['file']['name'];
+            $file_size = $_FILES['file']['size'];
+            $file_type = $_FILES['file']['type'];
+            // move_uploaded_file($file_tmp,"uploads/".$file_name); // simpan filenya di folder uploads
+
+            $object = PHPExcel_IOFactory::load($file_tmp);
+
+            $warehouse_id = $this->input->post('warehouse');
+
+            foreach ($object->getWorksheetIterator() as $worksheet) {
+
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+
+                for ($row = 2; $row <= $highestRow; $row++) {
+
+                    $waktu = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    $description = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                    $debt_code = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                    $cred_code = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                    $jumlah = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+
+                    $data[] = [
+                        'id'          => null,
+                        'waktu'          => $waktu,
+                        'invoice'         => $this->finance_model->invoice_journal(),
+                        'description'         => $description,
+                        'debt_code'         => $debt_code,
+                        'cred_code'         => $cred_code,
+                        'jumlah'         => $jumlah,
+                        'status'         => 1,
+                        'rvpy'         => null,
+                        'pay_stats'         => null,
+                        'pay_nth'         => null,
+                        'user_id'         => $this->user_id,
+                        'wh_id'         => $warehouse_id
+                    ];
+                }
+                // var_dump($data);
+            }
+            $this->db->insert_batch('account_trace', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Journal telah berhasil diimport.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('finance/importJurnal');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Gagal!</strong> Silahkan pilih file terlebih dahulu.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>');
+            redirect('finance/importJurnal');
         }
     }
 }

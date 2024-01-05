@@ -49,6 +49,7 @@
                     <li><a href="<?= base_url('finance/addJournal'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Jurnal Umum</a></li>
                     <li><a href="<?= base_url('finance/addDeposit'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Deposit</a></li>
                     <li><a href="<?= base_url('sales/addSalesValues'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Penjualan Barang (Values)</a></li>
+                    <li><a href="<?= base_url('finance/importJurnal'); ?>" class=" dropdown-item"> <i class="fa-solid fa-circle-plus"></i> Import Jurnal Umum</a></li>
                 </ul>
             </div>
             <div class="link-list-finance">
